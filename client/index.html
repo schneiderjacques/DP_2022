@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application de gestion d'agenda</title>
+</head>
+<body>
+    <div class="container">
+        <div class="top-container">
+            <div class="main-information">
+                <span>Octobre</span>
+                <span>Nous sommes le lundi 17 octobre 2022</span>
+            </div>
+            <div class="create-rdv">
+                <img src="assets/plus-btn.svg">
+                <span>Ajouter un rendez-vous</span>
+            </div>
+            
+        </div>
+        <div class="select-date">
+            <div class="choices">
+                <div class="select-date-type">
+                    <select id="date-type">
+                        <option selected>Jour</option>
+                        <option>Mois</option>
+                        <option>Année</option>
+                    </select>
+                </div>
+                <div class="date">
+                    <button> &lt; </button>
+                    <span>15 Juin 2022</span>
+                    <button> &gt; </button>
+                </div>
+                
+            </div>
+        </div>
+        <div class="main-container" id="main-container">
+            <table>
+                <thead>
+                    <tr class="tr-head">
+                        <th colspan="2">Mardi 15/05</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    <tr>
+                        <td class="hours" rowspan="4">8:00 AM</td>
+                        <td class="rdv-container" rowspan="4"> 
+                            <div class="rdv">
+                                <span>Daily Stand Up</span>
+                                <span>8:00 AM - 9:00 AM</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr></tr>
+                    <tr></tr>
+                    <tr></tr>
+                    
+
+
+                    <tr>
+                        <td class="hours" rowspan="4">9:00 AM</td>
+                        <td></td>
+                    </tr>
+                    <tr><td class="rdv-container" rowspan="3"> 
+                        <div class="rdv">
+                            <span>Daily Stand Up</span>
+                            <span>9:15 AM - 9:45 AM</span>
+                        </div>
+                    </td></tr>
+                    <tr></tr>
+                    <tr><td></td></tr>
+
+                    <tr>
+                        <td class="hours" rowspan="4">10:00 AM</td>
+                        <td></td>
+                    </tr>
+                    <tr><td></td></tr>
+                    <tr><td class="rdv-container" rowspan="6"> 
+                        <div class="rdv">
+                            <span>Daily Stand Up</span>
+                            <span>10:30 AM - 12:00 AM</span>
+                        </div>
+                    </td></tr>
+                    <tr><td></td></tr>
+                    
+                    <tr>
+                        <td class="hours" rowspan="4">11:00 AM</td>
+                        <td></td>
+                    </tr>
+                    <tr><td></td></tr>
+                    <tr><td></td></tr>
+                    <tr><td></td></tr>
+
+
+                    <tr><td class="hours" rowspan="4">12:00 AM</td>
+                        <td></td></tr>
+
+
+
+
+
+
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+   
+    </body>
+    <script src="js/calendar.js"></script>
+</html>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Poppins:wght@400;500;600&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body{
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(120deg,#2980b9, #8e44ad);
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container{
+    background:white;
+    width: 90%;
+}
+
+.top-container{
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px;
+    margin-top: 15px;
+}
+.main-information{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   
+}
+.main-information span:first-child{
+    font-size: 30px;
+    font-weight: 500;
+}
+.main-information span:last-child{
+    color: #979797;
+}
+.create-rdv{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background: #583bed;
+    border-radius: 5px;
+    color:white;
+    cursor:pointer;
+    transition: 500ms ease;
+    user-select: none;
+}
+.create-rdv:hover{
+    background: #4730bf;   
+}
+.create-rdv:active{
+    transform: translateY(-1px) scale(1.2);
+}
+.create-rdv img{
+    margin-right: 10px;
+}
+.select-date{
+    width: 100% ;
+}
+.choices{
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    color: #78778b;
+    font-weight: 500;
+    font-size: 15px;
+    margin-right: 40px;
+}
+
+.choices .date {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    display: flex;
+    padding: 10px 20px;
+}
+.choices span{
+    font-size: 15px;
+    color:#9695a6;
+}
+.choices button{
+    background: transparent;
+    outline: none;
+    border:none;
+    cursor:pointer;
+    font-size: 15px;
+    font-weight: bold;
+    color:#9695a6;
+}
+.choices button:first-child{
+    margin-right: 10px;
+
+}
+.choices button:last-child{
+    margin-left: 10px;
+
+}
+
+.choices .select-date-type{
+    margin-right: 20px;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+
+}
+.choices .select-date-type select{
+    font-size: 15px;
+    border-radius: 10px;
+    color: #78778b;
+    border:none;
+    outline:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+    appearance:none;
+    background-image: url('./assets/down-arrow.svg');
+    background-repeat: no-repeat;
+    background-position-x: 85%;
+    background-position-y: 50%;
+    padding: 10px 20px;
+    cursor:pointer;
+    width: 110px;
+
+}
+.main-container {
+    display: flex;
+    flex-direction: row;
+    max-height: 70vh;
+    overflow: auto;
+}
+.main-container table{
+    margin-left:40px;
+    height: 100%;
+}
+.main-container tbody tr{
+    height: 40px;
+
+}
+.main-container tbody tr td{
+    padding-top: 15px;
+
+    
+}
+.hours{
+    vertical-align: top;
+    width: 200px;
+    border-right: 1px solid #9695a6;
+}
+.rdv-container{ /*Td*/
+    width: 300px;
+    padding: 0 5px 0 5px;
+    vertical-align: top;
+
+
+}
+.rdv{ /*td div*/
+    background-color: #eaf7f1;
+    width: 100%;
+    padding: 0 10px;
+    border: 1px solid #c0e5d4;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: left;
+    height: 100%;
+    cursor:pointer;
+    transition: transform 500ms;
+}
+.rdv:hover{
+    background-color: #f1faf6;
+}
+.rdv span:first-child{
+    font-size: 11px;
+}
+.rdv span:last-child{
+    font-size: 11px;
+    color:#979a99;
+}
+
+.tr-head{
+    background: #583bed;
+    color:white;
+    padding:10px;
+}
+</style>
