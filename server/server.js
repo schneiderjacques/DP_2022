@@ -1,16 +1,22 @@
-const fs = require('fs/promises');
 const express = require('express');
-const cors = require('cors');
-const _ = require('lodash');
-const { v4: uuidv } = require('uuid');
-
 const app = express();
+const tool_user = require('./tools/user.js');
+
+app.use(express.json());
 
 /**
- * Définition d'une route GET pour le path '/'
+ * @api {post} /login Login
+ * @apiName Login
+ * @apiGroup Authentication
  */
-app.get('/', (req, res) => {
-	res.send('Hello World!');
+app.post('/login', function (req, res) {
+	if (!req.body.username || !req.body.password) {
+		res.sendStatus(422);
+		return;
+	}
+
+	res.sendStatus(tool_user.check_login(req.body) ? 200 : 401);
+	res.end()
 });
 
 /**
