@@ -74,13 +74,23 @@ document.getElementById('btn-previous-month').addEventListener('click', function
 
 
 function refreshCalendar(month, year){
-    console.log(getMonthName(month), " - ", year);
     document.getElementById("main-month-container").innerHTML = ''; //on efface tout dans le calendrier
     document.getElementById("main_month_container_responsive").innerHTML = ''; //on efface tout dans le calendrier responsive
     document.getElementById('btn-month-name').innerHTML = getMonthName(month); //On met a jour le nom du mois
     printCalendarByMonth(getAllDaysFromMonth(month, year), month); //On met a jour le calendrier
     document.getElementById("main-title-month").innerHTML = getMonthName(month) + " " + year; //On met à jour le titre (Novembre 2022)
     printCalendarByMonthResponsive(getAllDaysFromMonth(month, year), month); //On met a jour le calendrier responsive
+
+    document.getElementById('animation').animate([//On lance une animation
+        // étapes/keyframes
+        { transform: 'translateY(-4px)',
+        opacity: '0' },
+        { transform: 'translateY(0px)',
+        opacity: '1' }
+      ], {
+        // temporisation
+        duration: 500,
+      });
 }
 
 
@@ -105,6 +115,7 @@ function getPreviousMonth(month){
 
 
 function printCalendarByMonth(days, month) { //Affiche le calendrier
+
     for (let i = 0; i < days.length; i++) {
         const dt = new Date(days[i]);
 

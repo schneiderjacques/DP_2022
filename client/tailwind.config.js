@@ -5,12 +5,15 @@ module.exports = {
   './index.html'],
   theme: {
     extend: {
-      animation: {
+      keyframes: {
         opac: {
           '0%': { opacity: '0' },
-          '100%': { opacity: '100' },
+          '100%': { opacity: '1' },
         },
       },
+      animation:{
+        'opac': 'opac 500ms ease-in-out',
+      }
     },
   },
   plugins: [],
