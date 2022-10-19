@@ -4,7 +4,14 @@ module.exports = {
   "./html/*/*.{html,js}",
   './index.html'],
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        opac: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '100' },
+        },
+      },
+    },
   },
   plugins: [],
 }
