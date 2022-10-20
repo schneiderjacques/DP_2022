@@ -1,8 +1,15 @@
 [
-    {
-      "id": 1,
-      "username": "toto",
-      "password": "toto",
-      "timetable": []
-    }
+  {
+    "id": 1,
+    "username": "toto",
+    "password": "toto",
+    "token": "toto",
+    "rdvs": []
+  },
+  {
+    "username": "sdds",
+    "password": "toto",
+    "token": 1666277298,
+    "rdvs": []
+  }
 ]

@@ -1,21 +1,45 @@
 const express = require('express');
 const app = express();
 const tool_user = require('./tools/user.js');
+const fs = require("fs");
 
 app.use(express.json());
 
 /**
+ * Middleware permettant de vérifier si le token est présent dans la requête
+ */
+function checkToken(req, res, next) {
+	if (req.headers.authorization) {
+		let users = JSON.parse(fs.readFileSync(__dirname + "./../data/" + "data.json", 'utf8'));
+		for (var i = 0; i < users.length; i++) {
+			if (users[i].token === req.headers.authorization.substring(7)) {
+				next();
+			}
+		}
+	} else {
+		res.send(401);
+	}
+}
+
+/**
+ * Méthode de connexion
  * @api {post} /login Login
  * @apiName Login
  * @apiGroup Authentication
  */
 app.post('/login', function (req, res) {
-	if (!req.body.username || !req.body.password) {
-		res.sendStatus(422);
-		return;
-	}
+	tool_user.login(req, res)
+	res.end()
+});
 
-	res.sendStatus(tool_user.check_login(req.body) ? 200 : 401);
+/**
+ * Méthode d'enregistrement
+ * @api {post} /register Register
+ * @apiName Register
+ * @apiGroup Authentication
+ */
+app.post('/register', function (req, res) {
+	tool_user.register(req, res);
 	res.end()
 });
 
