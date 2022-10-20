@@ -2,32 +2,33 @@
 import { getAllDaysFromMonth, getPreviousDay, searchDateInArray } from './date_tools.js'
 
 
+
 const mes_rdv = {
     "rdvs": [
         {
             id: 0,
-            date: "10-18-2022",
+            date: "2022-10-18",
             heureDebut: "10-18-2022 08:00:00",
             heureFin: "10-18-2022 09:00:00",
             nom: "Anniversaire de sam",
         },
         {
             id: 1,
-            date: "10-25-2022",
+            date: "2022-10-19",
             heureDebut: "10-18-2022 14:00:00",
             heureFin: "10-18-2022 18:00:00",
             nom: "Cours de math",
         },
         {
             id: 2,
-            date: "09-26-2022",
+            date: "2022-10-20",
             heureDebut: "10-19-2022 14:00:00",
             heureFin: "10-19-2022 15:00:00",
             nom: "Cours d'anglais",
         },
         {
             id: 3,
-            date: "10-18-2022",
+            date: "2022-10-22",
             heureDebut: "10-18-2022 15:00:00",
             heureFin: "10-18-2022 16:00:00",
             nom: "Sortie VTT",
@@ -118,7 +119,6 @@ function printCalendarByMonth(days, month) { //Affiche le calendrier
 
     for (let i = 0; i < days.length; i++) {
         const dt = new Date(days[i]);
-
         var main_month_container = document.getElementById("main-month-container");
         var div = document.createElement('div');
 
@@ -140,7 +140,6 @@ function printCalendarByMonth(days, month) { //Affiche le calendrier
 
 
         div.appendChild(time);
-
         const rdv = searchDateInArray(dt, mes_rdv.rdvs);
         div.appendChild(time);
         if (rdv.length != 0) {
@@ -209,7 +208,6 @@ function printCalendarByMonthResponsive(days, month) { //affiche le calendrier r
         button.appendChild(time);
         button.appendChild(span);
 
-
         var span2 = document.createElement("span");
         span2.classList.add("-mx-0.5", "mt-auto", "flex", "flex-wrap-reverse");
         if (rdv.length != 0) {
@@ -231,26 +229,5 @@ function printCalendarByMonthResponsive(days, month) { //affiche le calendrier r
     }
 }
 
-hideMenu();
-
-
-document.getElementById('btn-menu').addEventListener('click', showMenu); //Affiche le menu
-document.getElementById('btn-menu').addEventListener('focusout', hideMenu); //Cache le menu
-
-
-
-function hideMenu() { //Affiche le menu lors du clique
-    document.getElementById('menu-selection').style.display = 'none';
-}
-
-
-function showMenu() {
-    if (document.getElementById('menu-selection').style.display == 'block') {
-        document.getElementById('menu-selection').style.display = 'none';
-        return;
-    }
-    document.getElementById('menu-selection').style.display = 'block';
-
-}
 
 

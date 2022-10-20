@@ -45,6 +45,7 @@ export function getNextDay(date, nb) { //renvoie le N jour suivant de date
 }
 
 export function isDateEqual(date1, date2) { //Check si deux dates sont égales
+    date2.setHours("00", "00", "00", "00");
     return date1.getTime() == date2.getTime();
 }
 
