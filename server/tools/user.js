@@ -64,6 +64,7 @@ function register(req, res) {
 
     // Ajouter l'utilisateur dans la base de données
     users.push({
+        id: users.length + 1,
         username: req.body.username,
         password: req.body.password,
         // Génération d'un token de session
