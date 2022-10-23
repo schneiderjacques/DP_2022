@@ -1,4 +1,4 @@
-import { getPreviousDay, getNextDay } from './date_tools.js'
+import { getPreviousDay, getNextDay, searchDateInArray, formatNumber } from './date_tools.js'
 
 
 const heures = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"];
@@ -56,7 +56,11 @@ function refreshCalendar(date){
 
 function setDateName(date){
     var button = document.getElementById("btn-week-name");
-    button.innerHTML = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+    var dt;
+    date.getDate() < 10 ? dt = "0" + date.getDate() : dt = date.getDate();
+    date.getMonth() < 9 ? dt += "-0" + (date.getMonth()+1) : dt += "-" + (date.getMonth()+1);
+    dt += "-" + date.getFullYear();
+    button.innerHTML = dt;
 }
 
 function setWeekNumber(dt){
@@ -65,7 +69,7 @@ function setWeekNumber(dt){
         (24 * 60 * 60 * 1000));
          
     var weekNumber = Math.ceil(days / 7);
-    document.getElementById("main-title-week").innerHTML = "Semaine " + weekNumber;
+    document.getElementById("main-title-week").innerHTML = "Semaine " + weekNumber + " " + dt.getFullYear();
 }
 
 
@@ -118,10 +122,71 @@ function setWeekTableHeaderByDay(dt){ //Met en place le header du tableau (Lun 1
         button.appendChild(span_responsive_children);
         parent_responsive.appendChild(button);
 
+        setUpEventsByDate(week[i]);
+
 
 
 
     }
+}
+
+function setUpEventsByDate(date){
+    var events = searchDateInArray(date);
+    var events_container = document.getElementById("events-container");
+    /*
+    <li class="relative mt-px flex sm:col-start-3" style="grid-row: 194 / span 6">
+                                    <a href="#"
+                                        class="group absolute inset-1 flex flex-col overflow-y-auto rounded-lg bg-blue-50 p-2 text-xs leading-5 hover:bg-blue-100">
+                                        <p class="order-1 font-semibold text-blue-700">Breakfast</p>
+                                        <p class="text-blue-500 group-hover:text-blue-700"><time
+                                                datetime="2022-01-12T06:00">6:00 AM</time></p>
+                                    </a>
+                                </li>
+    
+    */
+    for (let i = 0; i < events.length; i++) {
+
+
+        const dayDebut = new Date(Date.parse(events[i].heureDebut));
+        const dayFin = new Date(Date.parse(events[i].heureFin));
+
+        if(dayDebut.getDate() != dayFin.getDate() || dayDebut.getMonth() != dayFin.getMonth()){
+            console.log('Evenement sur plusieurs jours !');
+
+        } else{
+            //Différence entre deux dates
+            var diff = getMinDiff(dayDebut, dayFin);
+            //60 minute = 12 span
+            //1 span = 5 minutes
+            const span = diff / 5;
+            
+
+            const gridRow = (dayDebut.getHours() * 6 * 2 + 2);
+            console.log(gridRow)
+
+            var li = document.createElement("li");
+            li.classList.add("relative", "mt-px", "flex", "sm:col-start-3");
+            li.style.gridRow = gridRow + " / span " + span;
+            var a = document.createElement("a");
+            a.classList.add("group", "absolute", "inset-1", "flex", "flex-col", "overflow-y-auto", "rounded-lg", "bg-blue-50", "p-2", "text-xs", "leading-5", "hover:bg-blue-100");
+            var p = document.createElement("p");
+            p.classList.add("order-1", "font-semibold", "text-blue-700");
+            p.innerHTML = events[i].nom;
+            var p2 = document.createElement("p");
+            p2.classList.add("text-blue-500", "group-hover:text-blue-700");
+            var time = document.createElement("time");
+            time.classList.add("text-blue-500", "group-hover:text-blue-700");
+            time.setAttribute("datetime",dayDebut.toISOString());
+            time.innerHTML = formatNumber(dayDebut.getHours()) + ":" + formatNumber(dayDebut.getMinutes());
+            p2.appendChild(time);
+            a.appendChild(p);
+            a.appendChild(p2);
+            li.appendChild(a);
+            events_container.appendChild(li);
+        }
+        
+    }
+
 }
 
 function getFirstDayOfWeek(dt){
@@ -140,3 +205,10 @@ function getDayName(dt){
     const days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
     return days[dt.getDay()];
 }
+function getMinDiff(startDate, endDate) {
+    const msInMinute = 60 * 1000;
+  
+    return Math.round(
+      Math.abs(endDate - startDate) / msInMinute
+    );
+  }

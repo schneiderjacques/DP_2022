@@ -3,40 +3,6 @@ import { getAllDaysFromMonth, getPreviousDay, searchDateInArray } from './date_t
 
 
 
-const mes_rdv = {
-    "rdvs": [
-        {
-            id: 0,
-            date: "2022-10-18",
-            heureDebut: "10-18-2022 08:00:00",
-            heureFin: "10-18-2022 09:00:00",
-            nom: "Anniversaire de sam",
-        },
-        {
-            id: 1,
-            date: "2022-10-19",
-            heureDebut: "10-18-2022 14:00:00",
-            heureFin: "10-18-2022 18:00:00",
-            nom: "Cours de math",
-        },
-        {
-            id: 2,
-            date: "2022-10-20",
-            heureDebut: "10-19-2022 14:00:00",
-            heureFin: "10-19-2022 15:00:00",
-            nom: "Cours d'anglais",
-        },
-        {
-            id: 3,
-            date: "2022-10-22",
-            heureDebut: "10-18-2022 15:00:00",
-            heureFin: "10-18-2022 16:00:00",
-            nom: "Sortie VTT",
-        },
-
-    ]
-}
-
 
 
 
@@ -140,7 +106,7 @@ function printCalendarByMonth(days, month) { //Affiche le calendrier
 
 
         div.appendChild(time);
-        const rdv = searchDateInArray(dt, mes_rdv.rdvs);
+        const rdv = searchDateInArray(dt);
         div.appendChild(time);
         if (rdv.length != 0) {
             var ol = document.createElement("ol");
@@ -201,7 +167,7 @@ function printCalendarByMonthResponsive(days, month) { //affiche le calendrier r
         }
 
         var span = document.createElement("span");
-        const rdv = searchDateInArray(dt, mes_rdv.rdvs);
+        const rdv = searchDateInArray(dt);
         span.classList.add("sr-only");
         span.innerHTML = "Rdv : " + rdv.length;
 

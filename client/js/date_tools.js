@@ -1,3 +1,50 @@
+const mes_rdv = {
+    "rdvs": [
+        {
+            id: 0,
+            date: "2022-10-18",
+            heureDebut: "2022-10-18 08:00:00",
+            heureFin: "2022-10-18 09:00:00",
+            nom: "Anniversaire de sam",
+        },
+        {
+            id: 1,
+            date: "2022-10-19",
+            heureDebut: "2022-10-19 14:00:00",
+            heureFin: "2022-10-20 18:00:00",
+            nom: "Cours de math",
+        },
+        {
+            id: 2,
+            date: "2022-10-20",
+            heureDebut: "2022-10-20 14:00:00",
+            heureFin: "2022-10-20 15:00:00",
+            nom: "Cours d'anglais",
+        },
+        {
+            id: 3,
+            date: "2022-10-22",
+            heureDebut: "2022-10-22 15:00:00",
+            heureFin: "2022-10-22 16:00:00",
+            nom: "BACKEND",
+        },
+        {
+            id: 4,
+            date: "2022-10-20",
+            heureDebut: "2022-10-20 15:00:00",
+            heureFin: "2022-10-20 16:00:00",
+            nom: "TEST",
+        },
+
+
+    ]
+}
+
+
+
+
+
+
 export function getAllDaysFromMonth(month, year) { //Renvoie tout les jours d'un mois, du mois précédent visible et du mois suivant visible (cases grises)
     let days = []; //Tout les jours du mois
     let firstDays = []; //Les jours du mois précédents qu'on peut afficher
@@ -46,10 +93,11 @@ export function getNextDay(date, nb) { //renvoie le N jour suivant de date
 
 export function isDateEqual(date1, date2) { //Check si deux dates sont égales
     date2.setHours("00", "00", "00", "00");
+    date1.setHours("00", "00", "00", "00");
     return date1.getTime() == date2.getTime();
 }
 
-export function searchDateInArray(date, array) { //Renvoie les rendez vous d'un jour
+export function searchDateInArray(date, array=mes_rdv.rdvs) { //Renvoie les rendez vous d'un jour
     var results = [];
     for (let i = 0; i < array.length; i++) {
         if (isDateEqual(date, new Date(array[i].date))) {
@@ -58,4 +106,6 @@ export function searchDateInArray(date, array) { //Renvoie les rendez vous d'un 
     }
     return results;
 }
-
+export function formatNumber(nb) { //Renvoie l'heure d'un date
+    return nb < 10 ? nb = "0" + nb : nb;
+}
