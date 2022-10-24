@@ -22,7 +22,10 @@ function login(req, res) {
         if (users[i].username === req.body.username && users[i].password === req.body.password) {
             // Génération d'un token de session
             users[i].token = Math.floor(Date.now() / 1000) + (60 * 60);
-            res.status(200).send(users[i]);
+            res.writeHead(200, {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }).send(users[users.length-1]);
             return;
         }
     }
@@ -76,7 +79,10 @@ function register(req, res) {
     fs.writeFileSync(__dirname + "./../data/" + "data.json", JSON.stringify(users));
 
     // On retourne le dernier utilisateur ajouté
-    res.status(200).send(users[users.length-1]);
+    res.writeHead(200, {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+    }).send(users[users.length-1]);
 }
 
 module.exports = {
