@@ -11,7 +11,7 @@ const mes_rdv = {
             id: 1,
             date: "2022-10-24",
             heureDebut: "2022-10-24 00:00:00",
-            heureFin: "2022-10-30 18:00:00",
+            heureFin: "2022-10-29 18:00:00",
             nom: "Cours de math",
         },
         {
