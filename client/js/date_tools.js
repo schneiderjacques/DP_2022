@@ -9,16 +9,16 @@ const mes_rdv = {
         },
         {
             id: 1,
-            date: "2022-10-19",
-            heureDebut: "2022-10-19 14:00:00",
-            heureFin: "2022-10-20 18:00:00",
+            date: "2022-10-24",
+            heureDebut: "2022-10-24 00:00:00",
+            heureFin: "2022-10-30 18:00:00",
             nom: "Cours de math",
         },
         {
             id: 2,
             date: "2022-10-20",
             heureDebut: "2022-10-20 14:00:00",
-            heureFin: "2022-10-20 15:00:00",
+            heureFin: "2022-10-20 14:45:00",
             nom: "Cours d'anglais",
         },
         {
@@ -108,4 +108,7 @@ export function searchDateInArray(date, array=mes_rdv.rdvs) { //Renvoie les rend
 }
 export function formatNumber(nb) { //Renvoie l'heure d'un date
     return nb < 10 ? nb = "0" + nb : nb;
+}
+export function getNumberOfDayBetween2Date(date1, date2){//renvoie le nombre de jour entre deux dates
+    return Math.round((date2.getTime() - date1.getTime()) / (1000 * 3600 * 24));
 }

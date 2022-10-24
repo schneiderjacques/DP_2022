@@ -1,4 +1,4 @@
-import { getPreviousDay, getNextDay, searchDateInArray, formatNumber } from './date_tools.js'
+import { getPreviousDay, getNextDay, searchDateInArray, formatNumber, getNumberOfDayBetween2Date } from './date_tools.js'
 
 
 const heures = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"];
@@ -43,6 +43,7 @@ document.getElementById('btn-previous-week').addEventListener('click', function 
 setWeekTableHeaderByDay(currentWeekDate);
 
 function refreshCalendar(date){
+    document.getElementById("events-container").innerHTML = "";
     document.getElementById("week-headers").innerHTML = "";
     var div = document.createElement("div");
     div.classList.add("col-end-1", "w-14");
@@ -132,26 +133,33 @@ function setWeekTableHeaderByDay(dt){ //Met en place le header du tableau (Lun 1
 
 function setUpEventsByDate(date){
     var events = searchDateInArray(date);
-    var events_container = document.getElementById("events-container");
-    /*
-    <li class="relative mt-px flex sm:col-start-3" style="grid-row: 194 / span 6">
-                                    <a href="#"
-                                        class="group absolute inset-1 flex flex-col overflow-y-auto rounded-lg bg-blue-50 p-2 text-xs leading-5 hover:bg-blue-100">
-                                        <p class="order-1 font-semibold text-blue-700">Breakfast</p>
-                                        <p class="text-blue-500 group-hover:text-blue-700"><time
-                                                datetime="2022-01-12T06:00">6:00 AM</time></p>
-                                    </a>
-                                </li>
-    
-    */
+
     for (let i = 0; i < events.length; i++) {
 
-
+        const dayColumnIndex = new Date(events[i].date).getDay();
         const dayDebut = new Date(Date.parse(events[i].heureDebut));
         const dayFin = new Date(Date.parse(events[i].heureFin));
 
         if(dayDebut.getDate() != dayFin.getDate() || dayDebut.getMonth() != dayFin.getMonth()){
-            console.log('Evenement sur plusieurs jours !');
+            
+            const debutRdvInDecimal = timeToDecimal(dayDebut.getHours() + ":" + dayDebut.getMinutes());
+            const gridRow = (debutRdvInDecimal * 6 * 2 + 2);
+
+
+
+            createWeekRdv(dayColumnIndex, dayDebut, events[i].nom, gridRow, (12*(24 - dayDebut.getHours())) );
+
+            for(let j = (dayDebut.getDay()+1) ; j < (dayFin.getDay()+1); j++){
+                if (j == dayFin.getDay()) {
+                    createWeekRdvSquence(j, dayDebut, 2, (12*(24 - dayFin.getHours())) );
+                } else {
+                    createWeekRdvSquence(j, dayDebut, 2, 288 );
+                }
+            }
+            
+
+       
+
 
         } else{
             //Différence entre deux dates
@@ -160,29 +168,9 @@ function setUpEventsByDate(date){
             //1 span = 5 minutes
             const span = diff / 5;
             
-
-            const gridRow = (dayDebut.getHours() * 6 * 2 + 2);
-            console.log(gridRow)
-
-            var li = document.createElement("li");
-            li.classList.add("relative", "mt-px", "flex", "sm:col-start-3");
-            li.style.gridRow = gridRow + " / span " + span;
-            var a = document.createElement("a");
-            a.classList.add("group", "absolute", "inset-1", "flex", "flex-col", "overflow-y-auto", "rounded-lg", "bg-blue-50", "p-2", "text-xs", "leading-5", "hover:bg-blue-100");
-            var p = document.createElement("p");
-            p.classList.add("order-1", "font-semibold", "text-blue-700");
-            p.innerHTML = events[i].nom;
-            var p2 = document.createElement("p");
-            p2.classList.add("text-blue-500", "group-hover:text-blue-700");
-            var time = document.createElement("time");
-            time.classList.add("text-blue-500", "group-hover:text-blue-700");
-            time.setAttribute("datetime",dayDebut.toISOString());
-            time.innerHTML = formatNumber(dayDebut.getHours()) + ":" + formatNumber(dayDebut.getMinutes());
-            p2.appendChild(time);
-            a.appendChild(p);
-            a.appendChild(p2);
-            li.appendChild(a);
-            events_container.appendChild(li);
+            const debutRdvInDecimal = timeToDecimal(dayDebut.getHours() + ":" + dayDebut.getMinutes());
+            const gridRow = (debutRdvInDecimal * 6 * 2 + 2);
+            createWeekRdv(dayColumnIndex, dayDebut, events[i].nom, gridRow, span );
         }
         
     }
@@ -212,3 +200,51 @@ function getMinDiff(startDate, endDate) {
       Math.abs(endDate - startDate) / msInMinute
     );
   }
+  function timeToDecimal(t) {
+    var arr = t.split(':');
+    var dec = parseInt((arr[1]/6)*10, 10);
+
+    return parseFloat(parseInt(arr[0], 10) + '.' + (dec<10?'0':'') + dec);
+}
+function createWeekRdv(dayColumnIndex, dayDebut, event_name, gridRow, span){
+    var events_container = document.getElementById("events-container");
+    var li = document.createElement("li");
+    li.classList.add("relative", "mt-px", "flex", ("sm:col-start-"+dayColumnIndex), ("col-start-"+dayColumnIndex));
+    li.style.gridRow = gridRow + " / span " + span;
+    var a = document.createElement("a");
+    a.classList.add("group", "absolute", "inset-1", "flex", "flex-col", "overflow-y-auto", "rounded-lg", "bg-blue-50", "p-2", "text-xs", "leading-5", "hover:bg-blue-100");
+    var p = document.createElement("p");
+    p.classList.add("order-1", "font-semibold", "text-blue-700");
+    p.innerHTML = event_name;
+    var p2 = document.createElement("p");
+    p2.classList.add("text-blue-500", "group-hover:text-blue-700");
+    var time = document.createElement("time");
+    time.classList.add("text-blue-500", "group-hover:text-blue-700");
+    time.setAttribute("datetime",dayDebut.toISOString());
+    time.innerHTML = formatNumber(dayDebut.getHours()) + ":" + formatNumber(dayDebut.getMinutes());
+    p2.appendChild(time);
+    a.appendChild(p);
+    a.appendChild(p2);
+    li.appendChild(a);
+    events_container.appendChild(li);
+}
+function createWeekRdvSquence(dayColumnIndex, dayDebut, gridRow, span){
+    var events_container = document.getElementById("events-container");
+    var li = document.createElement("li");
+    li.classList.add("relative", "mt-px", "flex", ("sm:col-start-"+dayColumnIndex), ("col-start-"+dayColumnIndex));
+    li.style.gridRow = gridRow + " / span " + span;
+    var a = document.createElement("a");
+    a.classList.add("group", "absolute", "inset-1", "flex", "flex-col", "overflow-y-auto", "rounded-lg", "bg-blue-50", "p-2", "text-xs", "leading-5", "hover:bg-blue-100");
+    var p = document.createElement("p");
+    p.classList.add("order-1", "font-semibold", "text-blue-700");
+    var p2 = document.createElement("p");
+    p2.classList.add("text-blue-500", "group-hover:text-blue-700");
+    var time = document.createElement("time");
+    time.classList.add("text-blue-500", "group-hover:text-blue-700");
+    time.setAttribute("datetime",dayDebut.toISOString());
+    p2.appendChild(time);
+    a.appendChild(p);
+    a.appendChild(p2);
+    li.appendChild(a);
+    events_container.appendChild(li);
+}

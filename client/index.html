@@ -415,7 +415,11 @@
 
 <script>
 
+    if(window.localStorage.getItem('user') == null){
+        window.location.href = "html/authentification/connexion.html";
 
+    }
+    console.log(JSON.parse(window.localStorage.getItem('user')));
 
     const vue_week = document.getElementById('vue-week');
     const vue_month = document.getElementById('vue-month');

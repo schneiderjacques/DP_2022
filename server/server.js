@@ -1,9 +1,11 @@
 const express = require('express');
+const cors = require('cors')
 const app = express();
 const tool_user = require('./tools/user.js');
 const fs = require("fs");
 
-app.use(express.json());
+
+app.use(express.json(), cors());
 
 /**
  * Middleware permettant de vérifier si le token est présent dans la requête
