@@ -82,9 +82,11 @@
             "username": login,
             "password": password
       })
-      fetchData(body, 'POST', 'http://localhost:8080/login/').then(response => {
+      fetchData(body, 'POST', 'login/').then(response => {
         localStorage.setItem('user', JSON.stringify(response));
         window.location.href = "../../index.html";
+      }).catch(error => {
+          document.getElementById('alert-2').style.display= 'flex';
       });
         
       

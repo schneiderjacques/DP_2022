@@ -1,47 +1,20 @@
-const mes_rdv = {
-    "rdvs": [
-        {
-            id: 0,
-            date: "2022-10-18",
-            heureDebut: "2022-10-18 08:00:00",
-            heureFin: "2022-10-18 09:00:00",
-            nom: "Anniversaire de sam",
-        },
-        {
-            id: 1,
-            date: "2022-10-24",
-            heureDebut: "2022-10-24 00:00:00",
-            heureFin: "2022-10-29 18:00:00",
-            nom: "Cours de math",
-        },
-        {
-            id: 2,
-            date: "2022-10-20",
-            heureDebut: "2022-10-20 14:00:00",
-            heureFin: "2022-10-20 14:45:00",
-            nom: "Cours d'anglais",
-        },
-        {
-            id: 3,
-            date: "2022-10-22",
-            heureDebut: "2022-10-22 15:00:00",
-            heureFin: "2022-10-22 16:00:00",
-            nom: "BACKEND",
-        },
-        {
-            id: 4,
-            date: "2022-10-20",
-            heureDebut: "2022-10-20 15:00:00",
-            heureFin: "2022-10-20 16:00:00",
-            nom: "TEST",
-        },
 
 
-    ]
+import { refreshCalendarDay } from './calendar_day.js';
+import { refreshCalendarWeek } from './calendar_week.js';
+import { refreshCalendarMonth } from './calendar_month.js';
+
+var current_date = new Date();
+
+
+
+
+refreshAllCalendars();
+export function refreshAllCalendars(){
+    refreshCalendarDay(current_date);
+    refreshCalendarWeek(current_date);
+    //refreshCalendarMonth(current_date.getMonth(), current_date.getFullYear());
 }
-
-
-
 
 
 
@@ -80,15 +53,15 @@ export function daysInMonth(month, year) { //Renvoi le premier jour du mois
 }
 
 
-export function getPreviousDay(date, nb) {//renvoie le n jour précédent de date
-    const previous = new Date(date.getTime());
-    previous.setDate(date.getDate() - nb);
-    return previous;
+export function setPreviousDay(nb) {//renvoie le n jour précédent de date
+    const previous = new Date(current_date.getTime());
+    previous.setDate(current_date.getDate() - nb);
+    current_date = previous;
 }
-export function getNextDay(date, nb) { //renvoie le N jour suivant de date
-    const next = new Date(date.getTime());
-    next.setDate(date.getDate() + nb);
-    return next;
+export function setNextDay(nb) { //renvoie le N jour suivant de date
+    const next = new Date(current_date.getTime());
+    next.setDate(current_date.getDate() + nb);
+    current_date = next;
 }
 
 export function isDateEqual(date1, date2) { //Check si deux dates sont égales
@@ -97,7 +70,7 @@ export function isDateEqual(date1, date2) { //Check si deux dates sont égales
     return date1.getTime() == date2.getTime();
 }
 
-export function searchDateInArray(date, array=mes_rdv.rdvs) { //Renvoie les rendez vous d'un jour
+export function searchDateInArray(date, array) { //Renvoie les rendez vous d'un jour
     var results = [];
     for (let i = 0; i < array.length; i++) {
         if (isDateEqual(date, new Date(array[i].date))) {
@@ -112,3 +85,59 @@ export function formatNumber(nb) { //Renvoie l'heure d'un date
 export function getNumberOfDayBetween2Date(date1, date2){//renvoie le nombre de jour entre deux dates
     return Math.round((date2.getTime() - date1.getTime()) / (1000 * 3600 * 24));
 }
+export function getDayName(dt){
+    const days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+    return days[dt.getDay()];
+}
+export function getMonthName(dt){
+    const months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+    return months[dt.getMonth()];
+}
+export function getFirstDayOfWeek(dt){
+    var tmp = new Date(dt);
+    const day = tmp.getDay(); 
+    const diff = tmp.getDate() - day + (day === 0 ? -6 : 1);
+    return new Date(tmp.setDate(diff));
+}
+export function getNextDay(nb){
+    const next = new Date(current_date.getTime());
+    next.setDate(current_date.getDate() + nb);
+    return next;
+}
+export function getAllDaysFromWeek(dt){
+    var days = [];
+    for (let i = 0; i < 7; i++) {
+        days.push(getNextDay(i));
+    }
+    return days;
+}
+
+
+export function initHours(name) {
+    const heures = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"];
+    const parent = document.getElementById(name);
+    for (let i = 0; i < heures.length; i++) {
+        let div = document.createElement("div");
+        let child = document.createElement("div");
+        div.classList.add("sticky", "left-0", "z-20", "-mt-2.5", "-ml-14", "w-14", "pr-2", "text-right", "text-xs", "leading-5", "text-gray-400");
+        div.innerHTML = heures[i] + ":00";
+        child.appendChild(div);
+        parent.appendChild(child);
+        parent.appendChild(document.createElement("div"));
+    }
+}
+
+export function getMinDiff(startDate, endDate) { //renvoie la différence en minutes entre deux dates
+    const msInMinute = 60 * 1000;
+  
+    return Math.round(
+      Math.abs(endDate - startDate) / msInMinute
+    );
+    }
+
+export function timeToDecimal(t) { //renvoie l'heure en décimal entre deux heures
+        var arr = t.split(':');
+        var dec = parseInt((arr[1]/6)*10, 10);
+    
+        return parseFloat(parseInt(arr[0], 10) + '.' + (dec<10?'0':'') + dec);
+    }

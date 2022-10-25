@@ -1,8 +1,8 @@
 
+const api = 'http://localhost:8080/'; // adresse l'api avec le port
 
-
-export async function fetchData(body, method, url) {
-    const response = await fetch(url, {
+export async function fetchData(body, method, route) {
+    const response = await fetch(api + route, {
             method: method,
             headers: {
               'Content-Type':'application/json',
@@ -12,9 +12,17 @@ export async function fetchData(body, method, url) {
             body: body
           })
           
-  
-        if (response.status == 401) {
-          document.getElementById('alert-2').style.display= 'flex';
-        }
         return response.json();
   }
+export async function fetchDataGet(route){
+    const response = await fetch(api + route, {
+        method: 'GET',
+        headers: {
+          'Content-Type':'application/json',
+          'Accept':'application/json',
+          'Authorization': 'Bearer ' + JSON.parse(window.localStorage.getItem('user')).token,
+        }
+
+      })
+    return response.json();
+}

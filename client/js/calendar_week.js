@@ -1,48 +1,22 @@
-import { getPreviousDay, getNextDay, searchDateInArray, formatNumber, getNumberOfDayBetween2Date } from './date_tools.js'
+import { setPreviousDay, setNextDay, formatNumber, getDayName, getFirstDayOfWeek, getAllDaysFromWeek, initHours, getMinDiff, timeToDecimal, searchDateInArray, getMonthName, refreshAllCalendars } from './date_tools.js'
+import { fetchDataGet } from './request.js'
 
-
-const heures = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"];
-
-initHours();
-
-function initHours() {
-    const parent = document.getElementById("hours-container");
-    for (let i = 0; i < heures.length; i++) {
-        let div = document.createElement("div");
-        let child = document.createElement("div");
-        div.classList.add("sticky", "left-0", "z-20", "-mt-2.5", "-ml-14", "w-14", "pr-2", "text-right", "text-xs", "leading-5", "text-gray-400");
-        div.innerHTML = heures[i] + ":00";
-        child.appendChild(div);
-        parent.appendChild(child);
-        parent.appendChild(document.createElement("div"));
-    }
-}
-
-var currentWeekDate = new Date();
-
+initHours("hours-container");//Initie les heures (00:00, 01:00, 02:00, etc...)
 
 
 document.getElementById('btn-next-week').addEventListener('click', function () { //Bouton pour afficher le mois suivant
-    currentWeekDate = getNextDay(currentWeekDate, 8);
-    refreshCalendar(currentWeekDate)
+    setNextDay(8);
+    refreshAllCalendars();
 
 })
 
 document.getElementById('btn-previous-week').addEventListener('click', function () { //Bouton pour afficher le mois précédent
-    currentWeekDate = getPreviousDay(currentWeekDate, 6);
-    refreshCalendar(currentWeekDate)
+    setPreviousDay(6);
+    refreshAllCalendars();
 })
 
 
-
-
-
-
-
-
-setWeekTableHeaderByDay(currentWeekDate);
-
-function refreshCalendar(date){
+export function refreshCalendarWeek(date){
     document.getElementById("events-container").innerHTML = "";
     document.getElementById("week-headers").innerHTML = "";
     var div = document.createElement("div");
@@ -70,7 +44,7 @@ function setWeekNumber(dt){
         (24 * 60 * 60 * 1000));
          
     var weekNumber = Math.ceil(days / 7);
-    document.getElementById("main-title-week").innerHTML = "Semaine " + weekNumber + " " + dt.getFullYear();
+    document.getElementById("main-title-week").innerHTML = "Sem. n°" + weekNumber + " (" + getMonthName(dt)  + ") " + dt.getFullYear();
 }
 
 
@@ -83,7 +57,6 @@ function setWeekTableHeaderByDay(dt){ //Met en place le header du tableau (Lun 1
     for (let i = 0; i < week.length; i++) {
 
         if (i == 0) setDateName(week[i]); //Met en place la date de la semaine
-
         const name = getDayName(week[i]).slice(0,3) + " "; //récupère le nom du jour et le coupe à 3 lettres
         const day = week[i].getDate(); //On récupère le jour
         var div = document.createElement("div"); //on créer une div qui contiendra le nom du jour et le numéro du jour
@@ -123,20 +96,29 @@ function setWeekTableHeaderByDay(dt){ //Met en place le header du tableau (Lun 1
         button.appendChild(span_responsive_children);
         parent_responsive.appendChild(button);
 
-        setUpEventsByDate(week[i]);
 
+
+        const dateOfDay = firstDayOfWeek.getFullYear() + "-" + formatNumber(firstDayOfWeek.getMonth() + 1) + "-" + formatNumber(firstDayOfWeek.getDate());
+        fetchDataGet('week_planning/'+ dateOfDay  )
+        .then(response => {
+            setUpEventsByDate(week[i], response);
+        });
 
 
 
     }
+    
 }
 
-function setUpEventsByDate(date){
-    var events = searchDateInArray(date);
+function setUpEventsByDate(date, eventsArray){ //Met en place les événements dans le tableau
+    const events = searchDateInArray(date, eventsArray);
 
     for (let i = 0; i < events.length; i++) {
 
-        const dayColumnIndex = new Date(events[i].date).getDay();
+        var dayColumnIndex = new Date(events[i].date).getDay();
+
+
+
         const dayDebut = new Date(Date.parse(events[i].heureDebut));
         const dayFin = new Date(Date.parse(events[i].heureFin));
 
@@ -177,36 +159,11 @@ function setUpEventsByDate(date){
 
 }
 
-function getFirstDayOfWeek(dt){
-    var day = dt.getDay();
-    var diff = dt.getDate() - day + (day == 0 ? -6:1)-1;
-    return new Date(dt.setDate(diff));
-}
-function getAllDaysFromWeek(dt){
-    var days = [];
-    for (let i = 0; i < 7; i++) {
-        days.push(new Date(dt.setDate(dt.getDate() + 1)));
-    }
-    return days;
-}
-function getDayName(dt){
-    const days = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
-    return days[dt.getDay()];
-}
-function getMinDiff(startDate, endDate) {
-    const msInMinute = 60 * 1000;
-  
-    return Math.round(
-      Math.abs(endDate - startDate) / msInMinute
-    );
-  }
-  function timeToDecimal(t) {
-    var arr = t.split(':');
-    var dec = parseInt((arr[1]/6)*10, 10);
 
-    return parseFloat(parseInt(arr[0], 10) + '.' + (dec<10?'0':'') + dec);
-}
+
+
 function createWeekRdv(dayColumnIndex, dayDebut, event_name, gridRow, span){
+    dayColumnIndex == 0 ? dayColumnIndex = 7 : dayColumnIndex = dayColumnIndex;
     var events_container = document.getElementById("events-container");
     var li = document.createElement("li");
     li.classList.add("relative", "mt-px", "flex", ("sm:col-start-"+dayColumnIndex), ("col-start-"+dayColumnIndex));
@@ -229,6 +186,7 @@ function createWeekRdv(dayColumnIndex, dayDebut, event_name, gridRow, span){
     events_container.appendChild(li);
 }
 function createWeekRdvSquence(dayColumnIndex, dayDebut, gridRow, span){
+    dayColumnIndex == 0 ? dayColumnIndex = 7 : dayColumnIndex = dayColumnIndex;
     var events_container = document.getElementById("events-container");
     var li = document.createElement("li");
     li.classList.add("relative", "mt-px", "flex", ("sm:col-start-"+dayColumnIndex), ("col-start-"+dayColumnIndex));
