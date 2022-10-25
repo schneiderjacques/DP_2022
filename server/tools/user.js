@@ -1,6 +1,15 @@
 var fs = require("fs");
 
 /**
+ * Méthode permettant de récupérer les données du site
+ * @returns {any}
+ */
+function get_datas() {
+    // Récupérer les données du site
+    return JSON.parse(fs.readFileSync(__dirname + "./../data/" + "data.json", 'utf8'));
+}
+
+/**
  * Méthode permettant à l'utilisateur de se connecter
  * @param req
  *  Requête
@@ -15,7 +24,7 @@ function login(req, res) {
     }
 
     // Récupérer les données du site
-    let users = JSON.parse(fs.readFileSync(__dirname + "./../data/" + "data.json", 'utf8'));
+    let users = get_datas();
 
     // Vérifier si le username et le password sont présents dans la base de données
     for (var i = 0; i < users.length; i++) {
@@ -53,7 +62,7 @@ function register(req, res) {
     }
 
     // Récupérer les données du site
-    let users = JSON.parse(fs.readFileSync(__dirname + "./../data/" + "data.json", 'utf8'));
+    let users = get_datas();
 
     // Vérifier si le username est déjà présent dans la base de données
     for (var i = 0; i < users.length; i++) {
@@ -81,7 +90,35 @@ function register(req, res) {
     res.send(users[users.length-1]);
 }
 
+/**
+ * Méthode permettant de récupérer les données de l'utilisateur
+ * @param req
+ * Requête
+ * @param res
+ * Réponse
+ */
+function get_user(req, res) {
+    // Récupérer les données du site
+    let users = get_datas();
+
+    // Récupérer l'utilisateur
+    let found = false;
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].token == req.headers.authorization.substring(7)) {
+            found = true;
+            res.set({"Content-Type":"application/json","Access-Control-Allow-Origin":"*"});
+            res.send(users[i]);
+            return;
+        }
+    }
+
+    if (!found) {
+        res.sendStatus(404);
+    }
+}
+
 module.exports = {
     login: login,
-    register: register
+    register: register,
+    get_user: get_user
 }

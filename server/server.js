@@ -11,17 +11,22 @@ app.use(express.json(), cors());
  * Middleware permettant de vérifier si le token est présent dans la requête
  */
 function checkToken(req, res, next) {
+	let found = false;
 	if (req.headers.authorization) {
-		let users = JSON.parse(fs.readFileSync(__dirname + "./../data/" + "data.json", 'utf8'));
+		let users = JSON.parse(fs.readFileSync(__dirname + "/data/" + "data.json", 'utf8'));
 		for (var i = 0; i < users.length; i++) {
-			if (users[i].token === req.headers.authorization.substring(7)) {
+			if (users[i].token == req.headers.authorization.substring(7)) {
+				found = true;
 				next();
 			}
 		}
-	} else {
-		res.send(401);
+	}
+
+	if (!found) {
+		res.sendStatus(401);
 	}
 }
+
 
 /**
  * Méthode de connexion
@@ -43,6 +48,18 @@ app.post('/login', function (req, res) {
 app.post('/register', function (req, res) {
 	tool_user.register(req, res);
 	res.end()
+});
+
+/**
+ * Méthode de récupération des données de l'utilisateur
+ * @api {get} /user Get user
+ * @apiName User
+ * @apiGroup User
+ * @apiHeader {String} Authorization Token de session
+ */
+app.get('/user', checkToken, function (req, res) {
+	tool_user.get_user(req, res);
+	res.end();
 });
 
 /**
