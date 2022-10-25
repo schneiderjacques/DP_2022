@@ -76,6 +76,30 @@ app.get('/month_planning/:month/:year', checkToken, function (req, res) {
 });
 
 /**
+ * Méthode retournant les rendez-vous de la semaine donnée
+ * @api {get} /week_planning/:first_day_week Get planning
+ * @apiName Planning
+ * @apiGroup Planning
+ * @apiHeader {String} Authorization Token de session
+ */
+app.get('/week_planning/:first_day_week', checkToken, function (req, res) {
+	tool_planning.week_view(req, res);
+	res.end();
+});
+
+/**
+ * Méthode retournant les rendez-vous du jour donné
+ * @api {get} /day_planning/:day Get planning
+ * @apiName Planning
+ * @apiGroup Planning
+ * @apiHeader {String} Authorization Token de session
+ */
+app.get('/day_planning/:day', checkToken, function (req, res) {
+	tool_planning.day_view(req, res);
+	res.end();
+});
+
+/**
  * Listener sur le port 8080
  */
 app.listen(8080, () => {
