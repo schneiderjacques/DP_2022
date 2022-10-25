@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors')
 const app = express();
 const tool_user = require('./tools/user.js');
+const tool_planning = require('./tools/planning.js');
 const fs = require("fs");
 
 
@@ -59,6 +60,18 @@ app.post('/register', function (req, res) {
  */
 app.get('/user', checkToken, function (req, res) {
 	tool_user.get_user(req, res);
+	res.end();
+});
+
+/**
+ * Méthode retournant les rendez-vous du mois donné
+ * @api {get} /planning/:month/:year Get planning
+ * @apiName Planning
+ * @apiGroup Planning
+ * @apiHeader {String} Authorization Token de session
+ */
+app.get('/month_planning/:month/:year', checkToken, function (req, res) {
+	tool_planning.month_view(req, res);
 	res.end();
 });
 
