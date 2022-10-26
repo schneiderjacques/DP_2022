@@ -118,6 +118,7 @@ function get_user(req, res) {
 }
 
 module.exports = {
+    get_datas: get_datas,
     login: login,
     register: register,
     get_user: get_user

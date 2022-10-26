@@ -112,6 +112,18 @@ app.post('/add_appointment', checkToken, function (req, res) {
 });
 
 /**
+ * Méthode permettant de modifier un événement du planning
+ * @api {post} /edit_appointment Edit event
+ * @apiName Edit appointment
+ * @apiGroup Planning
+ * @apiHeader {String} Authorization Token de session
+ */
+app.post('/edit_appointment', checkToken, function (req, res) {
+	tool_planning.edit_appointment(req, res);
+	res.end();
+});
+
+/**
  * Listener sur le port 8080
  */
 app.listen(8080, () => {

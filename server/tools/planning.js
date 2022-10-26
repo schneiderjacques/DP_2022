@@ -1,3 +1,4 @@
+const tool_user = require('./user.js');
 const fs = require("fs");
 
 /**
@@ -45,7 +46,7 @@ function month_view(req, res) {
                 rdvs.push(planning[i]);
             }
         }
-        res.set({"Content-Type":"application/json","Access-Control-Allow-Origin":"*"});
+        res.set({"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"});
         res.send(rdvs);
     } else {
         res.sendStatus(404);
@@ -87,7 +88,7 @@ function week_view(req, res) {
                 rdvs.push(planning[i]);
             }
         }
-        res.set({"Content-Type":"application/json","Access-Control-Allow-Origin":"*"});
+        res.set({"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"});
         res.send(rdvs);
     } else {
         res.sendStatus(404);
@@ -124,7 +125,7 @@ function day_view(req, res) {
                 rdvs.push(planning[i]);
             }
         }
-        res.set({"Content-Type":"application/json","Access-Control-Allow-Origin":"*"});
+        res.set({"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"});
         res.send(rdvs);
     } else {
         res.sendStatus(404);
@@ -151,7 +152,7 @@ function add_appointment(req, res) {
 
     if (planning) {
         // Récupérer les données du site
-        let users = JSON.parse(fs.readFileSync(__dirname + "/../data/" + "data.json", 'utf8'));
+        let users = tool_user.get_datas();
 
         // Chercher l'utilisateur
         for (var i = 0; i < users.length; i++) {
@@ -192,9 +193,70 @@ function add_appointment(req, res) {
     }
 }
 
+/**
+ * Méthode permettant de modifier un rendez-vous
+ * @param req
+ * Requête
+ * @param res
+ * Réponse
+ */
+function edit_appointment(req, res) {
+    // Vérifier si les données sont présentes dans la requête
+    if (!req.body.nom || !req.body.date || !req.body.heureDebut || !req.body.heureFin) {
+        res.sendStatus(422);
+        return;
+    }
+
+    // Récupérer les données du site
+    let users = tool_user.get_datas();
+
+    // Chercher l'utilisateur
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].token == req.headers.authorization.substring(7)) {
+            let new_date_debut = new Date(req.body.heureDebut);
+            let new_date_fin = new Date(req.body.heureFin);
+
+            // Vérifier si le rendez-vous n'est pas déjà pris
+            for (var j = 0; j < users[i].rdvs.length; j++) {
+                let debut = new Date(users[i].rdvs.heureDebut);
+                let fin = new Date(users[i].rdvs.heureFin);
+
+                if (debut <= new_date_debut && fin >= new_date_fin) {
+                    res.sendStatus(409);
+                    return;
+                }
+            }
+
+            // Modifier le rendez-vous
+            let found = false;
+            for (var j = 0; j < users[i].rdvs.length; j++) {
+                if (users[i].rdvs[j].id === req.body.id) {
+                    found = true;
+                    users[i].rdvs[j].nom = req.body.nom;
+                    users[i].rdvs[j].date = req.body.date;
+                    users[i].rdvs[j].heureDebut = req.body.heureDebut;
+                    users[i].rdvs[j].heureFin = req.body.heureFin;
+                }
+            }
+
+            if (!found) {
+                res.sendStatus(404);
+                return;
+            }
+
+            // Sauvegarder les données
+            fs.writeFileSync(__dirname + "/../data/" + "data.json", JSON.stringify(users));
+
+            res.sendStatus(200);
+            return;
+        }
+    }
+}
+
 module.exports = {
     month_view: month_view,
     week_view: week_view,
     day_view: day_view,
-    add_appointment: add_appointment
+    add_appointment: add_appointment,
+    edit_appointment: edit_appointment
 }
