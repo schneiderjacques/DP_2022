@@ -100,6 +100,18 @@ app.get('/day_planning/:day', checkToken, function (req, res) {
 });
 
 /**
+ * Méthode permettant d'ajouter un événement au planning
+ * @api {post} /add_appointment Add event
+ * @apiName Add appointment
+ * @apiGroup Planning
+ * @apiHeader {String} Authorization Token de session
+ */
+app.post('/add_appointment', checkToken, function (req, res) {
+	tool_planning.add_appointment(req, res);
+	res.end();
+});
+
+/**
  * Listener sur le port 8080
  */
 app.listen(8080, () => {
