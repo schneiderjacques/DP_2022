@@ -104,10 +104,15 @@ export function getNextDay(nb){
     next.setDate(current_date.getDate() + nb);
     return next;
 }
+function getNextDayFromMonday(date,nb){
+    const next = new Date(date.getTime());
+    next.setDate(date.getDate() + nb);
+    return next;
+}
 export function getAllDaysFromWeek(dt){
     var days = [];
     for (let i = 0; i < 7; i++) {
-        days.push(getNextDay(i));
+        days.push(getNextDayFromMonday(dt,i));
     }
     return days;
 }

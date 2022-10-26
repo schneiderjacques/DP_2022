@@ -17,6 +17,7 @@ document.getElementById('btn-previous-week').addEventListener('click', function 
 
 
 export function refreshCalendarWeek(date){
+    
     document.getElementById("events-container").innerHTML = "";
     document.getElementById("week-headers").innerHTML = "";
     var div = document.createElement("div");
@@ -51,6 +52,7 @@ function setWeekNumber(dt){
 function setWeekTableHeaderByDay(dt){ //Met en place le header du tableau (Lun 10, Mar 11, etc...)
     const firstDayOfWeek = getFirstDayOfWeek(dt);
     const week = getAllDaysFromWeek(firstDayOfWeek);
+    console.log(getAllDaysFromWeek(firstDayOfWeek));
     setWeekNumber(dt); //Met en place le numéro de la semaine;
     var parent = document.getElementById("week-headers");
     var parent_responsive = document.getElementById("week-headers-responsive");
@@ -69,7 +71,9 @@ function setWeekTableHeaderByDay(dt){ //Met en place le header du tableau (Lun 1
         const aujourd = new Date();
         if(week[i].getDate() === aujourd.getDate() && week[i].getMonth() === aujourd.getMonth() && week[i].getFullYear() === aujourd.getFullYear()){
             span_children.classList.add("ml-1.5", "flex", "h-8", "w-8", "items-center", "justify-center", "rounded-full", "bg-indigo-600", "font-semibold", "text-white");
-        } else {
+        } else if (dt.getDate() === week[i].getDate() && dt.getMonth() === week[i].getMonth() && dt.getFullYear() === week[i].getFullYear()){
+                span_children.classList.add("ml-1.5", "flex", "h-8", "w-8", "items-center", "justify-center",  "rounded-full" , "bg-gray-900", "font-semibold", "text-white");
+            } else {
             span_children.classList.add("ml-1.5","items-center", "justify-center", "font-semibold", "text-gray-900");
         }
 
