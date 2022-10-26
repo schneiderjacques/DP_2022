@@ -5,13 +5,13 @@ initHours("hours-container");//Initie les heures (00:00, 01:00, 02:00, etc...)
 
 
 document.getElementById('btn-next-week').addEventListener('click', function () { //Bouton pour afficher le mois suivant
-    setNextDay(8);
+    setNextDay(7);
     refreshAllCalendars();
 
 })
 
 document.getElementById('btn-previous-week').addEventListener('click', function () { //Bouton pour afficher le mois précédent
-    setPreviousDay(6);
+    setPreviousDay(7);
     refreshAllCalendars();
 })
 

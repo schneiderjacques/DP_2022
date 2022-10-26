@@ -5,5 +5,4 @@
   "scripts": {
     "build": "npx tailwindcss -i  ./assets/css/in.css -o ./assets/css/app.css --watch"
   }
-  
 }

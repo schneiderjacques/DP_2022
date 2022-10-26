@@ -5,6 +5,9 @@ module.exports = {
   './index.html'],
   theme: {
     extend: {
+      colors:{
+        'regal-blue': '#091e42',
+      },
       keyframes: {
         opac: {
           '0%': { opacity: '0' },
