@@ -6,8 +6,9 @@ import { refreshCalendarMonth } from './calendar_month.js';
 
 var current_date = new Date();
 
-
-
+const heures = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"];
+const minutes = ["00","05","10","15","20","25","30","35","40","45","50","55"];
+initHoursOfModal();
 
 refreshAllCalendars();
 export function refreshAllCalendars(){
@@ -16,7 +17,20 @@ export function refreshAllCalendars(){
     //refreshCalendarMonth(current_date.getMonth(), current_date.getFullYear());
 }
 
-
+function initHoursOfModal(){//Met en place les heures dans le modal
+    var debutRdv = document.getElementById("first-hour");
+    var finRdv = document.getElementById("second-hour");
+    for (var i = 0; i < heures.length; i++){
+        for(var j = 0; j < minutes.length; j++){
+            var option = document.createElement("option");
+            option.value = heures[i] + ":" + minutes[j];
+            option.text = heures[i] + ":" + minutes[j]
+            debutRdv.add(option);
+            finRdv.add(option.cloneNode(true));
+        }
+    }
+       
+}
 
 export function getAllDaysFromMonth(month, year) { //Renvoie tout les jours d'un mois, du mois précédent visible et du mois suivant visible (cases grises)
     let days = []; //Tout les jours du mois

@@ -4,9 +4,14 @@ module.exports = {
   "./html/*/*.{html,js}",
   './index.html'],
   theme: {
+    fontFamily: {
+      famille: ['"Arial"', 'sans-serif'],
+    },
     extend: {
       colors:{
         'regal-blue': '#091e42',
+        'other-blue': '#007afb',
+        'special-gray': '#787d86',
       },
       keyframes: {
         opac: {
