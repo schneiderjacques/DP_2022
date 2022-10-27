@@ -11,93 +11,117 @@
 </head>
 
 <body class="bg-gradient-to-r from-blue-400 to-white-50">
-    <div id="modal" class="h-screen w-screen fixed  z-10 bg-opacity-50 bg-regal-blue hidden items-center justify-center">
+    <div id="modal" class="h-screen w-screen fixed  z-10 bg-opacity-50 bg-regal-blue flex items-center justify-center">
         <div class="bg-white rounded-lg h-auto w-2/6 slide-in-top">
             <div class="pl-4 pr-4 pt-4 flex-col w-full">
                 <div class="flex flex-row justify-between items-center">
                     <div class="flex flex-row justify-start items-center">
                         <h1 class="text-3xl font-semibold">Rendez-vous</h1>
-                        <div class="ml-5 rounded-xl px-1 pt-1 pb-1 bg-other-blue text-white select-none flex items-center">
+                        <div
+                            class="ml-5 rounded-xl px-1 pt-1 pb-1 bg-other-blue text-white select-none flex items-center">
                             <h1 class="text-md">Création</h1>
                         </div>
                     </div>
                     <span
-                     onclick="document.getElementById('modal').classList.add('hidden');document.getElementById('modal').classList.remove('flex');"
-                     class="text-3xl font-semibold select-none cursor-pointer text-gray-600 hover:scale-125 hover:text-black" >&times;</span>
+                        onclick="document.getElementById('modal').classList.add('hidden');document.getElementById('modal').classList.remove('flex');"
+                        class="text-3xl font-semibold select-none cursor-pointer text-gray-600 hover:scale-125 hover:text-black">&times;</span>
                 </div>
-                
+
                 <div class="mt-7 border-t-gray-200 border-opacity-50 border-t-2 w-full pb-7">
                     <div class="mt-5">
-                        <span class="">Date du rendez-vous</span>
+                        <span class="text-sm font-medium text-gray-700">Jour du rendez-vous</span>
                     </div>
                     <div class="w-full mt-2 flex flex-row justify-between items-center">
-                        <div class="w-1/2 border-gray-200 border flex justify-between items-center rounded-xl font-semibold relative select-none " onclick="changeState()">
-                            <input placeholder="" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date-picker" type="date" class="ml-4 focus:border-none p-1 w-2/5 focus:outline-none outline-0 placeholder:font-normal" value="">
-                            <span class="mr-4 border-l-2 border-gray-200 pl-3" ><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="gray" class="w-5 h-5 cursor-pointer hover:stroke-gray-900 ">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
-                              </svg>
-                              </span>
+                        <div class="w-1/2 border-gray-200 border flex justify-between items-center rounded-xl font-semibold relative select-none shadow-sm"
+                            onclick="changeState()">
+                            <input placeholder="" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
+                                id="date-picker" type="date"
+                                class="ml-4 focus:border-none p-1 w-2/5 focus:outline-none outline-0 placeholder:font-normal"
+                                value="">
+                            <span class="mr-4 border-l-2 border-gray-200 pl-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="gray"
+                                    class="w-5 h-5 cursor-pointer hover:stroke-gray-900 ">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                                </svg>
+                            </span>
                         </div>
-                        <div class="w-2/5 flex flex-row justify-around">
-                            <div class="border-gray-200 border rounded-lg flex justify-center items-center relative">
-                                <select id="first-hour" class="form-select text-center z-0 appearance-none block w-20 pl-3 py-1.5 text-base font-semibold text-gray-700 bg-transparent bg-clip-padding bg-no-repeat
-                                        transition
-                                        rounded
-                                        ease-in-out
-                                        cursor-pointer
-                                        relative
-                                        focus:bg-transparent
-                                    
-                                        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example">
-                                          
-                                      </select>
-                                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="black" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                                      </svg>
-                                      
-                                      
+
+                    </div>
+                    <div class="mt-5 flex flex-row justify-between items-center">
+                        <div class="w-1/2 px-1">
+                            <label for="email" class="text-sm font-medium text-gray-700">Debut du rdv</label>
+                            <div
+                                class="p-2 mt-2  border-gray-200 border flex rounded-xl flex-row justify-start items-center w-full shadow-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+
+                                <button data-action="decrement-first" id="decrement-first"
+                                    class="ml-6 bg-other-blue text-white hover:text-white hover:bg-blue-700 h-full w-6 rounded cursor-pointer outline-none">
+                                    <span class="m-auto text-1xl font-thin">−</span>
+                                </button>
+                                <input type="text" value="00:00" id="input-first"
+                                    class="focus:outline-none text-center w-12 bg-transparent font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none"
+                                    name="custom-input-number" value="0" readonly></input>
+                                <button data-action="increment-first" id="increment-first"
+                                    class="bg-other-blue text-white hover:text-white hover:bg-blue-700 h-full w-6 rounded cursor-pointer">
+                                    <span class="m-auto text-1xl font-thin">+</span>
+                                </button>
+
                             </div>
-                            <div class="flex justify-center items-center text-black text-2xl">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                                  </svg>                                  
-                            </div>
-                            <div class="border-gray-200 border rounded-lg flex justify-center items-center relative">
-                                <select id="second-hour" class="form-select text-center z-0 appearance-none block w-20 pl-3 py-1.5 text-base font-semibold text-gray-700 bg-transparent bg-clip-padding bg-no-repeat
-                                transition
-                                rounded
-                                ease-in-out
-                                cursor-pointer
-                                relative
-                                focus:bg-transparent
-                            
-                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example">
-                                  
-                              </select>
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="black" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                              </svg>
+                        </div>
+                        <div class="w-1/2 px-1">
+                            <label for="email" class="text-sm font-medium text-gray-700">Fin du rdv</label>
+                            <div
+                                class="p-2 mt-2  border-gray-200 border flex rounded-xl flex-row justify-start items-center w-full shadow-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+
+                                <button data-action="decrement-first" id="decrement-second"
+                                    class="ml-6 bg-other-blue text-white hover:text-white hover:bg-blue-700 h-full w-6 rounded cursor-pointer outline-none">
+                                    <span class="m-auto text-1xl font-thin">−</span>
+                                </button>
+                                <input type="text" value="00:00" id="input-second"
+                                    class="focus:outline-none text-center w-12 bg-transparent font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none"
+                                    name="custom-input-number" value="0" readonly></input>
+                                <button data-action="increment-first" id="increment-second"
+                                    class="bg-other-blue text-white hover:text-white hover:bg-blue-700 h-full w-6 rounded cursor-pointer">
+                                    <span class="m-auto text-1xl font-thin">+</span>
+                                </button>
+
                             </div>
                         </div>
 
                     </div>
+                    
                     <div class="mt-5">
                         <span class="font-normal">Description</span>
-                        <textarea class="w-full mt-2 border-gray-200 border rounded-lg p-2 resize-none"  name="" id="" cols="30" rows="5"></textarea>
+                        <textarea class="w-full mt-2 border-gray-200 border rounded-lg p-2 resize-none shadow-sm"
+                            name="" id="" cols="30" rows="5"></textarea>
+                    </div>
+                    <div class="w-full ">
+                        
                     </div>
                     <div class="flex flex-row justify-end items-center mt-5">
                         <button class="mr-4 text-special-gray pt-2 pb-2 px-4  font-medium bg-white rounded-2xl border-transparent border
                         transition-all hover:border-red-700 hover:bg-red-700 hover:text-white active:bg-red-800"
-                        onclick="document.getElementById('modal').classList.add('hidden');document.getElementById('modal').classList.remove('flex');"
-                        >Annuler</button>
-                        <button class="text-white pt-2 pb-2 px-4 font-medium
+                            onclick="document.getElementById('modal').classList.add('hidden');document.getElementById('modal').classList.remove('flex');">Annuler</button>
+                        <button
+                            class="text-white pt-2 pb-2 px-4 font-medium
                           transition-all
                          border-other-blue border bg-other-blue rounded-2xl hover:text-other-blue hover:bg-white active:bg-other-blue active:text-white">Confirmer</button>
                     </div>
                 </div>
+                
             </div>
         </div>
-      </div>
+    </div>
     <div class="p-10">
         <div class="lg:hidden lg:h-full lg:flex-col" id="vue-month">
             <header class="flex items-center justify-between border-b border-gray-200 py-4 px-6 lg:flex-none">
@@ -167,7 +191,7 @@
                     </div>
                     <div class="ml-6 h-6 w-px bg-gray-300"></div>
                     <button type="button"
-                    onclick="document.getElementById('modal').classList.remove('hidden');document.getElementById('modal').classList.add('flex');"
+                        onclick="document.getElementById('modal').classList.remove('hidden');document.getElementById('modal').classList.add('flex');"
                         class="ml-6 rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Ajouter
                         un RDV</button>
                 </div>
@@ -204,100 +228,100 @@
                     </div>
                 </div>
             </header>
-        
 
-        <div class="shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col"
-            id="animation">
-            <div
-                class="grid grid-cols-7 gap-px border-b border-gray-300 bg-gray-200 text-center text-xs font-semibold leading-6 text-gray-700 lg:flex-none">
-                <div class="flex justify-center bg-white py-2">
-                    <span>L</span>
-                    <span class="sr-only sm:not-sr-only">undi</span>
-                </div>
-                <div class="flex justify-center bg-white py-2">
-                    <span>M</span>
-                    <span class="sr-only sm:not-sr-only">ardi</span>
-                </div>
-                <div class="flex justify-center bg-white py-2">
-                    <span>M</span>
-                    <span class="sr-only sm:not-sr-only">ercredi</span>
-                </div>
-                <div class="flex justify-center bg-white py-2">
-                    <span>J</span>
-                    <span class="sr-only sm:not-sr-only">eudi</span>
-                </div>
-                <div class="flex justify-center bg-white py-2">
-                    <span>V</span>
-                    <span class="sr-only sm:not-sr-only">endredi</span>
-                </div>
-                <div class="flex justify-center bg-white py-2">
-                    <span>S</span>
-                    <span class="sr-only sm:not-sr-only">amedi</span>
-                </div>
-                <div class="flex justify-center bg-white py-2">
-                    <span>D</span>
-                    <span class="sr-only sm:not-sr-only">imanche</span>
-                </div>
-            </div>
-            <div class="flex bg-gray-200 text-xs leading-6 text-gray-700 lg:flex-auto">
-                <div id="main-month-container" class="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">
 
-                    <!--
+            <div class="shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col" id="animation">
+                <div
+                    class="grid grid-cols-7 gap-px border-b border-gray-300 bg-gray-200 text-center text-xs font-semibold leading-6 text-gray-700 lg:flex-none">
+                    <div class="flex justify-center bg-white py-2">
+                        <span>L</span>
+                        <span class="sr-only sm:not-sr-only">undi</span>
+                    </div>
+                    <div class="flex justify-center bg-white py-2">
+                        <span>M</span>
+                        <span class="sr-only sm:not-sr-only">ardi</span>
+                    </div>
+                    <div class="flex justify-center bg-white py-2">
+                        <span>M</span>
+                        <span class="sr-only sm:not-sr-only">ercredi</span>
+                    </div>
+                    <div class="flex justify-center bg-white py-2">
+                        <span>J</span>
+                        <span class="sr-only sm:not-sr-only">eudi</span>
+                    </div>
+                    <div class="flex justify-center bg-white py-2">
+                        <span>V</span>
+                        <span class="sr-only sm:not-sr-only">endredi</span>
+                    </div>
+                    <div class="flex justify-center bg-white py-2">
+                        <span>S</span>
+                        <span class="sr-only sm:not-sr-only">amedi</span>
+                    </div>
+                    <div class="flex justify-center bg-white py-2">
+                        <span>D</span>
+                        <span class="sr-only sm:not-sr-only">imanche</span>
+                    </div>
+                </div>
+                <div class="flex bg-gray-200 text-xs leading-6 text-gray-700 lg:flex-auto">
+                    <div id="main-month-container"
+                        class="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">
+
+                        <!--
                               Les jours du mois sont générés automatiquement.
                             -->
 
 
-                </div>
-                <div id="main_month_container_responsive"
-                    class="isolate grid w-full grid-cols-7 grid-rows-6 gap-px lg:hidden">
-                    <!--
+                    </div>
+                    <div id="main_month_container_responsive"
+                        class="isolate grid w-full grid-cols-7 grid-rows-6 gap-px lg:hidden">
+                        <!--
                             Générer automatiquement la vue responsive du mois
                         -->
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="py-10 px-4 sm:px-6 lg:hidden">
-            <ol
-                class="divide-y divide-gray-100 overflow-hidden rounded-lg bg-white text-sm shadow ring-1 ring-black ring-opacity-5">
-                <li class="group flex p-4 pr-6 focus-within:bg-gray-50 hover:bg-gray-50">
-                    <div class="flex-auto">
-                        <p class="font-semibold text-gray-900">Maple syrup museum</p>
-                        <time datetime="2022-01-15T09:00" class="mt-2 flex items-center text-gray-700">
-                            <!-- Heroicon name: mini/clock -->
-                            <svg class="mr-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            3PM
-                        </time>
-                    </div>
-                    <a href="#"
-                        class="ml-6 flex-none self-center rounded-md border border-gray-300 bg-white py-2 px-3 font-semibold text-gray-700 opacity-0 shadow-sm hover:bg-gray-50 focus:opacity-100 group-hover:opacity-100">Edit<span
-                            class="sr-only">, Maple syrup museum</span></a>
-                </li>
+            <div class="py-10 px-4 sm:px-6 lg:hidden">
+                <ol
+                    class="divide-y divide-gray-100 overflow-hidden rounded-lg bg-white text-sm shadow ring-1 ring-black ring-opacity-5">
+                    <li class="group flex p-4 pr-6 focus-within:bg-gray-50 hover:bg-gray-50">
+                        <div class="flex-auto">
+                            <p class="font-semibold text-gray-900">Maple syrup museum</p>
+                            <time datetime="2022-01-15T09:00" class="mt-2 flex items-center text-gray-700">
+                                <!-- Heroicon name: mini/clock -->
+                                <svg class="mr-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                3PM
+                            </time>
+                        </div>
+                        <a href="#"
+                            class="ml-6 flex-none self-center rounded-md border border-gray-300 bg-white py-2 px-3 font-semibold text-gray-700 opacity-0 shadow-sm hover:bg-gray-50 focus:opacity-100 group-hover:opacity-100">Edit<span
+                                class="sr-only">, Maple syrup museum</span></a>
+                    </li>
 
-                <li class="group flex p-4 pr-6 focus-within:bg-gray-50 hover:bg-gray-50">
-                    <div class="flex-auto">
-                        <p class="font-semibold text-gray-900">Hockey game</p>
-                        <time datetime="2022-01-22T19:00" class="mt-2 flex items-center text-gray-700">
-                            <!-- Heroicon name: mini/clock -->
-                            <svg class="mr-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                            7PM
-                        </time>
-                    </div>
-                    <a href="#"
-                        class="ml-6 flex-none self-center rounded-md border border-gray-300 bg-white py-2 px-3 font-semibold text-gray-700 opacity-0 shadow-sm hover:bg-gray-50 focus:opacity-100 group-hover:opacity-100">Edit<span
-                            class="sr-only">, Hockey game</span></a>
-                </li>
-            </ol>
-        </div>
+                    <li class="group flex p-4 pr-6 focus-within:bg-gray-50 hover:bg-gray-50">
+                        <div class="flex-auto">
+                            <p class="font-semibold text-gray-900">Hockey game</p>
+                            <time datetime="2022-01-22T19:00" class="mt-2 flex items-center text-gray-700">
+                                <!-- Heroicon name: mini/clock -->
+                                <svg class="mr-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                7PM
+                            </time>
+                        </div>
+                        <a href="#"
+                            class="ml-6 flex-none self-center rounded-md border border-gray-300 bg-white py-2 px-3 font-semibold text-gray-700 opacity-0 shadow-sm hover:bg-gray-50 focus:opacity-100 group-hover:opacity-100">Edit<span
+                                class="sr-only">, Hockey game</span></a>
+                    </li>
+                </ol>
+            </div>
         </div>
         <!-- Vue par semaine -->
 
@@ -320,7 +344,7 @@
                                     clip-rule="evenodd" />
                             </svg>
                         </button>
-                        
+
                         <button type="button" id="btn-week-name"
                             class="hidden border-t border-b border-gray-300 bg-white px-3.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 focus:relative md:block">Date</button>
                         <span class="relative -mx-px h-5 w-px bg-gray-300 md:hidden"></span>
@@ -371,7 +395,7 @@
                     </div>
                     <div class="ml-6 h-6 w-px bg-gray-300"></div>
                     <button type="button"
-                    onclick="document.getElementById('modal').classList.remove('hidden');document.getElementById('modal').classList.add('flex');"
+                        onclick="document.getElementById('modal').classList.remove('hidden');document.getElementById('modal').classList.add('flex');"
                         class="ml-6 rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Ajouter
                         un RDV</button>
                 </div>
@@ -411,13 +435,14 @@
             <div class="isolate flex flex-auto flex-col overflow-auto bg-white">
                 <div style="width: 165%" class="flex max-w-full flex-none flex-col sm:max-w-none md:max-w-full">
                     <div class="sticky top-0 z-30 flex-none bg-white shadow ring-1 ring-black ring-opacity-5 sm:pr-8">
-                        <div id="week-headers-responsive" class="grid grid-cols-7 text-sm leading-6 text-gray-500 sm:hidden" >
+                        <div id="week-headers-responsive"
+                            class="grid grid-cols-7 text-sm leading-6 text-gray-500 sm:hidden">
 
                             <!--Généré automatiquement pour le responsive-->
                         </div>
 
-                        <div
-                            class="-mr-px hidden grid-cols-7 divide-x divide-gray-100 border-r border-gray-100 text-sm leading-6 text-gray-500 sm:grid" id="week-headers">
+                        <div class="-mr-px hidden grid-cols-7 divide-x divide-gray-100 border-r border-gray-100 text-sm leading-6 text-gray-500 sm:grid"
+                            id="week-headers">
                             <div class="col-end-1 w-14"></div>
 
                             <!-- Headers de la table générés automatiquement-->
@@ -431,8 +456,8 @@
                                 style="grid-template-rows: repeat(48, minmax(3.5rem, 1fr))" id="hours-container">
                                 <div class="row-end-1 h-7"></div>
                                 <!-- Ici les heures sont générées automatiquement
-                                -->  
-                                
+                                -->
+
                             </div>
 
                             <!-- Vertical lines -->
@@ -449,7 +474,8 @@
                             </div>
 
                             <!-- Events -->
-                            <ol class="col-start-1 col-end-2 row-start-1 grid grid-cols-1 sm:grid-cols-7 sm:pr-8" id="events-container"
+                            <ol class="col-start-1 col-end-2 row-start-1 grid grid-cols-1 sm:grid-cols-7 sm:pr-8"
+                                id="events-container"
                                 style="grid-template-rows: 1.75rem repeat(288, minmax(0, 1fr)) auto">
                             </ol>
                         </div>
@@ -527,7 +553,7 @@
                     </div>
                     <div class="ml-6 h-6 w-px bg-gray-300"></div>
                     <button type="button"
-                    onclick="document.getElementById('modal').classList.remove('hidden');document.getElementById('modal').classList.add('flex');"
+                        onclick="document.getElementById('modal').classList.remove('hidden');document.getElementById('modal').classList.add('flex');"
                         class="ml-6 rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Ajouter
                         un RDV</button>
                 </div>
@@ -565,27 +591,31 @@
                 </div>
             </header>
             <div class="isolate flex flex-auto overflow-hidden bg-white ">
-              <div class="flex flex-auto flex-col overflow-auto border-2 border-solid border-gray-100 border-collapse">
-                <div class="sticky top-0 z-10 grid flex-none grid-cols-7 bg-white text-xs text-gray-500 shadow ring-1 ring-black ring-opacity-5 md:hidden "  id="day-headers">
-                    <!-- Les jours sont générés automatiquement -->
-                </div>
-                <div class="flex w-full flex-auto">
-                  <div class="w-14 flex-none bg-white ring-1 ring-gray-100"></div>
-                  <div class="grid flex-auto grid-cols-1 grid-rows-1">
-                    <!-- Horizontal lines -->
-                    <div class="col-start-1 col-end-2 row-start-1 grid divide-y divide-gray-100" style="grid-template-rows: repeat(48, minmax(3.5rem, 1fr))" id="hours-container-day">
-                      <div class="row-end-1 h-7"></div>
-                        <!-- Les heures sont générées automatiquement dans calendar_day -->
+                <div
+                    class="flex flex-auto flex-col overflow-auto border-2 border-solid border-gray-100 border-collapse">
+                    <div class="sticky top-0 z-10 grid flex-none grid-cols-7 bg-white text-xs text-gray-500 shadow ring-1 ring-black ring-opacity-5 md:hidden "
+                        id="day-headers">
+                        <!-- Les jours sont générés automatiquement -->
                     </div>
-          
-                    <!-- Events -->
-                    <ol class="col-start-1 col-end-2 row-start-1 grid grid-cols-1" style="grid-template-rows: 1.75rem repeat(288, minmax(0, 1fr)) auto" id="day-rdv">
-                    </ol>
-                  </div>
+                    <div class="flex w-full flex-auto">
+                        <div class="w-14 flex-none bg-white ring-1 ring-gray-100"></div>
+                        <div class="grid flex-auto grid-cols-1 grid-rows-1">
+                            <!-- Horizontal lines -->
+                            <div class="col-start-1 col-end-2 row-start-1 grid divide-y divide-gray-100"
+                                style="grid-template-rows: repeat(48, minmax(3.5rem, 1fr))" id="hours-container-day">
+                                <div class="row-end-1 h-7"></div>
+                                <!-- Les heures sont générées automatiquement dans calendar_day -->
+                            </div>
+
+                            <!-- Events -->
+                            <ol class="col-start-1 col-end-2 row-start-1 grid grid-cols-1"
+                                style="grid-template-rows: 1.75rem repeat(288, minmax(0, 1fr)) auto" id="day-rdv">
+                            </ol>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
+        </div>
 
 
     </div>
@@ -610,13 +640,13 @@
 
 
 
-    
+
 </body>
 <script src="js/date_tools.js" type="module"></script>
 
 <script>
 
-    if(window.localStorage.getItem('user') == null){
+    if (window.localStorage.getItem('user') == null) {
         window.location.href = "html/authentification/connexion.html";
 
     }
@@ -624,7 +654,7 @@
     const vue_day = document.getElementById('vue-day');
     const vue_week = document.getElementById('vue-week');
     const vue_month = document.getElementById('vue-month');
-    
+
 
 
     switchVue(1); //Affiche la vue du mois par défaut
@@ -652,11 +682,21 @@
 
         }
     }
-    function changeState(){
+    function changeState() {
         var picker = document.getElementById('date-picker');
         picker.type = 'date';
         picker.showPicker();
     }
+
+    document.getElementById('decrement-first').addEventListener('click', function () {
+        var input = document.getElementById('input-first');
+        var value = parseInt(input.value, 10);
+        if( value > 0){
+            value = isNaN(value) ? 0 : value;
+            value--;
+            input.value = value;
+        }
+    });
 
 
 
@@ -667,24 +707,42 @@
     .dropdown:hover .dropdown-menu {
         display: block;
     }
+
     input[type="date"]::-webkit-calendar-picker-indicator {
         display: none;
     }
+
     .slide-in-top {
-	animation: slide-in-top 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-}
+        animation: slide-in-top 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    }
+
     @-webkit-keyframes slide-in-top {
-  0% {
-    -webkit-transform: translateY(-500px);
+        0% {
+            -webkit-transform: translateY(-500px);
             transform: translateY(-500px);
-    opacity: 0;
-  }
-  100% {
-    -webkit-transform: translateY(0);
+            opacity: 0;
+        }
+
+        100% {
+            -webkit-transform: translateY(0);
             transform: translateY(0);
-    opacity: 1;
-  }
-}
+            opacity: 1;
+        }
+    }
+
+    input[type='number']::-webkit-inner-spin-button,
+    input[type='number']::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .custom-number-input input:focus {
+        outline: none !important;
+    }
+
+    .custom-number-input button:focus {
+        outline: none !important;
+    }
 </style>
 
 </html>

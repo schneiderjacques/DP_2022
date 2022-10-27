@@ -6,10 +6,6 @@ import { refreshCalendarMonth } from './calendar_month.js';
 
 var current_date = new Date();
 
-const heures = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"];
-const minutes = ["00","05","10","15","20","25","30","35","40","45","50","55"];
-initHoursOfModal();
-
 refreshAllCalendars();
 export function refreshAllCalendars(){
     refreshCalendarDay(current_date);
@@ -17,20 +13,6 @@ export function refreshAllCalendars(){
     //refreshCalendarMonth(current_date.getMonth(), current_date.getFullYear());
 }
 
-function initHoursOfModal(){//Met en place les heures dans le modal
-    var debutRdv = document.getElementById("first-hour");
-    var finRdv = document.getElementById("second-hour");
-    for (var i = 0; i < heures.length; i++){
-        for(var j = 0; j < minutes.length; j++){
-            var option = document.createElement("option");
-            option.value = heures[i] + ":" + minutes[j];
-            option.text = heures[i] + ":" + minutes[j]
-            debutRdv.add(option);
-            finRdv.add(option.cloneNode(true));
-        }
-    }
-       
-}
 
 export function getAllDaysFromMonth(month, year) { //Renvoie tout les jours d'un mois, du mois précédent visible et du mois suivant visible (cases grises)
     let days = []; //Tout les jours du mois
@@ -160,3 +142,53 @@ export function timeToDecimal(t) { //renvoie l'heure en décimal entre deux heur
     
         return parseFloat(parseInt(arr[0], 10) + '.' + (dec<10?'0':'') + dec);
     }
+
+    function increment(input){
+        var values = input.value.split(':');
+        var hours = parseInt(values[0]);
+        var minutes = parseInt(values[1]);
+        if (minutes == 50) {
+            minutes = 0;
+            hours++;
+        } else {
+            minutes += 10;
+        }
+        if (hours == 24) {
+            hours = 0;
+        }
+        input.value = formatNumber(hours) + ':' + formatNumber(minutes);
+    }
+    function decrement(input){
+        var values = input.value.split(':');
+        var hours = parseInt(values[0]);
+        var minutes = parseInt(values[1]);
+        if (minutes == 0) {
+            minutes = 50;
+            hours--;
+        } else {
+            minutes -= 10;
+        }
+        if (hours == -1) {
+            hours = 23;
+        }
+        input.value = formatNumber(hours) + ':' + formatNumber(minutes);
+    }
+
+    document.getElementById('increment-first').addEventListener('click', function () {
+        var input = document.getElementById('input-first');
+        increment(input);
+    });
+    document.getElementById('decrement-first').addEventListener('click', function () {
+        var input = document.getElementById('input-first');
+        decrement(input);
+
+    });
+    document.getElementById('increment-second').addEventListener('click', function () {
+        var input = document.getElementById('input-second');
+        increment(input);
+    });
+    document.getElementById('decrement-second').addEventListener('click', function () {
+        var input = document.getElementById('input-second');
+        decrement(input);
+
+    });
