@@ -4,8 +4,8 @@ import { formatNumber, refreshAllCalendars } from "./date_tools.js";
 function increment(input) {
   //Permet l'incrémentation dans le modal
   let values = input.value.split(":");
-  let hours = parseInt(values[0]);
-  let minutes = parseInt(values[1]);
+  let hours = parseInt(values[0],10);
+  let minutes = parseInt(values[1],10);
   if (minutes === 50) {
     minutes = 0;
     hours++;
@@ -81,7 +81,7 @@ function createRdv() {
     couleur: color,
   };
   fetchDataConnected(JSON.stringify(data), "POST", "add_appointment").then(
-    (response) => {
+    () => {
       refreshAllCalendars();
     }
   );
@@ -89,7 +89,7 @@ function createRdv() {
 
 function showAlert(state) {
   //Affiche l'alerte dans le modal d'ajout de rdv
-  var alert = document.getElementById("alert-3");
+  let alert = document.getElementById("alert-3");
 
   if (state) alert.style.display = "flex";
   else alert.style.display = "none";
@@ -104,11 +104,11 @@ const colors = [
   "#4B0082",
   "#EE82EE",
 ];
-var selectedColor = 0;
+let selectedColor = 0;
 initColors();
 
 function initColors() {
-  var div = document.getElementById("colors");
+  let div = document.getElementById("colors");
   for (let i = 0; i < colors.length; i++) {
     const label = document.createElement("label");
     label.classList.add(
