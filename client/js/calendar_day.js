@@ -4,15 +4,13 @@ import {fetchDataGet} from "./request.js";
 initHours("hours-container-day");
 document.getElementById("btn-next-day").addEventListener("click", () => {
     setNextDay(1);
-    refreshAllCalendars();
-});
+    refreshAllCalendars();});
 document.getElementById("btn-previous-day").addEventListener("click", function(){
     setPreviousDay(1);
-    refreshAllCalendars();
-});
+    refreshAllCalendars();});
 
 export function refreshCalendarDay(date){
-    document.getElementById("btn-day-name").innerHTML = date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear();
+    document.getElementById("btn-day-name").innerHTML = date.getDate()+"-" +(date.getMonth()+1)+"-"+date.getFullYear();
     document.getElementById("main-title-day").innerHTML = getDayName(date).substring(0,3) + ". " + date.getDate() + " " + getMonthName(date) + " " + date.getFullYear();
 
     document.getElementById("day-headers").innerHTML = "";
