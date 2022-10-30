@@ -4,8 +4,8 @@ import { formatNumber, refreshAllCalendars } from "./date_tools.js";
 function increment(input) {
   //Permet l'incrémentation dans le modal
   let values = input.value.split(":");
-  let hours = parseInt(values[0],10);
-  let minutes = parseInt(values[1],10);
+  let hours = parseInt(values[0], 10);
+  let minutes = parseInt(values[1], 10);
   if (minutes === 50) {
     minutes = 0;
     hours++;
