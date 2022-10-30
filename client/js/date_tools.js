@@ -216,7 +216,7 @@ export function getSpanHeight(dayDebut, dayFin) {
   const diff = getMinDiff(dayDebut, dayFin);
   return diff / 5;
 }
-export function getGridRow(dayDebut, dayFin) {
+export function getGridRow(dayDebut) {
   return (
     timeToDecimal(dayDebut.getHours() + ":" + dayDebut.getMinutes()) * 6 * 2 + 2
   );

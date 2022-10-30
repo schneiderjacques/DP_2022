@@ -197,7 +197,7 @@ function setUpEventsByDate(date, eventsArray) {
       dayColumnIndex,
       dayDebut,
       events[i].nom,
-      getGridRow(dayDebut, dayFin),
+      getGridRow(dayDebut),
       getSpanHeight(dayDebut, dayFin),
       events[i].couleur
     );

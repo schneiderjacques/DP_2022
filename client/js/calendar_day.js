@@ -130,7 +130,7 @@ function createDayRdv(date) {
           let li = document.createElement("li");
           li.classList.add("relative", "mt-px", "flex");
           li.style.gridRow =
-            getGridRow(dayDebut, dayFin) +
+            getGridRow(dayDebut) +
             " / span " +
             getSpanHeight(dayDebut, dayFin);
           let a = document.createElement("a");
