@@ -1,6 +1,5 @@
 import {
   getAllDaysFromMonth,
-  setPreviousDay,
   searchDateInArray,
 } from "./date_tools.js";
 
@@ -87,8 +86,7 @@ function printCalendarByMonth(days, month) {
   for (let i = 0; i < days.length; i++) {
     const dt = new Date(days[i]);
     var main_month_container = document.getElementById("main-month-container");
-    var div = document.createElement("div");
-
+    let div = document.createElement("div");
     if (dt.getMonth() != month) {
       //Si le jour concerne notre mois
       div.classList.add(
@@ -171,7 +169,7 @@ function printCalendarByMonth(days, month) {
 }
 function printCalendarByMonthResponsive(days, month) {
   //affiche le calendrier responsive
-  var main_month_container_responsive = document.getElementById(
+  let main_month_container_responsive = document.getElementById(
     "main_month_container_responsive"
   );
   for (let i = 0; i < days.length; i++) {

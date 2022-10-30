@@ -41,8 +41,7 @@ function createRdv() {
   const desc = document.getElementById("textarea").value.trim();
   const color = colors[selectedColor];
 
-  var alert = document.getElementById("alert-3");
-  //^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/\d{4}$
+  let alert = document.getElementById("alert-3");
 
   if (
     day.length === 0 ||
@@ -165,24 +164,24 @@ function changeColorSelection(index) {
 document
   .getElementById("increment-first")
   .addEventListener("click", function () {
-    var input = document.getElementById("input-first");
+    let input = document.getElementById("input-first");
     increment(input);
   });
 document
   .getElementById("decrement-first")
   .addEventListener("click", function () {
-    var input = document.getElementById("input-first");
+    let input = document.getElementById("input-first");
     decrement(input);
   });
 document
   .getElementById("increment-second")
   .addEventListener("click", function () {
-    var input = document.getElementById("input-second");
+    let input = document.getElementById("input-second");
     increment(input);
   });
 document
   .getElementById("decrement-second")
   .addEventListener("click", function () {
-    var input = document.getElementById("input-second");
+    let input = document.getElementById("input-second");
     decrement(input);
   });

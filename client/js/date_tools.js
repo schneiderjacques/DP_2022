@@ -198,7 +198,7 @@ export function getMinDiff(startDate, endDate) {
 
 export function timeToDecimal(t) {
   //renvoie l'heure en décimal entre deux heures
-  var arr = t.split(":");
+  const arr = t.split(":");
   var dec = parseInt((arr[1] / 6) * 10, 10);
 
   return parseFloat(parseInt(arr[0], 10) + "." + (dec < 10 ? "0" : "") + dec);

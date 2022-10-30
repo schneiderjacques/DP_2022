@@ -1,742 +1,1207 @@
 <!DOCTYPE html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./assets/css/app.css" rel="stylesheet">
-    <link rel="shortcut icon" href="./assets/images/favicon.ico" type="image/x-icon">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./assets/css/app.css" rel="stylesheet" />
+    <link
+      rel="shortcut icon"
+      href="./assets/images/favicon.ico"
+      type="image/x-icon"
+    />
     <title>Application de gestion d'agenda</title>
-</head>
+  </head>
 
-<body class="bg-gradient-to-r from-blue-400 to-white-50">
-    <div id="modal" class="h-screen w-screen fixed  z-10 bg-opacity-50 bg-regal-blue hidden items-center justify-center">
-        <div class="bg-white rounded-lg h-auto w-2/5 slide-in-top">
-            <div class="pl-4 pr-4 pt-4 flex-col w-full">
-                <div class="flex flex-row justify-between items-center">
-                    <div class="flex flex-row justify-start items-center">
-                        <h1 class="text-3xl font-semibold">Rendez-vous</h1>
-                        <div
-                            class="ml-5 rounded-xl px-1 pt-1 pb-1 bg-other-blue text-white select-none flex items-center">
-                            <h1 class="text-md">Création</h1>
-                        </div>
-                    </div>
-                    <span
-                        onclick="document.getElementById('modal').classList.add('hidden');document.getElementById('modal').classList.remove('flex');"
-                        class="text-3xl font-semibold select-none cursor-pointer text-gray-600 hover:scale-125 hover:text-black">&times;</span>
-                </div>
-
-                <div class="mt-7 border-t-gray-200 border-opacity-50 border-t-2 w-full pb-7">
-                    <div class="mt-5">
-                        <span class="text-sm font-medium text-gray-700">Jour du rendez-vous</span>
-                    </div>
-                    <div id="alert-3" class="hidden p-4 mb-4 bg-red-100 rounded-lg dark:bg-red-200" role="alert">
-                        <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-red-700 dark:text-red-800" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-                        <span class="sr-only">Info</span>
-                        <div class="ml-3 text-sm font-medium text-red-700 dark:text-red-800">
-                          Veuillez sélectionner un jour pour le rendez vous
-                        </div>
-                        <button onclick="document.getElementById('alert-3').style.display= 'none';" type="button" class="ml-auto -mx-1.5 -my-1.5 bg-red-100 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 dark:bg-red-200 dark:text-red-600 dark:hover:bg-red-300" data-dismiss-target="#alert-2" aria-label="Close">
-                          <span class="sr-only">Close</span>
-                          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                        </button>
-                      </div>
-                    <div class="w-full mt-2 flex flex-row justify-between items-center">
-                        
-                        <div class="w-1/2 border-gray-200 border flex justify-between items-center rounded-xl font-semibold relative select-none shadow-sm"
-                            onclick="changeState()">
-                            <input placeholder="" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"
-                                id="date-picker" type="date"
-                                class="ml-4 focus:border-none p-1 w-3/5 focus:outline-none outline-0 placeholder:font-normal"
-                                value="">
-                            <span class="mr-4 border-l-2 border-gray-200 pl-3"><svg xmlns="http://www.w3.org/2000/svg"
-                                    fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="gray"
-                                    class="w-5 h-5 cursor-pointer hover:stroke-gray-900 ">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
-                                </svg>
-                            </span>
-                        </div>
-
-                    </div>
-                    <div class="mt-5 flex flex-row justify-between items-center">
-                        <div class="w-1/2 px-1">
-                            <label for="email" class="text-sm font-medium text-gray-700">Debut du rdv</label>
-                            <div
-                                class="p-2 mt-2  border-gray-200 border flex rounded-xl flex-row justify-start items-center w-full shadow-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-
-                                <button data-action="decrement-first" id="decrement-first"
-                                    class="ml-6 bg-other-blue text-white hover:text-white hover:bg-blue-700 h-full w-6 rounded cursor-pointer outline-none">
-                                    <span class="m-auto text-1xl font-thin">−</span>
-                                </button>
-                                <input type="text" value="00:00" id="input-first"
-                                    class="focus:outline-none text-center w-12 bg-transparent font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none"
-                                    name="custom-input-number" value="0" readonly></input>
-                                <button data-action="increment-first" id="increment-first"
-                                    class="bg-other-blue text-white hover:text-white hover:bg-blue-700 h-full w-6 rounded cursor-pointer">
-                                    <span class="m-auto text-1xl font-thin">+</span>
-                                </button>
-
-                            </div>
-                        </div>
-                        <div class="w-1/2 px-1">
-                            <label for="email" class="text-sm font-medium text-gray-700">Fin du rdv</label>
-                            <div
-                                class="p-2 mt-2  border-gray-200 border flex rounded-xl flex-row justify-start items-center w-full shadow-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-
-                                <button data-action="decrement-first" id="decrement-second"
-                                    class="ml-6 bg-other-blue text-white hover:text-white hover:bg-blue-700 h-full w-6 rounded cursor-pointer outline-none">
-                                    <span class="m-auto text-1xl font-thin">−</span>
-                                </button>
-                                <input type="text" value="00:00" id="input-second"
-                                    class="focus:outline-none text-center w-12 bg-transparent font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none"
-                                    name="custom-input-number" value="0" readonly></input>
-                                <button data-action="increment-first" id="increment-second"
-                                    class="bg-other-blue text-white hover:text-white hover:bg-blue-700 h-full w-6 rounded cursor-pointer">
-                                    <span class="m-auto text-1xl font-thin">+</span>
-                                </button>
-
-                            </div>
-                        </div>
-
-                    </div>
-                    
-                    <div class="mt-5">
-                        <span class="font-normal">Description</span>
-                        <textarea id="textarea" class="w-full mt-2 border-gray-200 border rounded-lg p-2 resize-none shadow-sm"
-                            name="" id="" maxlength="30" cols="30" rows="5"></textarea>
-                    </div>
-                    <div class="w-full mt-4">
-                    <span class="font-normal">Choix d'une couleur</span>
-                    <div class="flex flex-row mt-2" id="colors">    
-                            
-                    </div>
-                </div>
-                    <div class="flex flex-row justify-end items-center mt-5">
-                        <button class="mr-4 text-special-gray pt-2 pb-2 px-4  font-medium bg-white rounded-2xl border-transparent border
-                        transition-all hover:border-red-700 hover:bg-red-700 hover:text-white active:bg-red-800"
-                            onclick="document.getElementById('modal').classList.add('hidden');document.getElementById('modal').classList.remove('flex');">Annuler</button>
-                        <input type="submit" id="confirm_button"
-                            class="text-white pt-2 pb-2 px-4 font-medium
-                          transition-all
-                         border-other-blue border bg-other-blue rounded-2xl hover:text-other-blue hover:bg-white active:bg-other-blue active:text-white" value="Confirmer" />
-                    </div>
-                </div>
-                
+  <body class="bg-gradient-to-r from-blue-400 to-white-50">
+    <div
+      id="modal"
+      class="h-screen w-screen fixed z-10 bg-opacity-50 bg-regal-blue hidden items-center justify-center"
+    >
+      <div class="bg-white rounded-lg h-auto w-2/5 slide-in-top">
+        <div class="pl-4 pr-4 pt-4 flex-col w-full">
+          <div class="flex flex-row justify-between items-center">
+            <div class="flex flex-row justify-start items-center">
+              <h1 class="text-3xl font-semibold">Rendez-vous</h1>
+              <div
+                class="ml-5 rounded-xl px-1 pt-1 pb-1 bg-other-blue text-white select-none flex items-center"
+              >
+                <h1 class="text-md">Création</h1>
+              </div>
             </div>
+            <span
+              onclick="document.getElementById('modal').classList.add('hidden');document.getElementById('modal').classList.remove('flex');"
+              class="text-3xl font-semibold select-none cursor-pointer text-gray-600 hover:scale-125 hover:text-black"
+              >&times;</span
+            >
+          </div>
+
+          <div
+            class="mt-7 border-t-gray-200 border-opacity-50 border-t-2 w-full pb-7"
+          >
+            <div class="mt-5">
+              <span class="text-sm font-medium text-gray-700"
+                >Jour du rendez-vous</span
+              >
+            </div>
+            <div
+              id="alert-3"
+              class="hidden p-4 mb-4 bg-red-100 rounded-lg dark:bg-red-200"
+              role="alert"
+            >
+              <svg
+                aria-hidden="true"
+                class="flex-shrink-0 w-5 h-5 text-red-700 dark:text-red-800"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <span class="sr-only">Info</span>
+              <div
+                class="ml-3 text-sm font-medium text-red-700 dark:text-red-800"
+              >
+                Veuillez sélectionner un jour pour le rendez vous
+              </div>
+              <button
+                onclick="document.getElementById('alert-3').style.display= 'none';"
+                type="button"
+                class="ml-auto -mx-1.5 -my-1.5 bg-red-100 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 dark:bg-red-200 dark:text-red-600 dark:hover:bg-red-300"
+                data-dismiss-target="#alert-2"
+                aria-label="Close"
+              >
+                <span class="sr-only">Close</span>
+                <svg
+                  class="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+            <div class="w-full mt-2 flex flex-row justify-between items-center">
+              <div
+                class="w-1/2 border-gray-200 border flex justify-between items-center rounded-xl font-semibold relative select-none shadow-sm"
+                onclick="changeState()"
+              >
+                <input
+                  placeholder=""
+                  type="text"
+                  onfocus="(this.type='date')"
+                  onblur="(this.type='text')"
+                  id="date-picker"
+                  type="date"
+                  class="ml-4 focus:border-none p-1 w-3/5 focus:outline-none outline-0 placeholder:font-normal"
+                  value=""
+                />
+                <span class="mr-4 border-l-2 border-gray-200 pl-3"
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="gray"
+                    class="w-5 h-5 cursor-pointer hover:stroke-gray-900"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+            <div class="mt-5 flex flex-row justify-between items-center">
+              <div class="w-1/2 px-1">
+                <label for="email" class="text-sm font-medium text-gray-700"
+                  >Debut du rdv</label
+                >
+                <div
+                  class="p-2 mt-2 border-gray-200 border flex rounded-xl flex-row justify-start items-center w-full shadow-sm"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+
+                  <button
+                    data-action="decrement-first"
+                    id="decrement-first"
+                    class="ml-6 bg-other-blue text-white hover:text-white hover:bg-blue-700 h-full w-6 rounded cursor-pointer outline-none"
+                  >
+                    <span class="m-auto text-1xl font-thin">−</span>
+                  </button>
+                  <input
+                    type="text"
+                    value="00:00"
+                    id="input-first"
+                    class="focus:outline-none text-center w-12 bg-transparent font-semibold text-md hover:text-black focus:text-black md:text-basecursor-default flex items-center text-gray-700 outline-none"
+                    name="custom-input-number"
+                    value="0"
+                    readonly
+                  />
+                  <button
+                    data-action="increment-first"
+                    id="increment-first"
+                    class="bg-other-blue text-white hover:text-white hover:bg-blue-700 h-full w-6 rounded cursor-pointer"
+                  >
+                    <span class="m-auto text-1xl font-thin">+</span>
+                  </button>
+                </div>
+              </div>
+              <div class="w-1/2 px-1">
+                <label for="email" class="text-sm font-medium text-gray-700"
+                  >Fin du rdv</label
+                >
+                <div
+                  class="p-2 mt-2 border-gray-200 border flex rounded-xl flex-row justify-start items-center w-full shadow-sm"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+
+                  <button
+                    data-action="decrement-first"
+                    id="decrement-second"
+                    class="ml-6 bg-other-blue text-white hover:text-white hover:bg-blue-700 h-full w-6 rounded cursor-pointer outline-none"
+                  >
+                    <span class="m-auto text-1xl font-thin">−</span>
+                  </button>
+                  <input
+                    type="text"
+                    value="00:00"
+                    id="input-second"
+                    class="focus:outline-none text-center w-12 bg-transparent font-semibold text-md hover:text-black focus:text-black md:text-basecursor-default flex items-center text-gray-700 outline-none"
+                    name="custom-input-number"
+                    value="0"
+                    readonly
+                  />
+                  <button
+                    data-action="increment-first"
+                    id="increment-second"
+                    class="bg-other-blue text-white hover:text-white hover:bg-blue-700 h-full w-6 rounded cursor-pointer"
+                  >
+                    <span class="m-auto text-1xl font-thin">+</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-5">
+              <span class="font-normal">Description</span>
+              <textarea
+                id="textarea"
+                class="w-full mt-2 border-gray-200 border rounded-lg p-2 resize-none shadow-sm"
+                name=""
+                id=""
+                maxlength="30"
+                cols="30"
+                rows="5"
+              ></textarea>
+            </div>
+            <div class="w-full mt-4">
+              <span class="font-normal">Choix d'une couleur</span>
+              <div class="flex flex-row mt-2" id="colors"></div>
+            </div>
+            <div class="flex flex-row justify-end items-center mt-5">
+              <button
+                class="mr-4 text-special-gray pt-2 pb-2 px-4 font-medium bg-white rounded-2xl border-transparent border transition-all hover:border-red-700 hover:bg-red-700 hover:text-white active:bg-red-800"
+                onclick="document.getElementById('modal').classList.add('hidden');document.getElementById('modal').classList.remove('flex');"
+              >
+                Annuler
+              </button>
+              <input
+                type="submit"
+                id="confirm_button"
+                class="text-white pt-2 pb-2 px-4 font-medium transition-all border-other-blue border bg-other-blue rounded-2xl hover:text-other-blue hover:bg-white active:bg-other-blue active:text-white"
+                value="Confirmer"
+              />
+            </div>
+          </div>
         </div>
+      </div>
     </div>
     <div class="p-10">
-        <div class="lg:hidden lg:h-full lg:flex-col" id="vue-month">
-            <header class="flex items-center justify-between border-b border-gray-200 py-4 px-6 lg:flex-none">
-                <h1 class="text-3xl font-bold text-white">
-                    <span id="main-title-month"></span>
-                </h1>
-                <div class="flex items-center">
-                    <div class="flex items-center rounded-md shadow-sm md:items-stretch">
-                        <button type="button" id="btn-previous-month"
-                            class="flex items-center justify-center rounded-l-md border border-r-0 border-gray-300 bg-white py-2 pl-3 pr-4 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50">
-                            <span class="sr-only">Previous month</span>
-                            <!-- Heroicon name: mini/chevron-left -->
-                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                        <button type="button" id="btn-month-name"
-                            class="hidden border-t border-b border-gray-300 bg-white px-3.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 focus:relative md:block">A</button>
-                        <span class="relative -mx-px h-5 w-px bg-gray-300 md:hidden"></span>
-                        <button type="button" id="btn-next-month"
-                            class="flex items-center justify-center rounded-r-md border border-l-0 border-gray-300 bg-white py-2 pl-4 pr-3 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50">
-                            <span class="sr-only">Next month</span>
-                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="p-10 w-40 hidden md:flex">
-
-                        <div class="dropdown inline-block relative">
-                            <button type="button"
-                                class="flex items-center rounded-md border 
-                            border-gray-300 bg-white py-2 pl-3 pr-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">
-                                Mois
-                                <svg class="ml-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                            <ul class="dropdown-menu hidden absolute right-0 z-10 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1
-                            ring-black ring-opacity-5 focus:outline-none">
-                                <div class="py-1" role="none">
-                                    <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                                    <li><a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                            role="menuitem" tabindex="-1" id="menu-item-0"
-                                            onmousedown="switchVue(2)">Vue de jour</a></li>
-                                    <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                        role="menuitem" tabindex="-1" id="menu-item-1" onmousedown="switchVue(1)">Vue de
-                                        semaine</a>
-                                    <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                        role="menuitem" tabindex="-1" id="menu-item-2" onmousedown="switchVue(0)">Vue de
-                                        mois</a>
-                                    <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                        role="menuitem" tabindex="-1" id="menu-item-3">Vue de l'année</a>
-                                </div>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <div class="ml-6 h-6 w-px bg-gray-300"></div>
-                    <button type="button"
-                        onclick="document.getElementById('modal').classList.remove('hidden');document.getElementById('modal').classList.add('flex');"
-                        class="ml-6 rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Ajouter
-                        un RDV</button>
+      <div class="lg:hidden lg:h-full lg:flex-col" id="vue-month">
+        <header
+          class="flex items-center justify-between border-b border-gray-200 py-4 px-6 lg:flex-none"
+        >
+          <h1 class="text-3xl font-bold text-white">
+            <span id="main-title-month"></span>
+          </h1>
+          <div class="flex items-center">
+            <div
+              class="flex items-center rounded-md shadow-sm md:items-stretch"
+            >
+              <button
+                type="button"
+                id="btn-previous-month"
+                class="flex items-center justify-center rounded-l-md border border-r-0 border-gray-300 bg-white py-2 pl-3 pr-4 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50"
+              >
+                <span class="sr-only">Previous month</span>
+                <!-- Heroicon name: mini/chevron-left -->
+                <svg
+                  class="h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+              <button
+                type="button"
+                id="btn-month-name"
+                class="hidden border-t border-b border-gray-300 bg-white px-3.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 focus:relative md:block"
+              >
+                A
+              </button>
+              <span
+                class="relative -mx-px h-5 w-px bg-gray-300 md:hidden"
+              ></span>
+              <button
+                type="button"
+                id="btn-next-month"
+                class="flex items-center justify-center rounded-r-md border border-l-0 border-gray-300 bg-white py-2 pl-4 pr-3 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50"
+              >
+                <span class="sr-only">Next month</span>
+                <svg
+                  class="h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="p-10 w-40 hidden md:flex">
+              <div class="dropdown inline-block relative">
+                <button
+                  type="button"
+                  class="flex items-center rounded-md border border-gray-300 bg-white py-2 pl-3 pr-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
+                >
+                  Mois
+                  <svg
+                    class="ml-2 h-5 w-5 text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </button>
+                <ul
+                  class="dropdown-menu hidden absolute right-0 z-10 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                >
+                  <div class="py-1" role="none">
+                    <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                    <li>
+                      <a
+                        href="#"
+                        class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                        role="menuitem"
+                        tabindex="-1"
+                        id="menu-item-0"
+                        onmousedown="switchVue(2)"
+                        >Vue de jour</a
+                      >
+                    </li>
+                    <a
+                      href="#"
+                      class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                      role="menuitem"
+                      tabindex="-1"
+                      id="menu-item-1"
+                      onmousedown="switchVue(1)"
+                      >Vue de semaine</a
+                    >
+                    <a
+                      href="#"
+                      class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                      role="menuitem"
+                      tabindex="-1"
+                      id="menu-item-2"
+                      onmousedown="switchVue(0)"
+                      >Vue de mois</a
+                    >
+                    <a
+                      href="#"
+                      class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                      role="menuitem"
+                      tabindex="-1"
+                      id="menu-item-3"
+                      >Vue de l'année</a
+                    >
+                  </div>
+                </ul>
+              </div>
+            </div>
+            <div class="ml-6 h-6 w-px bg-gray-300"></div>
+            <button
+              type="button"
+              onclick="document.getElementById('modal').classList.remove('hidden');document.getElementById('modal').classList.add('flex');"
+              class="ml-6 rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              Ajouter un RDV
+            </button>
+          </div>
+          <div class="relative ml-6 md:hidden">
+            <div class="dropdown inline-block relative">
+              <button
+                type="button"
+                class="flex items-center rounded-md border border-gray-300 bg-white py-2 pl-3 pr-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
+              >
+                Mois
+                <svg
+                  class="ml-2 h-5 w-5 text-gray-400"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+              <ul
+                class="dropdown-menu hidden absolute right-0 z-10 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              >
+                <div class="py-1" role="none">
+                  <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                  <li>
+                    <a
+                      href="#"
+                      class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                      role="menuitem"
+                      tabindex="-1"
+                      id="menu-item-0"
+                      onmousedown="switchVue(2)"
+                      >Vue de jour</a
+                    >
+                  </li>
+                  <a
+                    href="#"
+                    class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                    role="menuitem"
+                    tabindex="-1"
+                    id="menu-item-1"
+                    onmousedown="switchVue(1)"
+                    >Vue de semaine</a
+                  >
+                  <a
+                    href="#"
+                    class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                    role="menuitem"
+                    tabindex="-1"
+                    id="menu-item-2"
+                    onmousedown="switchVue(0)"
+                    >Vue de mois</a
+                  >
+                  <a
+                    href="#"
+                    class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                    role="menuitem"
+                    tabindex="-1"
+                    id="menu-item-3"
+                    >Vue de l'année</a
+                  >
                 </div>
-                <div class="relative ml-6 md:hidden">
-                    <div class="dropdown inline-block relative">
-                        <button type="button"
-                            class="flex items-center rounded-md border 
-                            border-gray-300 bg-white py-2 pl-3 pr-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">
-                            Mois
-                            <svg class="ml-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                        <ul class="dropdown-menu hidden absolute right-0 z-10 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1
-                            ring-black ring-opacity-5 focus:outline-none">
-                            <div class="py-1" role="none">
-                                <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                                <li><a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                        role="menuitem" tabindex="-1" id="menu-item-0" onmousedown="switchVue(2)">Vue de
-                                        jour</a></li>
-                                <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                    role="menuitem" tabindex="-1" id="menu-item-1" onmousedown="switchVue(1)">Vue de
-                                    semaine</a>
-                                <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                    role="menuitem" tabindex="-1" id="menu-item-2" onmousedown="switchVue(0)">Vue de
-                                    mois</a>
-                                <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                    role="menuitem" tabindex="-1" id="menu-item-3">Vue de l'année</a>
-                            </div>
-                        </ul>
-                    </div>
-                </div>
-            </header>
+              </ul>
+            </div>
+          </div>
+        </header>
 
-
-            <div class="shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col" id="animation">
-                <div
-                    class="grid grid-cols-7 gap-px border-b border-gray-300 bg-gray-200 text-center text-xs font-semibold leading-6 text-gray-700 lg:flex-none">
-                    <div class="flex justify-center bg-white py-2">
-                        <span>L</span>
-                        <span class="sr-only sm:not-sr-only">undi</span>
-                    </div>
-                    <div class="flex justify-center bg-white py-2">
-                        <span>M</span>
-                        <span class="sr-only sm:not-sr-only">ardi</span>
-                    </div>
-                    <div class="flex justify-center bg-white py-2">
-                        <span>M</span>
-                        <span class="sr-only sm:not-sr-only">ercredi</span>
-                    </div>
-                    <div class="flex justify-center bg-white py-2">
-                        <span>J</span>
-                        <span class="sr-only sm:not-sr-only">eudi</span>
-                    </div>
-                    <div class="flex justify-center bg-white py-2">
-                        <span>V</span>
-                        <span class="sr-only sm:not-sr-only">endredi</span>
-                    </div>
-                    <div class="flex justify-center bg-white py-2">
-                        <span>S</span>
-                        <span class="sr-only sm:not-sr-only">amedi</span>
-                    </div>
-                    <div class="flex justify-center bg-white py-2">
-                        <span>D</span>
-                        <span class="sr-only sm:not-sr-only">imanche</span>
-                    </div>
-                </div>
-                <div class="flex bg-gray-200 text-xs leading-6 text-gray-700 lg:flex-auto">
-                    <div id="main-month-container"
-                        class="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">
-
-                        <!--
+        <div
+          class="shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col"
+          id="animation"
+        >
+          <div
+            class="grid grid-cols-7 gap-px border-b border-gray-300 bg-gray-200 text-center text-xs font-semibold leading-6 text-gray-700 lg:flex-none"
+          >
+            <div class="flex justify-center bg-white py-2">
+              <span>L</span>
+              <span class="sr-only sm:not-sr-only">undi</span>
+            </div>
+            <div class="flex justify-center bg-white py-2">
+              <span>M</span>
+              <span class="sr-only sm:not-sr-only">ardi</span>
+            </div>
+            <div class="flex justify-center bg-white py-2">
+              <span>M</span>
+              <span class="sr-only sm:not-sr-only">ercredi</span>
+            </div>
+            <div class="flex justify-center bg-white py-2">
+              <span>J</span>
+              <span class="sr-only sm:not-sr-only">eudi</span>
+            </div>
+            <div class="flex justify-center bg-white py-2">
+              <span>V</span>
+              <span class="sr-only sm:not-sr-only">endredi</span>
+            </div>
+            <div class="flex justify-center bg-white py-2">
+              <span>S</span>
+              <span class="sr-only sm:not-sr-only">amedi</span>
+            </div>
+            <div class="flex justify-center bg-white py-2">
+              <span>D</span>
+              <span class="sr-only sm:not-sr-only">imanche</span>
+            </div>
+          </div>
+          <div
+            class="flex bg-gray-200 text-xs leading-6 text-gray-700 lg:flex-auto"
+          >
+            <div
+              id="main-month-container"
+              class="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px"
+            >
+              <!--
                               Les jours du mois sont générés automatiquement.
                             -->
-
-
-                    </div>
-                    <div id="main_month_container_responsive"
-                        class="isolate grid w-full grid-cols-7 grid-rows-6 gap-px lg:hidden">
-                        <!--
+            </div>
+            <div
+              id="main_month_container_responsive"
+              class="isolate grid w-full grid-cols-7 grid-rows-6 gap-px lg:hidden"
+            >
+              <!--
                             Générer automatiquement la vue responsive du mois
                         -->
-                    </div>
-                </div>
             </div>
-            <div class="py-10 px-4 sm:px-6 lg:hidden">
-                <ol
-                    class="divide-y divide-gray-100 overflow-hidden rounded-lg bg-white text-sm shadow ring-1 ring-black ring-opacity-5">
-                    <li class="group flex p-4 pr-6 focus-within:bg-gray-50 hover:bg-gray-50">
-                        <div class="flex-auto">
-                            <p class="font-semibold text-gray-900">Maple syrup museum</p>
-                            <time datetime="2022-01-15T09:00" class="mt-2 flex items-center text-gray-700">
-                                <!-- Heroicon name: mini/clock -->
-                                <svg class="mr-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                                3PM
-                            </time>
-                        </div>
-                        <a href="#"
-                            class="ml-6 flex-none self-center rounded-md border border-gray-300 bg-white py-2 px-3 font-semibold text-gray-700 opacity-0 shadow-sm hover:bg-gray-50 focus:opacity-100 group-hover:opacity-100">Edit<span
-                                class="sr-only">, Maple syrup museum</span></a>
-                    </li>
-
-                    <li class="group flex p-4 pr-6 focus-within:bg-gray-50 hover:bg-gray-50">
-                        <div class="flex-auto">
-                            <p class="font-semibold text-gray-900">Hockey game</p>
-                            <time datetime="2022-01-22T19:00" class="mt-2 flex items-center text-gray-700">
-                                <!-- Heroicon name: mini/clock -->
-                                <svg class="mr-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                                7PM
-                            </time>
-                        </div>
-                        <a href="#"
-                            class="ml-6 flex-none self-center rounded-md border border-gray-300 bg-white py-2 px-3 font-semibold text-gray-700 opacity-0 shadow-sm hover:bg-gray-50 focus:opacity-100 group-hover:opacity-100">Edit<span
-                                class="sr-only">, Hockey game</span></a>
-                    </li>
-                </ol>
-            </div>
+          </div>
         </div>
-        <!-- Vue par semaine -->
+        <div class="py-10 px-4 sm:px-6 lg:hidden">
+          <ol
+            class="divide-y divide-gray-100 overflow-hidden rounded-lg bg-white text-sm shadow ring-1 ring-black ring-opacity-5"
+          >
+            <li
+              class="group flex p-4 pr-6 focus-within:bg-gray-50 hover:bg-gray-50"
+            >
+              <div class="flex-auto">
+                <p class="font-semibold text-gray-900">Maple syrup museum</p>
+                <time
+                  datetime="2022-01-15T09:00"
+                  class="mt-2 flex items-center text-gray-700"
+                >
+                  <!-- Heroicon name: mini/clock -->
+                  <svg
+                    class="mr-2 h-5 w-5 text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  3PM
+                </time>
+              </div>
+              <a
+                href="#"
+                class="ml-6 flex-none self-center rounded-md border border-gray-300 bg-white py-2 px-3 font-semibold text-gray-700 opacity-0 shadow-sm hover:bg-gray-50 focus:opacity-100 group-hover:opacity-100"
+                >Edit<span class="sr-only">, Maple syrup museum</span></a
+              >
+            </li>
 
-
-        <div class="flex h-full flex-col lg:hidden" id="vue-week">
-            <header class="flex items-center justify-between border-b border-gray-200 py-4 px-6 lg:flex-none">
-                <h1 class="text-3xl font-bold text-white">
-                    <span id="main-title-week"></span>
-                </h1>
-                <div class="flex items-center">
-                    <div class="flex items-center rounded-md shadow-sm md:items-stretch">
-                        <button type="button" id="btn-previous-week"
-                            class="flex items-center justify-center rounded-l-md border border-r-0 border-gray-300 bg-white py-2 pl-3 pr-4 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50">
-                            <span class="sr-only">Previous week</span>
-                            <!-- Heroicon name: mini/chevron-left -->
-                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </button>
-
-                        <button type="button" id="btn-week-name"
-                            class="hidden border-t border-b border-gray-300 bg-white px-3.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 focus:relative md:block">Date</button>
-                        <span class="relative -mx-px h-5 w-px bg-gray-300 md:hidden"></span>
-                        <button type="button" id="btn-next-week"
-                            class="flex items-center justify-center rounded-r-md border border-l-0 border-gray-300 bg-white py-2 pl-4 pr-3 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50">
-                            <span class="sr-only">Next week</span>
-                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="p-10 w-40 hidden md:flex">
-
-                        <div class="dropdown inline-block relative">
-                            <button type="button"
-                                class="flex items-center rounded-md border 
-                            border-gray-300 bg-white py-2 pl-3 pr-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">
-                                Semaine
-                                <svg class="ml-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                            <ul class="dropdown-menu hidden absolute right-0 z-10 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1
-                            ring-black ring-opacity-5 focus:outline-none">
-                                <div class="py-1" role="none">
-                                    <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                                    <li><a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                            role="menuitem" tabindex="-1" id="menu-item-0"
-                                            onmousedown="switchVue(2)">Vue de jour</a></li>
-                                    <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                        role="menuitem" tabindex="-1" id="menu-item-1" onmousedown="switchVue(1)">Vue de
-                                        semaine</a>
-                                    <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                        role="menuitem" tabindex="-1" id="menu-item-2" onmousedown="switchVue(0)">Vue de
-                                        mois</a>
-                                    <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                        role="menuitem" tabindex="-1" id="menu-item-3">Vue de l'année</a>
-                                </div>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <div class="ml-6 h-6 w-px bg-gray-300"></div>
-                    <button type="button"
-                        onclick="document.getElementById('modal').classList.remove('hidden');document.getElementById('modal').classList.add('flex');"
-                        class="ml-6 rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Ajouter
-                        un RDV</button>
-                </div>
-                <div class="relative ml-6 md:hidden">
-                    <div class="dropdown inline-block relative">
-                        <button type="button"
-                            class="flex items-center rounded-md border 
-                            border-gray-300 bg-white py-2 pl-3 pr-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">
-                            Mois
-                            <svg class="ml-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                        <ul class="dropdown-menu hidden absolute right-0 z-10 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1
-                            ring-black ring-opacity-5 focus:outline-none">
-                            <div class="py-1" role="none">
-                                <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                                <li><a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                        role="menuitem" tabindex="-1" id="menu-item-0" onmousedown="switchVue(2)">Vue de
-                                        jour</a></li>
-                                <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                    role="menuitem" tabindex="-1" id="menu-item-1" onmousedown="switchVue(1)">Vue de
-                                    semaine</a>
-                                <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                    role="menuitem" tabindex="-1" id="menu-item-2" onmousedown="switchVue(0)">Vue de
-                                    mois</a>
-                                <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                    role="menuitem" tabindex="-1" id="menu-item-3">Vue de l'année</a>
-                            </div>
-                        </ul>
-                    </div>
-                </div>
-            </header>
-            <div class="isolate flex flex-auto flex-col overflow-auto bg-white">
-                <div style="width: 165%" class="flex max-w-full flex-none flex-col sm:max-w-none md:max-w-full">
-                    <div class="sticky top-0 z-30 flex-none bg-white shadow ring-1 ring-black ring-opacity-5 sm:pr-8">
-                        <div id="week-headers-responsive"
-                            class="grid grid-cols-7 text-sm leading-6 text-gray-500 sm:hidden">
-
-                            <!--Généré automatiquement pour le responsive-->
-                        </div>
-
-                        <div class="-mr-px hidden grid-cols-7 divide-x divide-gray-100 border-r border-gray-100 text-sm leading-6 text-gray-500 sm:grid"
-                            id="week-headers">
-                            <div class="col-end-1 w-14"></div>
-
-                            <!-- Headers de la table générés automatiquement-->
-                        </div>
-                    </div>
-                    <div class="flex flex-auto">
-                        <div class="sticky left-0 z-10 w-14 flex-none bg-white ring-1 ring-gray-100"></div>
-                        <div class="grid flex-auto grid-cols-1 grid-rows-1">
-                            <!-- Horizontal lines -->
-                            <div class="col-start-1 col-end-2 row-start-1 grid divide-y divide-gray-100"
-                                style="grid-template-rows: repeat(48, minmax(3.5rem, 1fr))" id="hours-container">
-                                <div class="row-end-1 h-7"></div>
-                                <!-- Ici les heures sont générées automatiquement
-                                -->
-
-                            </div>
-
-                            <!-- Vertical lines -->
-                            <div
-                                class="col-start-1 col-end-2 row-start-1 hidden grid-cols-7 grid-rows-1 divide-x divide-gray-100 sm:grid sm:grid-cols-7">
-                                <div class="col-start-1 row-span-full"></div>
-                                <div class="col-start-2 row-span-full"></div>
-                                <div class="col-start-3 row-span-full"></div>
-                                <div class="col-start-4 row-span-full"></div>
-                                <div class="col-start-5 row-span-full"></div>
-                                <div class="col-start-6 row-span-full"></div>
-                                <div class="col-start-7 row-span-full"></div>
-                                <div class="col-start-8 row-span-full w-8"></div>
-                            </div>
-
-                            <!-- Events -->
-                            <ol class="col-start-1 col-end-2 row-start-1 grid grid-cols-1 sm:grid-cols-7 sm:pr-8"
-                                id="events-container"
-                                style="grid-template-rows: 1.75rem repeat(288, minmax(0, 1fr)) auto">
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <li
+              class="group flex p-4 pr-6 focus-within:bg-gray-50 hover:bg-gray-50"
+            >
+              <div class="flex-auto">
+                <p class="font-semibold text-gray-900">Hockey game</p>
+                <time
+                  datetime="2022-01-22T19:00"
+                  class="mt-2 flex items-center text-gray-700"
+                >
+                  <!-- Heroicon name: mini/clock -->
+                  <svg
+                    class="mr-2 h-5 w-5 text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  7PM
+                </time>
+              </div>
+              <a
+                href="#"
+                class="ml-6 flex-none self-center rounded-md border border-gray-300 bg-white py-2 px-3 font-semibold text-gray-700 opacity-0 shadow-sm hover:bg-gray-50 focus:opacity-100 group-hover:opacity-100"
+                >Edit<span class="sr-only">, Hockey game</span></a
+              >
+            </li>
+          </ol>
         </div>
+      </div>
+      <!-- Vue par semaine -->
 
+      <div class="flex h-full flex-col lg:hidden" id="vue-week">
+        <header
+          class="flex items-center justify-between border-b border-gray-200 py-4 px-6 lg:flex-none"
+        >
+          <h1 class="text-3xl font-bold text-white">
+            <span id="main-title-week"></span>
+          </h1>
+          <div class="flex items-center">
+            <div
+              class="flex items-center rounded-md shadow-sm md:items-stretch"
+            >
+              <button
+                type="button"
+                id="btn-previous-week"
+                class="flex items-center justify-center rounded-l-md border border-r-0 border-gray-300 bg-white py-2 pl-3 pr-4 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50"
+              >
+                <span class="sr-only">Previous week</span>
+                <!-- Heroicon name: mini/chevron-left -->
+                <svg
+                  class="h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
 
-        <!-- Vue par jour -->
-        <div class="flex h-full flex-col" id="vue-day">
-            <header class="flex items-center justify-between border-b border-gray-200 py-4 px-6 lg:flex-none">
-                <h1 class="text-3xl font-bold text-white">
-                    <span id="main-title-day" class="lg:block md:block sm:hidden">Mercredi 19 janvier 2022</span>
-                </h1>
-                <div class="flex items-center">
-                    <div class="flex items-center rounded-md shadow-sm md:items-stretch">
-                        <button type="button" id="btn-previous-day"
-                            class="flex items-center justify-center rounded-l-md border border-r-0 border-gray-300 bg-white py-2 pl-3 pr-4 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50">
-                            <span class="sr-only">Previous Day</span>
-                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                        <button type="button" id="btn-day-name"
-                            class="hidden border-t border-b border-gray-300 bg-white px-3.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 focus:relative md:hidden lg:block">JourX</button>
-                        <span class="relative -mx-px h-5 w-px bg-gray-300 md:hidden"></span>
-                        <button type="button" id="btn-next-day"
-                            class="flex items-center justify-center rounded-r-md border border-l-0 border-gray-300 bg-white py-2 pl-4 pr-3 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50">
-                            <span class="sr-only">Next Day</span>
-                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="p-10 w-40 hidden md:flex">
-
-                        <div class="dropdown inline-block relative">
-                            <button type="button"
-                                class="flex items-center rounded-md border 
-                            border-gray-300 bg-white py-2 pl-3 pr-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">
-                                Jour
-                                <svg class="ml-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                            <ul class="dropdown-menu hidden absolute right-0 z-10 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1
-                            ring-black ring-opacity-5 focus:outline-none">
-                                <div class="py-1" role="none">
-                                    <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                                    <li><a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                            role="menuitem" tabindex="-1" id="menu-item-0"
-                                            onmousedown="switchVue(2)">Vue de jour</a></li>
-                                    <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                        role="menuitem" tabindex="-1" id="menu-item-1" onmousedown="switchVue(1)">Vue de
-                                        semaine</a>
-                                    <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                        role="menuitem" tabindex="-1" id="menu-item-2" onmousedown="switchVue(0)">Vue de
-                                        mois</a>
-                                    <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                        role="menuitem" tabindex="-1" id="menu-item-3">Vue de l'année</a>
-                                </div>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <div class="ml-6 h-6 w-px bg-gray-300"></div>
-                    <button type="button"
-                        onclick="document.getElementById('modal').classList.remove('hidden');document.getElementById('modal').classList.add('flex');"
-                        class="ml-6 rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Ajouter
-                        un RDV</button>
+              <button
+                type="button"
+                id="btn-week-name"
+                class="hidden border-t border-b border-gray-300 bg-white px-3.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 focus:relative md:block"
+              >
+                Date
+              </button>
+              <span
+                class="relative -mx-px h-5 w-px bg-gray-300 md:hidden"
+              ></span>
+              <button
+                type="button"
+                id="btn-next-week"
+                class="flex items-center justify-center rounded-r-md border border-l-0 border-gray-300 bg-white py-2 pl-4 pr-3 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50"
+              >
+                <span class="sr-only">Next week</span>
+                <svg
+                  class="h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="p-10 w-40 hidden md:flex">
+              <div class="dropdown inline-block relative">
+                <button
+                  type="button"
+                  class="flex items-center rounded-md border border-gray-300 bg-white py-2 pl-3 pr-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
+                >
+                  Semaine
+                  <svg
+                    class="ml-2 h-5 w-5 text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </button>
+                <ul
+                  class="dropdown-menu hidden absolute right-0 z-10 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                >
+                  <div class="py-1" role="none">
+                    <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                    <li>
+                      <a
+                        href="#"
+                        class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                        role="menuitem"
+                        tabindex="-1"
+                        id="menu-item-0"
+                        onmousedown="switchVue(2)"
+                        >Vue de jour</a
+                      >
+                    </li>
+                    <a
+                      href="#"
+                      class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                      role="menuitem"
+                      tabindex="-1"
+                      id="menu-item-1"
+                      onmousedown="switchVue(1)"
+                      >Vue de semaine</a
+                    >
+                    <a
+                      href="#"
+                      class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                      role="menuitem"
+                      tabindex="-1"
+                      id="menu-item-2"
+                      onmousedown="switchVue(0)"
+                      >Vue de mois</a
+                    >
+                    <a
+                      href="#"
+                      class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                      role="menuitem"
+                      tabindex="-1"
+                      id="menu-item-3"
+                      >Vue de l'année</a
+                    >
+                  </div>
+                </ul>
+              </div>
+            </div>
+            <div class="ml-6 h-6 w-px bg-gray-300"></div>
+            <button
+              type="button"
+              onclick="document.getElementById('modal').classList.remove('hidden');document.getElementById('modal').classList.add('flex');"
+              class="ml-6 rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              Ajouter un RDV
+            </button>
+          </div>
+          <div class="relative ml-6 md:hidden">
+            <div class="dropdown inline-block relative">
+              <button
+                type="button"
+                class="flex items-center rounded-md border border-gray-300 bg-white py-2 pl-3 pr-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
+              >
+                Mois
+                <svg
+                  class="ml-2 h-5 w-5 text-gray-400"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+              <ul
+                class="dropdown-menu hidden absolute right-0 z-10 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              >
+                <div class="py-1" role="none">
+                  <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                  <li>
+                    <a
+                      href="#"
+                      class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                      role="menuitem"
+                      tabindex="-1"
+                      id="menu-item-0"
+                      onmousedown="switchVue(2)"
+                      >Vue de jour</a
+                    >
+                  </li>
+                  <a
+                    href="#"
+                    class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                    role="menuitem"
+                    tabindex="-1"
+                    id="menu-item-1"
+                    onmousedown="switchVue(1)"
+                    >Vue de semaine</a
+                  >
+                  <a
+                    href="#"
+                    class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                    role="menuitem"
+                    tabindex="-1"
+                    id="menu-item-2"
+                    onmousedown="switchVue(0)"
+                    >Vue de mois</a
+                  >
+                  <a
+                    href="#"
+                    class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                    role="menuitem"
+                    tabindex="-1"
+                    id="menu-item-3"
+                    >Vue de l'année</a
+                  >
                 </div>
-                <div class="relative ml-6 md:hidden">
-                    <div class="dropdown inline-block relative">
-                        <button type="button"
-                            class="flex items-center rounded-md border 
-                            border-gray-300 bg-white py-2 pl-3 pr-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50">
-                            Mois
-                            <svg class="ml-2 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd"
-                                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                        <ul class="dropdown-menu hidden absolute right-0 z-10 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1
-                            ring-black ring-opacity-5 focus:outline-none">
-                            <div class="py-1" role="none">
-                                <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                                <li><a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                        role="menuitem" tabindex="-1" id="menu-item-0" onmousedown="switchVue(2)">Vue de
-                                        jour</a></li>
-                                <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                    role="menuitem" tabindex="-1" id="menu-item-1" onmousedown="switchVue(1)">Vue de
-                                    semaine</a>
-                                <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                    role="menuitem" tabindex="-1" id="menu-item-2" onmousedown="switchVue(0)">Vue de
-                                    mois</a>
-                                <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
-                                    role="menuitem" tabindex="-1" id="menu-item-3">Vue de l'année</a>
-                            </div>
-                        </ul>
-                    </div>
-                </div>
-            </header>
-            <div class="isolate flex flex-auto overflow-hidden bg-white ">
+              </ul>
+            </div>
+          </div>
+        </header>
+        <div class="isolate flex flex-auto flex-col overflow-auto bg-white">
+          <div
+            style="width: 165%"
+            class="flex max-w-full flex-none flex-col sm:max-w-none md:max-w-full"
+          >
+            <div
+              class="sticky top-0 z-30 flex-none bg-white shadow ring-1 ring-black ring-opacity-5 sm:pr-8"
+            >
+              <div
+                id="week-headers-responsive"
+                class="grid grid-cols-7 text-sm leading-6 text-gray-500 sm:hidden"
+              >
+                <!--Généré automatiquement pour le responsive-->
+              </div>
+
+              <div
+                class="-mr-px hidden grid-cols-7 divide-x divide-gray-100 border-r border-gray-100 text-sm leading-6 text-gray-500 sm:grid"
+                id="week-headers"
+              >
+                <div class="col-end-1 w-14"></div>
+
+                <!-- Headers de la table générés automatiquement-->
+              </div>
+            </div>
+            <div class="flex flex-auto">
+              <div
+                class="sticky left-0 z-10 w-14 flex-none bg-white ring-1 ring-gray-100"
+              ></div>
+              <div class="grid flex-auto grid-cols-1 grid-rows-1">
+                <!-- Horizontal lines -->
                 <div
-                    class="flex flex-auto flex-col overflow-auto border-2 border-solid border-gray-100 border-collapse">
-                    <div class="sticky top-0 z-10 grid flex-none grid-cols-7 bg-white text-xs text-gray-500 shadow ring-1 ring-black ring-opacity-5 md:hidden "
-                        id="day-headers">
-                        <!-- Les jours sont générés automatiquement -->
-                    </div>
-                    <div class="flex w-full flex-auto">
-                        <div class="w-14 flex-none bg-white ring-1 ring-gray-100"></div>
-                        <div class="grid flex-auto grid-cols-1 grid-rows-1">
-                            <!-- Horizontal lines -->
-                            <div class="col-start-1 col-end-2 row-start-1 grid divide-y divide-gray-100"
-                                style="grid-template-rows: repeat(48, minmax(3.5rem, 1fr))" id="hours-container-day">
-                                <div class="row-end-1 h-7"></div>
-                                <!-- Les heures sont générées automatiquement dans calendar_day -->
-                            </div>
-
-                            <!-- Events -->
-                            <ol class="col-start-1 col-end-2 row-start-1 grid grid-cols-1"
-                                style="grid-template-rows: 1.75rem repeat(288, minmax(0, 1fr)) auto" id="day-rdv">
-                            </ol>
-                        </div>
-                    </div>
+                  class="col-start-1 col-end-2 row-start-1 grid divide-y divide-gray-100"
+                  style="grid-template-rows: repeat(48, minmax(3.5rem, 1fr))"
+                  id="hours-container"
+                >
+                  <div class="row-end-1 h-7"></div>
+                  <!-- Ici les heures sont générées automatiquement
+                                -->
                 </div>
+
+                <!-- Vertical lines -->
+                <div
+                  class="col-start-1 col-end-2 row-start-1 hidden grid-cols-7 grid-rows-1 divide-x divide-gray-100 sm:grid sm:grid-cols-7"
+                >
+                  <div class="col-start-1 row-span-full"></div>
+                  <div class="col-start-2 row-span-full"></div>
+                  <div class="col-start-3 row-span-full"></div>
+                  <div class="col-start-4 row-span-full"></div>
+                  <div class="col-start-5 row-span-full"></div>
+                  <div class="col-start-6 row-span-full"></div>
+                  <div class="col-start-7 row-span-full"></div>
+                  <div class="col-start-8 row-span-full w-8"></div>
+                </div>
+
+                <!-- Events -->
+                <ol
+                  class="col-start-1 col-end-2 row-start-1 grid grid-cols-1 sm:grid-cols-7 sm:pr-8"
+                  id="events-container"
+                  style="
+                    grid-template-rows: 1.75rem repeat(288, minmax(0, 1fr)) auto;
+                  "
+                ></ol>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
 
+      <!-- Vue par jour -->
+      <div class="flex h-full flex-col" id="vue-day">
+        <header
+          class="flex items-center justify-between border-b border-gray-200 py-4 px-6 lg:flex-none"
+        >
+          <h1 class="text-3xl font-bold text-white">
+            <span id="main-title-day" class="lg:block md:block sm:hidden"
+              >Mercredi 19 janvier 2022</span
+            >
+          </h1>
+          <div class="flex items-center">
+            <div
+              class="flex items-center rounded-md shadow-sm md:items-stretch"
+            >
+              <button
+                type="button"
+                id="btn-previous-day"
+                class="flex items-center justify-center rounded-l-md border border-r-0 border-gray-300 bg-white py-2 pl-3 pr-4 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50"
+              >
+                <span class="sr-only">Previous Day</span>
+                <svg
+                  class="h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+              <button
+                type="button"
+                id="btn-day-name"
+                class="hidden border-t border-b border-gray-300 bg-white px-3.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 focus:relative md:hidden lg:block"
+              >
+                JourX
+              </button>
+              <span
+                class="relative -mx-px h-5 w-px bg-gray-300 md:hidden"
+              ></span>
+              <button
+                type="button"
+                id="btn-next-day"
+                class="flex items-center justify-center rounded-r-md border border-l-0 border-gray-300 bg-white py-2 pl-4 pr-3 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50"
+              >
+                <span class="sr-only">Next Day</span>
+                <svg
+                  class="h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="p-10 w-40 hidden md:flex">
+              <div class="dropdown inline-block relative">
+                <button
+                  type="button"
+                  class="flex items-center rounded-md border border-gray-300 bg-white py-2 pl-3 pr-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
+                >
+                  Jour
+                  <svg
+                    class="ml-2 h-5 w-5 text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </button>
+                <ul
+                  class="dropdown-menu hidden absolute right-0 z-10 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                >
+                  <div class="py-1" role="none">
+                    <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                    <li>
+                      <a
+                        href="#"
+                        class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                        role="menuitem"
+                        tabindex="-1"
+                        id="menu-item-0"
+                        onmousedown="switchVue(2)"
+                        >Vue de jour</a
+                      >
+                    </li>
+                    <a
+                      href="#"
+                      class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                      role="menuitem"
+                      tabindex="-1"
+                      id="menu-item-1"
+                      onmousedown="switchVue(1)"
+                      >Vue de semaine</a
+                    >
+                    <a
+                      href="#"
+                      class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                      role="menuitem"
+                      tabindex="-1"
+                      id="menu-item-2"
+                      onmousedown="switchVue(0)"
+                      >Vue de mois</a
+                    >
+                    <a
+                      href="#"
+                      class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                      role="menuitem"
+                      tabindex="-1"
+                      id="menu-item-3"
+                      >Vue de l'année</a
+                    >
+                  </div>
+                </ul>
+              </div>
+            </div>
+            <div class="ml-6 h-6 w-px bg-gray-300"></div>
+            <button
+              type="button"
+              onclick="document.getElementById('modal').classList.remove('hidden');document.getElementById('modal').classList.add('flex');"
+              class="ml-6 rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            >
+              Ajouter un RDV
+            </button>
+          </div>
+          <div class="relative ml-6 md:hidden">
+            <div class="dropdown inline-block relative">
+              <button
+                type="button"
+                class="flex items-center rounded-md border border-gray-300 bg-white py-2 pl-3 pr-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
+              >
+                Mois
+                <svg
+                  class="ml-2 h-5 w-5 text-gray-400"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+              <ul
+                class="dropdown-menu hidden absolute right-0 z-10 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              >
+                <div class="py-1" role="none">
+                  <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                  <li>
+                    <a
+                      href="#"
+                      class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                      role="menuitem"
+                      tabindex="-1"
+                      id="menu-item-0"
+                      onmousedown="switchVue(2)"
+                      >Vue de jour</a
+                    >
+                  </li>
+                  <a
+                    href="#"
+                    class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                    role="menuitem"
+                    tabindex="-1"
+                    id="menu-item-1"
+                    onmousedown="switchVue(1)"
+                    >Vue de semaine</a
+                  >
+                  <a
+                    href="#"
+                    class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                    role="menuitem"
+                    tabindex="-1"
+                    id="menu-item-2"
+                    onmousedown="switchVue(0)"
+                    >Vue de mois</a
+                  >
+                  <a
+                    href="#"
+                    class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-200"
+                    role="menuitem"
+                    tabindex="-1"
+                    id="menu-item-3"
+                    >Vue de l'année</a
+                  >
+                </div>
+              </ul>
+            </div>
+          </div>
+        </header>
+        <div class="isolate flex flex-auto overflow-hidden bg-white">
+          <div
+            class="flex flex-auto flex-col overflow-auto border-2 border-solid border-gray-100 border-collapse"
+          >
+            <div
+              class="sticky top-0 z-10 grid flex-none grid-cols-7 bg-white text-xs text-gray-500 shadow ring-1 ring-black ring-opacity-5 md:hidden"
+              id="day-headers"
+            >
+              <!-- Les jours sont générés automatiquement -->
+            </div>
+            <div class="flex w-full flex-auto">
+              <div class="w-14 flex-none bg-white ring-1 ring-gray-100"></div>
+              <div class="grid flex-auto grid-cols-1 grid-rows-1">
+                <!-- Horizontal lines -->
+                <div
+                  class="col-start-1 col-end-2 row-start-1 grid divide-y divide-gray-100"
+                  style="grid-template-rows: repeat(48, minmax(3.5rem, 1fr))"
+                  id="hours-container-day"
+                >
+                  <div class="row-end-1 h-7"></div>
+                  <!-- Les heures sont générées automatiquement dans calendar_day -->
+                </div>
 
+                <!-- Events -->
+                <ol
+                  class="col-start-1 col-end-2 row-start-1 grid grid-cols-1"
+                  style="
+                    grid-template-rows: 1.75rem repeat(288, minmax(0, 1fr)) auto;
+                  "
+                  id="day-rdv"
+                ></ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </body>
 
+  <script src="js/date_tools.js" type="module"></script>
+  <script src="js/gestion_rdv.js" type="module"></script>
 
-
-
-
-
-
-    </div>
-
-</body>
-
-<script src="js/date_tools.js" type="module"></script>
-<script src="js/gestion_rdv.js" type="module"></script>
-
-<script>
-
-    if (window.localStorage.getItem('user') == null) { //si l'utilisateur n'est pas connecté on le renvoie sur la page de connexion
-        window.location.href = "html/authentification/connexion.html";
+  <script>
+    if (window.localStorage.getItem("user") == null) {
+      //si l'utilisateur n'est pas connecté on le renvoie sur la page de connexion
+      window.location.href = "html/authentification/connexion.html";
     }
-    console.log(JSON.parse(window.localStorage.getItem('user'))); //Affichage des données de l'utilisateur
+    console.log(JSON.parse(window.localStorage.getItem("user"))); //Affichage des données de l'utilisateur
     //window.localStorage.clear();
-    const vue_day = document.getElementById('vue-day');
-    const vue_week = document.getElementById('vue-week');
-    const vue_month = document.getElementById('vue-month');
-
-
+    const vue_day = document.getElementById("vue-day");
+    const vue_week = document.getElementById("vue-week");
+    const vue_month = document.getElementById("vue-month");
 
     switchVue(1); //Affiche la vue du mois par défaut
 
     function switchVue(id) {
-        switch (id) {
-            case 0: {
-                vue_month.style.display = 'block';
-                vue_week.style.display = 'none';
-                vue_day.style.display = 'none';
-                break;
-            }
-            case 1: {
-                vue_week.style.display = 'block';
-                vue_month.style.display = 'none';
-                vue_day.style.display = 'none';
-                break;
-            }
-            case 2: {
-                vue_week.style.display = 'none';
-                vue_month.style.display = 'none';
-                vue_day.style.display = 'block';
-                break;
-            }
-
+      switch (id) {
+        case 0: {
+          vue_month.style.display = "block";
+          vue_week.style.display = "none";
+          vue_day.style.display = "none";
+          break;
         }
+        case 1: {
+          vue_week.style.display = "block";
+          vue_month.style.display = "none";
+          vue_day.style.display = "none";
+          break;
+        }
+        case 2: {
+          vue_week.style.display = "none";
+          vue_month.style.display = "none";
+          vue_day.style.display = "block";
+          break;
+        }
+      }
     }
     function changeState() {
-        var picker = document.getElementById('date-picker');
-        picker.type = 'date';
-        picker.showPicker();
+      var picker = document.getElementById("date-picker");
+      picker.type = "date";
+      picker.showPicker();
     }
+  </script>
 
-
-
-</script>
-
-
-<style>
+  <style>
     .dropdown:hover .dropdown-menu {
-        display: block;
+      display: block;
     }
 
     input[type="date"]::-webkit-calendar-picker-indicator {
-        display: none;
+      display: none;
     }
 
     .slide-in-top {
-        animation: slide-in-top 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+      animation: slide-in-top 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
     }
 
     @-webkit-keyframes slide-in-top {
-        0% {
-            -webkit-transform: translateY(-500px);
-            transform: translateY(-500px);
-            opacity: 0;
-        }
+      0% {
+        -webkit-transform: translateY(-500px);
+        transform: translateY(-500px);
+        opacity: 0;
+      }
 
-        100% {
-            -webkit-transform: translateY(0);
-            transform: translateY(0);
-            opacity: 1;
-        }
+      100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
 
-    input[type='number']::-webkit-inner-spin-button,
-    input[type='number']::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
     }
 
     .custom-number-input input:focus {
-        outline: none !important;
+      outline: none !important;
     }
 
     .custom-number-input button:focus {
-        outline: none !important;
+      outline: none !important;
     }
-</style>
-
+  </style>
 </html>

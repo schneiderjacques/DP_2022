@@ -53,10 +53,10 @@ function setDateName(date) {
 }
 
 function setWeekNumber(dt) {
-  var startDate = new Date(dt.getFullYear(), 0, 1);
-  var days = Math.floor((dt - startDate) / (24 * 60 * 60 * 1000));
+  const startDate = new Date(dt.getFullYear(), 0, 1);
+  const days = Math.floor((dt - startDate) / (24 * 60 * 60 * 1000));
 
-  var weekNumber = Math.ceil(days / 7);
+  const weekNumber = Math.ceil(days / 7);
   document.getElementById("main-title-week").innerHTML =
     "Sem. n°" + weekNumber + " (" + getMonthName(dt) + ") " + dt.getFullYear();
 }
