@@ -169,23 +169,23 @@ document
   .getElementById("increment-first")
   .addEventListener("click", function () {
     let input = document.getElementById("input-first");
-    increment(input);
+    splitValues(input, true)
   });
 document
   .getElementById("decrement-first")
   .addEventListener("click", function () {
     let input = document.getElementById("input-first");
-    decrement(input);
+    splitValues(input, false)
   });
 document
   .getElementById("increment-second")
   .addEventListener("click", function () {
     let input = document.getElementById("input-second");
-    increment(input);
+    splitValues(input, true)
   });
 document
   .getElementById("decrement-second")
   .addEventListener("click", function () {
     let input = document.getElementById("input-second");
-    decrement(input);
+    splitValues(input, false)
   });
