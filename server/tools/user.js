@@ -120,5 +120,6 @@ function get_user(req, res) {
 module.exports = {
     login: login,
     register: register,
-    get_user: get_user
+    get_user: get_user,
+    get_datas: get_datas
 }

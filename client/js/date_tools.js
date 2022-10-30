@@ -142,53 +142,12 @@ export function timeToDecimal(t) { //renvoie l'heure en décimal entre deux heur
     
         return parseFloat(parseInt(arr[0], 10) + '.' + (dec<10?'0':'') + dec);
     }
+export function convertHex(hex, opacity){ //convert hex to rgba
+    hex = hex.replace('#','');
+    const r = parseInt(hex.substring(0,2), 16);
+    const g = parseInt(hex.substring(2,4), 16);
+    const b = parseInt(hex.substring(4,6), 16);
 
-    function increment(input){
-        var values = input.value.split(':');
-        var hours = parseInt(values[0]);
-        var minutes = parseInt(values[1]);
-        if (minutes == 50) {
-            minutes = 0;
-            hours++;
-        } else {
-            minutes += 10;
-        }
-        if (hours == 24) {
-            hours = 0;
-        }
-        input.value = formatNumber(hours) + ':' + formatNumber(minutes);
-    }
-    function decrement(input){
-        var values = input.value.split(':');
-        var hours = parseInt(values[0]);
-        var minutes = parseInt(values[1]);
-        if (minutes == 0) {
-            minutes = 50;
-            hours--;
-        } else {
-            minutes -= 10;
-        }
-        if (hours == -1) {
-            hours = 23;
-        }
-        input.value = formatNumber(hours) + ':' + formatNumber(minutes);
-    }
-
-    document.getElementById('increment-first').addEventListener('click', function () {
-        var input = document.getElementById('input-first');
-        increment(input);
-    });
-    document.getElementById('decrement-first').addEventListener('click', function () {
-        var input = document.getElementById('input-first');
-        decrement(input);
-
-    });
-    document.getElementById('increment-second').addEventListener('click', function () {
-        var input = document.getElementById('input-second');
-        increment(input);
-    });
-    document.getElementById('decrement-second').addEventListener('click', function () {
-        var input = document.getElementById('input-second');
-        decrement(input);
-
-    });
+    return  ('rgba('+r+','+g+','+b+','+opacity+')');
+    
+}

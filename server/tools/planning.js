@@ -142,7 +142,7 @@ function day_view(req, res) {
  */
 function add_appointment(req, res) {
     // Vérifier si les données sont présentes dans la requête
-    if (!req.body.nom || !req.body.date || !req.body.heureDebut || !req.body.heureFin) {
+    if (!req.body.nom || !req.body.date || !req.body.heureDebut || !req.body.heureFin || !req.body.couleur) {
         res.sendStatus(422);
         return;
     }
@@ -153,7 +153,6 @@ function add_appointment(req, res) {
     if (planning) {
         // Récupérer les données du site
         let users = tool_user.get_datas();
-
         // Chercher l'utilisateur
         for (var i = 0; i < users.length; i++) {
             if (users[i].token == req.headers.authorization.substring(7)) {
@@ -177,7 +176,8 @@ function add_appointment(req, res) {
                     nom: req.body.nom,
                     date: req.body.date,
                     heureDebut: req.body.heureDebut,
-                    heureFin: req.body.heureFin
+                    heureFin: req.body.heureFin,
+                    couleur: req.body.couleur
                 });
 
                 // Sauvegarder les données

@@ -1,4 +1,4 @@
-import {initHours,getFirstDayOfWeek,refreshAllCalendars, getAllDaysFromWeek, getDayName,getMonthName, setNextDay, setPreviousDay, getMinDiff, timeToDecimal, formatNumber} from "./date_tools.js";
+import {convertHex,initHours,getFirstDayOfWeek,refreshAllCalendars, getAllDaysFromWeek, getDayName,getMonthName, setNextDay, setPreviousDay, getMinDiff, timeToDecimal, formatNumber} from "./date_tools.js";
 import {fetchDataGet} from "./request.js";
 
 
@@ -82,14 +82,21 @@ function createDayRdv(date){
                 li.classList.add("relative", "mt-px", "flex");
                 li.style.gridRow = gridRow + " / span " + span;
                 var a = document.createElement("a");
-                a.classList.add("group", "absolute", "inset-1", "flex", "flex-col", "overflow-y-auto", "rounded-lg", "bg-blue-50", "p-2", "text-xs", "leading-5", "hover:bg-blue-100");
+                a.classList.add("group","cursor-pointer", "absolute", "inset-1", "flex", "flex-col", "overflow-y-auto", "rounded-lg", "p-2", "text-xs", "leading-5");
+                a.style.backgroundColor = convertHex(rdvs[i].couleur, 0.6);
+                a.addEventListener("mouseover", function(){
+                    a.style.backgroundColor = convertHex(rdvs[i].couleur, 0.9);
+                })
+                a.addEventListener("mouseout", function(){
+                    a.style.backgroundColor = convertHex(rdvs[i].couleur, 0.6);
+                })
                 var p = document.createElement("p");
-                p.classList.add("order-1", "font-semibold", "text-blue-700");
+                p.classList.add("order-1", "font-semibold", "text-black-700");
                 p.innerHTML = rdvs[i].nom;
                 var p2 = document.createElement("p");
-                p2.classList.add("text-blue-500", "group-hover:text-blue-700");
+                p2.classList.add("text-black-500", "group-hover:text-black-700");
                 var time = document.createElement("time");
-                time.classList.add("text-blue-500", "group-hover:text-blue-700");
+                time.classList.add("text-black-500", "group-hover:text-black-700");
                 time.setAttribute("datetime",dayDebut.toISOString());
                 time.innerHTML = formatNumber(dayDebut.getHours()) + ":" + formatNumber(dayDebut.getMinutes());
                 p2.appendChild(time);
