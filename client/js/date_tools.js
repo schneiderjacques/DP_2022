@@ -238,3 +238,11 @@ export function createFrontOfRdv(eventName, dayDebut, p, a) {
   a.appendChild(p2);
   return a;
 }
+export function areDateEquals(date1, date2) {
+  //renvoie true si les dates sont égales
+  return (
+    date1.getDate() === date2.getDate() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getFullYear() === date2.getFullYear()
+  );
+}

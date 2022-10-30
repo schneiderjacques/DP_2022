@@ -13,6 +13,7 @@ import {
   refreshAllCalendars,
   convertHex,
   createFrontOfRdv,
+  areDateEquals,
 } from "./date_tools.js";
 import { fetchDataGet } from "./request.js";
 
@@ -75,17 +76,14 @@ function setWeekTableHeaderByDay(dt) {
     const day = week[i].getDate(); //On récupère le jour
     let div = document.createElement("div"); //on créer une div qui contiendra le nom du jour et le numéro du jour
     div.classList.add("flex", "items-center", "justify-center", "py-3");
-    var span = document.createElement("span");
+    let span = document.createElement("span");
     span.innerHTML = name;
     let span_children = document.createElement("span");
 
     span_children.innerHTML = day;
     const aujourd = new Date();
-    if (
-      week[i].getDate() === aujourd.getDate() &&
-      week[i].getMonth() === aujourd.getMonth() &&
-      week[i].getFullYear() === aujourd.getFullYear()
-    ) {
+    const dateEqual = areDateEquals(week[i], aujourd);
+    if (dateEqual) {
       span_children.classList.add(
         "ml-1.5",
         "flex",
@@ -138,11 +136,7 @@ function setWeekTableHeaderByDay(dt) {
     let span_responsive_children = document.createElement("span");
     span_responsive_children.innerHTML = day;
 
-    if (
-      week[i].getDate() === aujourd.getDate() &&
-      week[i].getMonth() === aujourd.getMonth() &&
-      week[i].getFullYear() === aujourd.getFullYear()
-    ) {
+    if (dateEqual) {
       span_responsive_children.classList.add(
         "mt-1",
         "flex",
