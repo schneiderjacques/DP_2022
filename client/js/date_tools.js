@@ -1,8 +1,7 @@
 import { refreshCalendarDay } from "./calendar_day.js";
 import { refreshCalendarWeek } from "./calendar_week.js";
-import { refreshCalendarMonth } from "./calendar_month.js";
 
-var current_date = new Date();
+let current_date = new Date();
 
 refreshAllCalendars();
 export function refreshAllCalendars() {
@@ -24,18 +23,18 @@ export function getAllDaysFromMonth(month, year) {
   const firstDayOfMonth = new Date(days[0]);
   const lastDayOfMonth = new Date(days[days.length - 1]);
 
-  var previousDays = new Date(days[0]).getDay() - 1; //Jours précédents du mois M étudié
+  let previousDays = new Date(days[0]).getDay() - 1; //Jours précédents du mois M étudié
   if (previousDays == -1) {
     previousDays = 6;
   }
   const nextdays = 42 - (days.length + previousDays); //Jours suivant qu'on peut toujours remplir
 
   for (let i = previousDays; i > 0; i--) {
-    firstDays.push(getPreviousDay(firstDayOfMonth, i));
+    firstDays.push(getPreviousDay(i));
   }
 
   for (let i = 0; i < nextdays; i++) {
-    lastDays.push(getNextDay(lastDayOfMonth, i + 1));
+    lastDays.push(getNextDay(i + 1));
   }
 
   const final = firstDays.concat(days, lastDays);
@@ -69,7 +68,7 @@ export function isDateEqual(date1, date2) {
 
 export function searchDateInArray(date, array) {
   //Renvoie les rendez vous d'un jour
-  var results = [];
+  let results = [];
   for (let i = 0; i < array.length; i++) {
     if (isDateEqual(date, new Date(array[i].date))) {
       results.push(array[i]);
@@ -79,7 +78,10 @@ export function searchDateInArray(date, array) {
 }
 export function formatNumber(nb) {
   //Renvoie l'heure d'un date
-  return nb < 10 ? (nb = "0" + nb) : nb;
+  if (nb < 10) {
+    return "0" + nb;
+  }
+  return nb;
 }
 export function getNumberOfDayBetween2Date(date1, date2) {
   //renvoie le nombre de jour entre deux dates
@@ -115,7 +117,7 @@ export function getMonthName(dt) {
   return months[dt.getMonth()];
 }
 export function getFirstDayOfWeek(dt) {
-  var tmp = new Date(dt);
+  let tmp = new Date(dt);
   const day = tmp.getDay();
   const diff = tmp.getDate() - day + (day === 0 ? -6 : 1);
   return new Date(tmp.setDate(diff));
@@ -125,13 +127,18 @@ export function getNextDay(nb) {
   next.setDate(current_date.getDate() + nb);
   return next;
 }
+export function getPreviousDay(nb) {
+  const next = new Date(current_date.getTime());
+  next.setDate(current_date.getDate() - nb);
+  return next;
+}
 function getNextDayFromMonday(date, nb) {
   const next = new Date(date.getTime());
   next.setDate(date.getDate() + nb);
   return next;
 }
 export function getAllDaysFromWeek(dt) {
-  var days = [];
+  let days = [];
   for (let i = 0; i < 7; i++) {
     days.push(getNextDayFromMonday(dt, i));
   }
@@ -199,7 +206,7 @@ export function getMinDiff(startDate, endDate) {
 export function timeToDecimal(t) {
   //renvoie l'heure en décimal entre deux heures
   const arr = t.split(":");
-  var dec = parseInt((arr[1] / 6) * 10, 10);
+  let dec = parseInt((arr[1] / 6) * 10, 10);
 
   return parseFloat(parseInt(arr[0], 10) + "." + (dec < 10 ? "0" : "") + dec);
 }
