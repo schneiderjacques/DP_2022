@@ -2,46 +2,41 @@ import { convertHex, initHours, getFirstDayOfWeek, refreshAllCalendars, getAllDa
 import { fetchDataGet } from "./request.js";
 
 initHours("hours-container-day");
-document.getElementById("btn-next-day").addEventListener("click", () => {
-    setNextDay(1);
-    refreshAllCalendars();});
+  document.getElementById("btn-next-day").addEventListener("click", () => {
+  setNextDay(1);
+  refreshAllCalendars();});
 document.getElementById("btn-previous-day").addEventListener("click", () => {
-    setPreviousDay(1);
-    refreshAllCalendars();});
+  setPreviousDay(1);
+  refreshAllCalendars();});
 
 export function refreshCalendarDay(date) {
-    document.getElementById("btn-day-name").innerHTML = date.getDate()+"-" +(date.getMonth()+1)+"-"+date.getFullYear();
-    document.getElementById("main-title-day").innerHTML = getDayName(date).substring(0,3) + ". " + date.getDate() + " " + getMonthName(date) + " " + date.getFullYear();
-
-    document.getElementById("day-headers").innerHTML = "";
-
-    const firstDayOfWeek = getFirstDayOfWeek(date);
-    const days = getAllDaysFromWeek(firstDayOfWeek);
-    
-   
-    for (let i = 0; i < days.length; i++) {
-        var button = document.createElement("button");
-        button.classList.add("flex", "flex-col", "items-center", "pt-3", "pb-1.5");
-        button.type = "button";
-        var span = document.createElement("span");
-        span.innerHTML = getDayName(days[i]).charAt(0);
-        var span_children = document.createElement("span");
-        if (days[i].getDate() === new Date().getDate() && days[i].getMonth() === new Date().getMonth() && days[i].getFullYear() === new Date().getFullYear()) {
-            span_children.classList.add("mt-3", "flex", "h-8", "w-8", "items-center", "justify-center", "rouned-full" ,"text-base", "font-semibold", "text-indigo-600");
-        } else {
-            if (days[i].getDate() === date.getDate() && days[i].getMonth() === date.getMonth() && days[i].getFullYear() === date.getFullYear()) {
-                span_children.classList.add("mt-3", "flex", "h-8", "w-8", "items-center", "justify-center", "rounded-full" , "bg-gray-900", "font-semibold", "text-white");
-            } else {
-            span_children.classList.add("mt-3", "flex", "h-8", "w-8", "items-center", "justify-center", "rouned-full" ,"text-base", "font-semibold", "text-gray-900");
-            }
-        }
-        span_children.innerHTML = days[i].getDate();
-        button.appendChild(span);
-        button.appendChild(span_children);
-        document.getElementById("day-headers").appendChild(button);
-        
-    }
-    createDayRdv(date);
+  document.getElementById("btn-day-name").innerHTML = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+  document.getElementById("main-title-day").innerHTML = getDayName(date).substring(0,3) + ". " + date.getDate() + " " + getMonthName(date) + " " + date.getFullYear();
+  document.getElementById("day-headers").innerHTML = "";
+  const firstDayOfWeek = getFirstDayOfWeek(date);
+  const days = getAllDaysFromWeek(firstDayOfWeek);
+  for (let i = 0; i < days.length; i++) {
+      var button = document.createElement("button");
+      button.classList.add("flex", "flex-col", "items-center", "pt-3", "pb-1.5");
+      button.type = "button";
+      var span = document.createElement("span");
+      span.innerHTML = getDayName(days[i]).charAt(0);
+      var span_children = document.createElement("span");
+      if (days[i].getDate() === new Date().getDate() && days[i].getMonth() === new Date().getMonth() && days[i].getFullYear() === new Date().getFullYear()) {
+          span_children.classList.add("mt-3", "flex", "h-8", "w-8", "items-center", "justify-center", "rouned-full" ,"text-base", "font-semibold", "text-indigo-600");
+      } else {
+          if (days[i].getDate() === date.getDate() && days[i].getMonth() === date.getMonth() && days[i].getFullYear() === date.getFullYear()) {
+              span_children.classList.add("mt-3", "flex", "h-8", "w-8", "items-center", "justify-center", "rounded-full" , "bg-gray-900", "font-semibold", "text-white");
+          } else {
+          span_children.classList.add("mt-3", "flex", "h-8", "w-8", "items-center", "justify-center", "rouned-full" ,"text-base", "font-semibold", "text-gray-900");
+          }
+      }
+      span_children.innerHTML = days[i].getDate();
+      button.appendChild(span);
+      button.appendChild(span_children);
+      document.getElementById("day-headers").appendChild(button); 
+  }
+  createDayRdv(date);
 }
 
 
