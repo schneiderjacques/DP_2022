@@ -13,7 +13,7 @@ function get_planning(req) {
   );
 
   // Chercher l'utilisateur
-  for (var i = 0; i < users.length; i++) {
+  for (let i = 0; i < users.length; i++) {
     if (users[i].token == req.headers.authorization.substring(7)) {
       return users[i].rdvs;
     }
@@ -42,7 +42,7 @@ function month_view(req, res) {
   if (planning) {
     // Récupérer les rendez-vous du mois
     let rdvs = [];
-    for (var i = 0; i < planning.length; i++) {
+    for (let i = 0; i < planning.length; i++) {
       let date = new Date(planning[i].date);
       if (
         date.getMonth() + 1 == req.params.month &&
@@ -180,7 +180,7 @@ function add_appointment(req, res) {
         let new_date_fin = new Date(req.body.heureFin);
 
         // Vérifier si le rendez-vous n'est pas déjà pris
-        for (var j = 0; j < planning.length; j++) {
+        for (let j = 0; j < planning.length; j++) {
           let debut = new Date(planning[j].heureDebut);
           let fin = new Date(planning[j].heureFin);
 
@@ -245,7 +245,7 @@ function edit_appointment(req, res) {
       let new_date_fin = new Date(req.body.heureFin);
 
       // Vérifier si le rendez-vous n'est pas déjà pris
-      for (var j = 0; j < users[i].rdvs.length; j++) {
+      for (let j = 0; j < users[i].rdvs.length; j++) {
         let debut = new Date(users[i].rdvs.heureDebut);
         let fin = new Date(users[i].rdvs.heureFin);
 
@@ -257,7 +257,7 @@ function edit_appointment(req, res) {
 
       // Modifier le rendez-vous
       let found = false;
-      for (var j = 0; j < users[i].rdvs.length; j++) {
+      for (let j = 0; j < users[i].rdvs.length; j++) {
         if (users[i].rdvs[j].id === req.body.id) {
           found = true;
           users[i].rdvs[j].nom = req.body.nom;

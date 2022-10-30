@@ -1,7 +1,7 @@
 import { fetchDataConnected } from "./request.js";
 import { formatNumber, refreshAllCalendars } from "./date_tools.js";
 
-function increment(hours, minutes) {
+function increment(hours, minutes, input) {
   //Permet l'incrémentation dans le modal
   if (minutes === 50) {
     minutes = 0;
@@ -14,7 +14,7 @@ function increment(hours, minutes) {
   }
   input.value = formatNumber(hours) + ":" + formatNumber(minutes);
 }
-function decrement(hours, minutes) {
+function decrement(hours, minutes, input) {
   //Permet la décrémentation dans le modal
   if (minutes === 0) {
     minutes = 50;
@@ -25,6 +25,7 @@ function decrement(hours, minutes) {
   if (hours === -1) {
     hours = 23;
   }
+
   input.value = formatNumber(hours) + ":" + formatNumber(minutes);
 }
 document.getElementById("confirm_button").addEventListener("click", createRdv);
@@ -160,32 +161,28 @@ function splitValues(input, isIncrementing) {
   let hours = parseInt(values[0], 10);
   let minutes = parseInt(values[1], 10);
   if (isIncrementing) {
-    increment(hours, minutes);
+    increment(hours, minutes, input);
   } else {
-    decrement(hours, minutes);
+    decrement(hours, minutes, input);
   }
 }
 document
   .getElementById("increment-first")
   .addEventListener("click", function () {
-    let input = document.getElementById("input-first");
-    splitValues(input, true)
+    splitValues(document.getElementById("input-first"), true);
   });
 document
   .getElementById("decrement-first")
   .addEventListener("click", function () {
-    let input = document.getElementById("input-first");
-    splitValues(input, false)
+    splitValues(document.getElementById("input-first"), false);
   });
 document
   .getElementById("increment-second")
   .addEventListener("click", function () {
-    let input = document.getElementById("input-second");
-    splitValues(input, true)
+    splitValues(document.getElementById("input-second"), true);
   });
 document
   .getElementById("decrement-second")
   .addEventListener("click", function () {
-    let input = document.getElementById("input-second");
-    splitValues(input, false)
+    splitValues(document.getElementById("input-second"), false);
   });

@@ -1,4 +1,4 @@
-var fs = require("fs");
+const fs = require("fs");
 
 /**
  * Méthode permettant de récupérer les données du site
@@ -29,7 +29,7 @@ function login(req, res) {
   let users = get_datas();
 
   // Vérifier si le username et le password sont présents dans la base de données
-  for (var i = 0; i < users.length; i++) {
+  for (let i = 0; i < users.length; i++) {
     if (
       users[i].username === req.body.username &&
       users[i].password === req.body.password
