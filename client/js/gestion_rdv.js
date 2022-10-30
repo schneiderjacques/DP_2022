@@ -1,11 +1,8 @@
 import { fetchDataConnected } from "./request.js";
 import { formatNumber, refreshAllCalendars } from "./date_tools.js";
 
-function increment(input) {
+function increment(hours, minutes) {
   //Permet l'incrémentation dans le modal
-  let values = input.value.split(":");
-  let hours = parseInt(values[0], 10);
-  let minutes = parseInt(values[1], 10);
   if (minutes === 50) {
     minutes = 0;
     hours++;
@@ -17,11 +14,8 @@ function increment(input) {
   }
   input.value = formatNumber(hours) + ":" + formatNumber(minutes);
 }
-function decrement(input) {
+function decrement(hours, minutes) {
   //Permet la décrémentation dans le modal
-  let values = input.value.split(":");
-  let hours = parseInt(values[0], 10);
-  let minutes = parseInt(values[1], 10);
   if (minutes === 0) {
     minutes = 50;
     hours--;
@@ -150,7 +144,7 @@ function initColors() {
   }
 }
 function changeColorSelection(index) {
-  var div = document.getElementById("colors");
+  let div = document.getElementById("colors");
   for (let i = 0; i < div.children.length; i++) {
     if (i == index) {
       div.children[i].classList.add("ring", "ring-offset-1", "ring-2");
@@ -160,7 +154,17 @@ function changeColorSelection(index) {
     }
   }
 }
-
+function splitValues(input, isIncrementing) {
+  //Permet de séparer les heures et les minutes dans le modal
+  let values = input.value.split(":");
+  let hours = parseInt(values[0], 10);
+  let minutes = parseInt(values[1], 10);
+  if (isIncrementing) {
+    increment(hours, minutes);
+  } else {
+    decrement(hours, minutes);
+  }
+}
 document
   .getElementById("increment-first")
   .addEventListener("click", function () {
