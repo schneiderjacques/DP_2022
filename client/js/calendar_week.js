@@ -12,6 +12,7 @@ import {
   getMonthName,
   refreshAllCalendars,
   convertHex,
+  formatNumber,
 } from "./date_tools.js";
 import { fetchDataGet } from "./request.js";
 
@@ -34,7 +35,7 @@ document
 export function refreshCalendarWeek(date) {
   document.getElementById("events-container").innerHTML = "";
   document.getElementById("week-headers").innerHTML = "";
-  var div = document.createElement("div");
+  let div = document.createElement("div");
   div.classList.add("col-end-1", "w-14");
   document.getElementById("week-headers").appendChild(div);
   document.getElementById("week-headers-responsive").innerHTML = "";
@@ -42,13 +43,13 @@ export function refreshCalendarWeek(date) {
 }
 
 function setDateName(date) {
-  var button = document.getElementById("btn-week-name");
-  var dt;
-  date.getDate() < 10 ? (dt = "0" + date.getDate()) : (dt = date.getDate());
-  date.getMonth() < 9
-    ? (dt += "-0" + (date.getMonth() + 1))
-    : (dt += "-" + (date.getMonth() + 1));
-  dt += "-" + date.getFullYear();
+  let button = document.getElementById("btn-week-name");
+  const dt =
+    formatNumber(date.getDate) +
+    "-" +
+    formatNumber(date.getMonth + 1) +
+    "-" +
+    date.getFullYear();
   button.innerHTML = dt;
 }
 
@@ -66,17 +67,17 @@ function setWeekTableHeaderByDay(dt) {
   const firstDayOfWeek = getFirstDayOfWeek(dt);
   const week = getAllDaysFromWeek(firstDayOfWeek);
   setWeekNumber(dt); //Met en place le numéro de la semaine;
-  var parent = document.getElementById("week-headers");
-  var parent_responsive = document.getElementById("week-headers-responsive");
+  let parent = document.getElementById("week-headers");
+  let parent_responsive = document.getElementById("week-headers-responsive");
   for (let i = 0; i < week.length; i++) {
-    if (i == 0) setDateName(week[i]); //Met en place la date de la semaine
+    if (i === 0) setDateName(week[i]); //Met en place la date de la semaine
     const name = getDayName(week[i]).slice(0, 3) + " "; //récupère le nom du jour et le coupe à 3 lettres
     const day = week[i].getDate(); //On récupère le jour
-    var div = document.createElement("div"); //on créer une div qui contiendra le nom du jour et le numéro du jour
+    let div = document.createElement("div"); //on créer une div qui contiendra le nom du jour et le numéro du jour
     div.classList.add("flex", "items-center", "justify-center", "py-3");
     var span = document.createElement("span");
     span.innerHTML = name;
-    var span_children = document.createElement("span");
+    let span_children = document.createElement("span");
 
     span_children.innerHTML = day;
     const aujourd = new Date();
@@ -129,12 +130,12 @@ function setWeekTableHeaderByDay(dt) {
     parent.appendChild(div);
 
     //responsive
-    var button = document.createElement("button");
+    let button = document.createElement("button");
     button.classList.add("flex", "flex-col", "items-center", "pt-2", "pb-3");
     button.type = "button";
-    var span_responsive = document.createElement("span");
+    let span_responsive = document.createElement("span");
     span_responsive.innerHTML = name + " ";
-    var span_responsive_children = document.createElement("span");
+    let span_responsive_children = document.createElement("span");
     span_responsive_children.innerHTML = day;
 
     if (
@@ -188,7 +189,7 @@ function setUpEventsByDate(date, eventsArray) {
   const events = searchDateInArray(date, eventsArray);
 
   for (let i = 0; i < events.length; i++) {
-    var dayColumnIndex = new Date(events[i].date).getDay();
+    let dayColumnIndex = new Date(events[i].date).getDay();
 
     const dayDebut = new Date(Date.parse(events[i].heureDebut));
     const dayFin = new Date(Date.parse(events[i].heureFin));
@@ -212,11 +213,9 @@ function createWeekRdv(
   span,
   color
 ) {
-  dayColumnIndex == 0
-    ? (dayColumnIndex = 7)
-    : (dayColumnIndex = dayColumnIndex);
-  var events_container = document.getElementById("events-container");
-  var li = document.createElement("li");
+  if (dayColumnIndex == 0) dayColumnIndex = 7;
+  let events_container = document.getElementById("events-container");
+  let li = document.createElement("li");
   li.classList.add(
     "relative",
     "mt-px",
@@ -225,7 +224,7 @@ function createWeekRdv(
     "col-start-" + dayColumnIndex
   );
   li.style.gridRow = gridRow + " / span " + span;
-  var a = document.createElement("a");
+  let a = document.createElement("a");
   a.classList.add(
     "group",
     "absolute",
@@ -246,12 +245,12 @@ function createWeekRdv(
   a.addEventListener("mouseout", function () {
     a.style.backgroundColor = convertHex(color, 0.6);
   });
-  var p = document.createElement("p");
+  let p = document.createElement("p");
   p.classList.add("order-1", "font-semibold", "text-black-700");
   p.innerHTML = event_name;
-  var p2 = document.createElement("p");
+  let p2 = document.createElement("p");
   p2.classList.add("text-black-500", "group-hover:text-black-700");
-  var time = document.createElement("time");
+  let time = document.createElement("time");
   time.classList.add("text-black-500", "group-hover:text-black-700");
   time.setAttribute("datetime", dayDebut.toISOString());
   time.innerHTML =
