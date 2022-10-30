@@ -9,7 +9,7 @@ import {
   setNextDay,
   setPreviousDay,
   getGridRow,
-  formatNumber,
+  createFrontOfRdv,
   getSpanHeight,
 } from "./date_tools.js";
 import { fetchDataGet } from "./request.js";
@@ -130,9 +130,7 @@ function createDayRdv(date) {
           let li = document.createElement("li");
           li.classList.add("relative", "mt-px", "flex");
           li.style.gridRow =
-            getGridRow(dayDebut) +
-            " / span " +
-            getSpanHeight(dayDebut, dayFin);
+            getGridRow(dayDebut) + " / span " + getSpanHeight(dayDebut, dayFin);
           let a = document.createElement("a");
           a.classList.add(
             "group",
@@ -156,20 +154,7 @@ function createDayRdv(date) {
           });
           let p = document.createElement("p");
           p.classList.add("order-1", "font-semibold", "text-black-700");
-          p.innerHTML = rdvs[i].nom;
-          let p2 = document.createElement("p");
-          p2.classList.add("text-black-500", "group-hover:text-black-700");
-          let time = document.createElement("time");
-          time.classList.add("text-black-500", "group-hover:text-black-700");
-          time.setAttribute("datetime", dayDebut.toISOString());
-          time.innerHTML =
-            formatNumber(dayDebut.getHours()) +
-            ":" +
-            formatNumber(dayDebut.getMinutes());
-          p2.appendChild(time);
-          a.appendChild(p);
-          a.appendChild(p2);
-          li.appendChild(a);
+          li.appendChild(createFrontOfRdv(rdvs[i].nom, dayDebut, p, a));
           events_container.appendChild(li);
         }
       }

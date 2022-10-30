@@ -12,7 +12,7 @@ import {
   getMonthName,
   refreshAllCalendars,
   convertHex,
-  formatNumber,
+  createFrontOfRdv,
 } from "./date_tools.js";
 import { fetchDataGet } from "./request.js";
 
@@ -45,9 +45,9 @@ export function refreshCalendarWeek(date) {
 function setDateName(date) {
   let button = document.getElementById("btn-week-name");
   const dt =
-    formatNumber(date.getDate) +
+    formatNumber(date.getDate()) +
     "-" +
-    formatNumber(date.getMonth + 1) +
+    formatNumber(date.getMonth() + 1) +
     "-" +
     date.getFullYear();
   button.innerHTML = dt;
@@ -247,19 +247,6 @@ function createWeekRdv(
   });
   let p = document.createElement("p");
   p.classList.add("order-1", "font-semibold", "text-black-700");
-  p.innerHTML = event_name;
-  let p2 = document.createElement("p");
-  p2.classList.add("text-black-500", "group-hover:text-black-700");
-  let time = document.createElement("time");
-  time.classList.add("text-black-500", "group-hover:text-black-700");
-  time.setAttribute("datetime", dayDebut.toISOString());
-  time.innerHTML =
-    formatNumber(dayDebut.getHours()) +
-    ":" +
-    formatNumber(dayDebut.getMinutes());
-  p2.appendChild(time);
-  a.appendChild(p);
-  a.appendChild(p2);
-  li.appendChild(a);
+  li.appendChild(createFrontOfRdv(event_name, dayDebut, p, a));
   events_container.appendChild(li);
 }

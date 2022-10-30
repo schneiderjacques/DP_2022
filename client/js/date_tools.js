@@ -221,3 +221,20 @@ export function getGridRow(dayDebut) {
     timeToDecimal(dayDebut.getHours() + ":" + dayDebut.getMinutes()) * 6 * 2 + 2
   );
 }
+export function createFrontOfRdv(eventName, dayDebut, p, a) {
+  //Créer la span d'heure et de titre d'un rdv
+  p.innerHTML = eventName;
+  let p2 = document.createElement("p");
+  p2.classList.add("text-black-500", "group-hover:text-black-700");
+  let time = document.createElement("time");
+  time.classList.add("text-black-500", "group-hover:text-black-700");
+  time.setAttribute("datetime", dayDebut.toISOString());
+  time.innerHTML =
+    formatNumber(dayDebut.getHours()) +
+    ":" +
+    formatNumber(dayDebut.getMinutes());
+  p2.appendChild(time);
+  a.appendChild(p);
+  a.appendChild(p2);
+  return a;
+}
