@@ -1,15 +1,15 @@
-import {convertHex,initHours,getFirstDayOfWeek,refreshAllCalendars, getAllDaysFromWeek, getDayName,getMonthName, setNextDay, setPreviousDay, getMinDiff, timeToDecimal, formatNumber} from "./date_tools.js";
-import {fetchDataGet} from "./request.js";
+import { convertHex, initHours, getFirstDayOfWeek, refreshAllCalendars, getAllDaysFromWeek, getDayName,getMonthName, setNextDay, setPreviousDay, getMinDiff, timeToDecimal, formatNumber } from "./date_tools.js";
+import { fetchDataGet } from "./request.js";
 
 initHours("hours-container-day");
 document.getElementById("btn-next-day").addEventListener("click", () => {
     setNextDay(1);
     refreshAllCalendars();});
-document.getElementById("btn-previous-day").addEventListener("click", function(){
+document.getElementById("btn-previous-day").addEventListener("click", () => {
     setPreviousDay(1);
     refreshAllCalendars();});
 
-export function refreshCalendarDay(date){
+export function refreshCalendarDay(date) {
     document.getElementById("btn-day-name").innerHTML = date.getDate()+"-" +(date.getMonth()+1)+"-"+date.getFullYear();
     document.getElementById("main-title-day").innerHTML = getDayName(date).substring(0,3) + ". " + date.getDate() + " " + getMonthName(date) + " " + date.getFullYear();
 
