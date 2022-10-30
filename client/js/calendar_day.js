@@ -39,12 +39,12 @@ export function refreshCalendarDay(date) {
   const firstDayOfWeek = getFirstDayOfWeek(date);
   const days = getAllDaysFromWeek(firstDayOfWeek);
   for (let i = 0; i < days.length; i++) {
-    var button = document.createElement("button");
+    let button = document.createElement("button");
     button.classList.add("flex", "flex-col", "items-center", "pt-3", "pb-1.5");
     button.type = "button";
-    var span = document.createElement("span");
+    let span = document.createElement("span");
     span.innerHTML = getDayName(days[i]).charAt(0);
-    var span_children = document.createElement("span");
+    let span_children = document.createElement("span");
     if (
       days[i].getDate() === new Date().getDate() &&
       days[i].getMonth() === new Date().getMonth() &&
@@ -114,7 +114,7 @@ function createDayRdv(date) {
   )
     .then((response) => {
       const rdvs = response;
-      var events_container = document.getElementById("day-rdv");
+      let events_container = document.getElementById("day-rdv");
       events_container.innerHTML = "";
 
       for (let i = 0; i < rdvs.length; i++) {
@@ -128,7 +128,7 @@ function createDayRdv(date) {
           const dayFin = new Date(rdvs[i].heureFin);
 
           //Différence entre deux dates
-          var diff = getMinDiff(dayDebut, dayFin);
+          const diff = getMinDiff(dayDebut, dayFin);
           //60 minute = 12 span
           //1 span = 5 minutes
           const span = diff / 5;
@@ -138,10 +138,10 @@ function createDayRdv(date) {
           );
           const gridRow = debutRdvInDecimal * 6 * 2 + 2;
 
-          var li = document.createElement("li");
+          let li = document.createElement("li");
           li.classList.add("relative", "mt-px", "flex");
           li.style.gridRow = gridRow + " / span " + span;
-          var a = document.createElement("a");
+          let a = document.createElement("a");
           a.classList.add(
             "group",
             "cursor-pointer",
@@ -162,12 +162,12 @@ function createDayRdv(date) {
           a.addEventListener("mouseout", function () {
             a.style.backgroundColor = convertHex(rdvs[i].couleur, 0.6);
           });
-          var p = document.createElement("p");
+          let p = document.createElement("p");
           p.classList.add("order-1", "font-semibold", "text-black-700");
           p.innerHTML = rdvs[i].nom;
-          var p2 = document.createElement("p");
+          let p2 = document.createElement("p");
           p2.classList.add("text-black-500", "group-hover:text-black-700");
-          var time = document.createElement("time");
+          let time = document.createElement("time");
           time.classList.add("text-black-500", "group-hover:text-black-700");
           time.setAttribute("datetime", dayDebut.toISOString());
           time.innerHTML =
