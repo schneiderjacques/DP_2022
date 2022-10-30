@@ -8,9 +8,9 @@ import {
   getMonthName,
   setNextDay,
   setPreviousDay,
-  getMinDiff,
-  timeToDecimal,
+  getGridRow,
   formatNumber,
+  getSpanHeight,
 } from "./date_tools.js";
 import { fetchDataGet } from "./request.js";
 
@@ -127,20 +127,12 @@ function createDayRdv(date) {
           const dayDebut = new Date(rdvs[i].heureDebut);
           const dayFin = new Date(rdvs[i].heureFin);
 
-          //Différence entre deux dates
-          const diff = getMinDiff(dayDebut, dayFin);
-          //60 minute = 12 span
-          //1 span = 5 minutes
-          const span = diff / 5;
-
-          const debutRdvInDecimal = timeToDecimal(
-            dayDebut.getHours() + ":" + dayDebut.getMinutes()
-          );
-          const gridRow = debutRdvInDecimal * 6 * 2 + 2;
-
           let li = document.createElement("li");
           li.classList.add("relative", "mt-px", "flex");
-          li.style.gridRow = gridRow + " / span " + span;
+          li.style.gridRow =
+            getGridRow(dayDebut, dayFin) +
+            " / span " +
+            getSpanHeight(dayDebut, dayFin);
           let a = document.createElement("a");
           a.classList.add(
             "group",

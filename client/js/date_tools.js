@@ -212,3 +212,12 @@ export function convertHex(hex, opacity) {
 
   return "rgba(" + r + "," + g + "," + b + "," + opacity + ")";
 }
+export function getSpanHeight(dayDebut, dayFin) {
+  const diff = getMinDiff(dayDebut, dayFin);
+  return diff / 5;
+}
+export function getGridRow(dayDebut, dayFin) {
+  return (
+    timeToDecimal(dayDebut.getHours() + ":" + dayDebut.getMinutes()) * 6 * 2 + 2
+  );
+}

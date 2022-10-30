@@ -6,8 +6,8 @@ import {
   getFirstDayOfWeek,
   getAllDaysFromWeek,
   initHours,
-  getMinDiff,
-  timeToDecimal,
+  getSpanHeight,
+  getGridRow,
   searchDateInArray,
   getMonthName,
   refreshAllCalendars,
@@ -193,22 +193,12 @@ function setUpEventsByDate(date, eventsArray) {
     const dayDebut = new Date(Date.parse(events[i].heureDebut));
     const dayFin = new Date(Date.parse(events[i].heureFin));
 
-    //Différence entre deux dates
-    var diff = getMinDiff(dayDebut, dayFin);
-    //60 minute = 12 span
-    //1 span = 5 minutes
-    const span = diff / 5;
-
-    const debutRdvInDecimal = timeToDecimal(
-      dayDebut.getHours() + ":" + dayDebut.getMinutes()
-    );
-    const gridRow = debutRdvInDecimal * 6 * 2 + 2;
     createWeekRdv(
       dayColumnIndex,
       dayDebut,
       events[i].nom,
-      gridRow,
-      span,
+      getGridRow(dayDebut, dayFin),
+      getSpanHeight(dayDebut, dayFin),
       events[i].couleur
     );
   }
