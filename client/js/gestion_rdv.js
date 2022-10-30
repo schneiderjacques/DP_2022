@@ -18,8 +18,8 @@ function increment(input){ //Permet l'incrémentation dans le modal
 }
 function decrement(input){ //Permet la décrémentation dans le modal
     let values = input.value.split(':');
-    let hours = parseInt(values[0]);
-    let minutes = parseInt(values[1]);
+    let hours = parseInt(values[0],10);
+    let minutes = parseInt(values[1],10);
     if (minutes === 0) {
         minutes = 50;
         hours--;
