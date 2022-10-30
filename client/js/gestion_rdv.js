@@ -1,35 +1,32 @@
 import { fetchDataConnected } from "./request.js";
 import { formatNumber, refreshAllCalendars } from "./date_tools.js";
 
-
-
-
 function increment(input){ //Permet l'incrémentation dans le modal
-    var values = input.value.split(':');
-    var hours = parseInt(values[0]);
-    var minutes = parseInt(values[1]);
-    if (minutes == 50) {
+    let values = input.value.split(':');
+    let hours = parseInt(values[0]);
+    let minutes = parseInt(values[1]);
+    if (minutes === 50) {
         minutes = 0;
         hours++;
     } else {
         minutes += 10;
     }
-    if (hours == 24) {
+    if (hours === 24) {
         hours = 0;
     }
     input.value = formatNumber(hours) + ':' + formatNumber(minutes);
 }
 function decrement(input){ //Permet la décrémentation dans le modal
-    var values = input.value.split(':');
-    var hours = parseInt(values[0]);
-    var minutes = parseInt(values[1]);
-    if (minutes == 0) {
+    let values = input.value.split(':');
+    let hours = parseInt(values[0]);
+    let minutes = parseInt(values[1]);
+    if (minutes === 0) {
         minutes = 50;
         hours--;
     } else {
         minutes -= 10;
     }
-    if (hours == -1) {
+    if (hours === -1) {
         hours = 23;
     }
     input.value = formatNumber(hours) + ':' + formatNumber(minutes);
