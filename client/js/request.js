@@ -1,5 +1,5 @@
 const api = "http://localhost:8080/"; // adresse l'api avec le port
-export async function fetchData(body, method, route) {
+async function fetchData(body, method, route) {
   const response = await fetch(api + route, {
     method: method,
     headers: {
@@ -10,7 +10,7 @@ export async function fetchData(body, method, route) {
   });
   return response.json();
 }
-export async function fetchDataConnected(body, method, route) {
+async function fetchDataConnected(body, method, route) {
   const response = await fetch(api + route, {
     method: method,
     headers: {
@@ -23,7 +23,7 @@ export async function fetchDataConnected(body, method, route) {
   });
   return response.json();
 }
-export async function fetchDataGet(route) {
+async function fetchDataGet(route) {
   const response = await fetch(api + route, {
     method: "GET",
     headers: {

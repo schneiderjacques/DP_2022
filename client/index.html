@@ -1117,9 +1117,11 @@
       </div>
     </div>
   </body>
-
-  <script src="js/date_tools.js" type="module"></script>
-  <script src="js/gestion_rdv.js" type="module"></script>
+  <script src="js/request.js"></script>
+  <script src="js/date_tools.js"></script>
+  <script src="js/calendar_day.js"></script>
+  <script src="js/calendar_week.js"></script>
+  <script src="js/gestion_rdv.js"></script>
 
   <script>
     if (window.localStorage.getItem("user") == null) {
@@ -1127,7 +1129,6 @@
       window.location.href = "html/authentification/connexion.html";
     }
     console.log(JSON.parse(window.localStorage.getItem("user"))); //Affichage des données de l'utilisateur
-    //window.localStorage.clear();
     const vue_day = document.getElementById("vue-day");
     const vue_week = document.getElementById("vue-week");
     const vue_month = document.getElementById("vue-month");

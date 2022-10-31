@@ -1,22 +1,3 @@
-import {
-  setPreviousDay,
-  setNextDay,
-  formatNumber,
-  getDayName,
-  getFirstDayOfWeek,
-  getAllDaysFromWeek,
-  initHours,
-  getSpanHeight,
-  getGridRow,
-  searchDateInArray,
-  getMonthName,
-  refreshAllCalendars,
-  convertHex,
-  createFrontOfRdv,
-  areDateEquals,
-} from "./date_tools.js";
-import { fetchDataGet } from "./request.js";
-
 initHours("hours-container"); //Initie les heures (00:00, 01:00, 02:00, etc...)
 
 document.getElementById("btn-next-week").addEventListener("click", function () {
@@ -33,7 +14,7 @@ document
     refreshAllCalendars();
   });
 
-export function refreshCalendarWeek(date) {
+function refreshCalendarWeek(date) {
   document.getElementById("events-container").innerHTML = "";
   document.getElementById("week-headers").innerHTML = "";
   let div = document.createElement("div");

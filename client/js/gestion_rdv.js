@@ -1,6 +1,10 @@
-import { fetchDataConnected } from "./request.js";
-import { formatNumber, refreshAllCalendars } from "./date_tools.js";
+refreshAllCalendars();
 
+function refreshAllCalendars() {
+  refreshCalendarDay(current_date);
+  refreshCalendarWeek(current_date);
+  //refreshCalendarMonth(current_date.getMonth(), current_date.getFullYear());
+}
 function increment(hours, minutes, input) {
   //Permet l'incrémentation dans le modal
   if (minutes === 50) {

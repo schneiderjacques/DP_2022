@@ -78,13 +78,8 @@
   </div>
     
 </body>
-
-
-<script type="module">
-  import { fetchData } from '../../js/request.js';
-
-
-
+<script src="../../js/request.js"></script>
+<script>
   document.getElementById('login_btn').addEventListener("click", () => { //ajout du login au click du bouton connexion
     const login = document.getElementById('pseudo').value.trim();
     const password = document.getElementById('password').value;

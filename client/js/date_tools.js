@@ -1,16 +1,8 @@
-import { refreshCalendarDay } from "./calendar_day.js";
-import { refreshCalendarWeek } from "./calendar_week.js";
-
 let current_date = new Date();
 
-refreshAllCalendars();
-export function refreshAllCalendars() {
-  refreshCalendarDay(current_date);
-  refreshCalendarWeek(current_date);
-  //refreshCalendarMonth(current_date.getMonth(), current_date.getFullYear());
-}
 
-export function getAllDaysFromMonth(month, year) {
+
+function getAllDaysFromMonth(month, year) {
   //Renvoie tout les jours d'un mois, du mois précédent visible et du mois suivant visible (cases grises)
   let days = []; //Tout les jours du mois
   let firstDays = []; //Les jours du mois précédents qu'on peut afficher
@@ -41,32 +33,32 @@ export function getAllDaysFromMonth(month, year) {
   return final;
 }
 
-export function daysInMonth(month, year) {
+function daysInMonth(month, year) {
   //Renvoi le premier jour du mois
   return new Date(year, month + 1, 0).getDate();
 }
 
-export function setPreviousDay(nb) {
+function setPreviousDay(nb) {
   //renvoie le n jour précédent de date
   const previous = new Date(current_date.getTime());
   previous.setDate(current_date.getDate() - nb);
   current_date = previous;
 }
-export function setNextDay(nb) {
+function setNextDay(nb) {
   //renvoie le N jour suivant de date
   const next = new Date(current_date.getTime());
   next.setDate(current_date.getDate() + nb);
   current_date = next;
 }
 
-export function isDateEqual(date1, date2) {
+function isDateEqual(date1, date2) {
   //Check si deux dates sont égales
   date2.setHours("00", "00", "00", "00");
   date1.setHours("00", "00", "00", "00");
   return date1.getTime() == date2.getTime();
 }
 
-export function searchDateInArray(date, array) {
+function searchDateInArray(date, array) {
   //Renvoie les rendez vous d'un jour
   let results = [];
   for (let i = 0; i < array.length; i++) {
@@ -76,18 +68,18 @@ export function searchDateInArray(date, array) {
   }
   return results;
 }
-export function formatNumber(nb) {
+function formatNumber(nb) {
   //Renvoie l'heure d'un date
   if (nb < 10) {
     return "0" + nb;
   }
   return nb;
 }
-export function getNumberOfDayBetween2Date(date1, date2) {
+function getNumberOfDayBetween2Date(date1, date2) {
   //renvoie le nombre de jour entre deux dates
   return Math.round((date2.getTime() - date1.getTime()) / (1000 * 3600 * 24));
 }
-export function getDayName(dt) {
+function getDayName(dt) {
   const days = [
     "Dimanche",
     "Lundi",
@@ -99,7 +91,7 @@ export function getDayName(dt) {
   ];
   return days[dt.getDay()];
 }
-export function getMonthName(dt) {
+function getMonthName(dt) {
   const months = [
     "Janvier",
     "Février",
@@ -116,18 +108,18 @@ export function getMonthName(dt) {
   ];
   return months[dt.getMonth()];
 }
-export function getFirstDayOfWeek(dt) {
+function getFirstDayOfWeek(dt) {
   let tmp = new Date(dt);
   const day = tmp.getDay();
   const diff = tmp.getDate() - day + (day === 0 ? -6 : 1);
   return new Date(tmp.setDate(diff));
 }
-export function getNextDay(nb) {
+function getNextDay(nb) {
   const next = new Date(current_date.getTime());
   next.setDate(current_date.getDate() + nb);
   return next;
 }
-export function getPreviousDay(nb) {
+function getPreviousDay(nb) {
   const next = new Date(current_date.getTime());
   next.setDate(current_date.getDate() - nb);
   return next;
@@ -137,7 +129,7 @@ function getNextDayFromMonday(date, nb) {
   next.setDate(date.getDate() + nb);
   return next;
 }
-export function getAllDaysFromWeek(dt) {
+function getAllDaysFromWeek(dt) {
   let days = [];
   for (let i = 0; i < 7; i++) {
     days.push(getNextDayFromMonday(dt, i));
@@ -145,7 +137,7 @@ export function getAllDaysFromWeek(dt) {
   return days;
 }
 
-export function initHours(name) {
+function initHours(name) {
   const heures = [
     "00",
     "01",
@@ -196,21 +188,21 @@ export function initHours(name) {
   }
 }
 
-export function getMinDiff(startDate, endDate) {
+function getMinDiff(startDate, endDate) {
   //renvoie la différence en minutes entre deux dates
   const msInMinute = 60 * 1000;
 
   return Math.round(Math.abs(endDate - startDate) / msInMinute);
 }
 
-export function timeToDecimal(t) {
+function timeToDecimal(t) {
   //renvoie l'heure en décimal entre deux heures
   const arr = t.split(":");
   let dec = parseInt((arr[1] / 6) * 10, 10);
 
   return parseFloat(parseInt(arr[0], 10) + "." + (dec < 10 ? "0" : "") + dec);
 }
-export function convertHex(hex, opacity) {
+function convertHex(hex, opacity) {
   //convert hex to rgba
   hex = hex.replace("#", "");
   const r = parseInt(hex.substring(0, 2), 16);
@@ -219,16 +211,16 @@ export function convertHex(hex, opacity) {
 
   return "rgba(" + r + "," + g + "," + b + "," + opacity + ")";
 }
-export function getSpanHeight(dayDebut, dayFin) {
+function getSpanHeight(dayDebut, dayFin) {
   const diff = getMinDiff(dayDebut, dayFin);
   return diff / 5;
 }
-export function getGridRow(dayDebut) {
+function getGridRow(dayDebut) {
   return (
     timeToDecimal(dayDebut.getHours() + ":" + dayDebut.getMinutes()) * 6 * 2 + 2
   );
 }
-export function createFrontOfRdv(eventName, dayDebut, p, a) {
+function createFrontOfRdv(eventName, dayDebut, p, a) {
   //Créer la span d'heure et de titre d'un rdv
   p.innerHTML = eventName;
   let p2 = document.createElement("p");
@@ -245,7 +237,7 @@ export function createFrontOfRdv(eventName, dayDebut, p, a) {
   a.appendChild(p2);
   return a;
 }
-export function areDateEquals(date1, date2) {
+function areDateEquals(date1, date2) {
   //renvoie true si les dates sont égales
   return (
     date1.getDate() === date2.getDate() &&
