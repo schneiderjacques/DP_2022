@@ -7,7 +7,7 @@ const fs = require("fs");
 function get_datas() {
   // Récupérer les données du site
   return JSON.parse(
-    fs.readFileSync(__dirname + "./../data/" + "data.json", "utf8")
+    fs.readFileSync(__dirname + "/../data/" + "data.json", "utf8")
   );
 }
 
@@ -92,7 +92,7 @@ function register(req, res) {
 
   // Enregistrer les données du site
   fs.writeFileSync(
-    __dirname + "./../data/" + "data.json",
+    __dirname + "/../data/" + "data.json",
     JSON.stringify(users)
   );
 
