@@ -85,103 +85,13 @@
     "username": "toto57320",
     "password": "toto",
     "token": 1666785839,
-    "rdvs": [
-      {
-        "id": 1,
-        "nom": "ATTENTION TEESTTT",
-        "date": "2022-10-29",
-        "heureDebut": "2022-10-29 00:00:00",
-        "heureFin": "2022-10-29 22:50:00",
-        "couleur": "#FF0000"
-      },
-      {
-        "id": 2,
-        "nom": "Réunion de dingue !",
-        "date": "2022-10-28",
-        "heureDebut": "2022-10-29 00:00:00",
-        "heureFin": "2022-10-29 23:40:00",
-        "couleur": "#1D4ED8"
-      },
-      {
-        "id": 3,
-        "nom": "DDDD",
-        "date": "2022-10-22",
-        "heureDebut": "2022-10-22 00:00:00",
-        "heureFin": "2022-10-22 23:40:00",
-        "couleur": "#4B0082"
-      },
-      {
-        "id": 4,
-        "nom": "dddd",
-        "date": "2022-10-30",
-        "heureDebut": "2022-10-30 00:00:00",
-        "heureFin": "2022-10-30 23:50:00",
-        "couleur": "#EE82EE"
-      },
-      {
-        "id": 5,
-        "nom": "Test",
-        "date": "2022-10-27",
-        "heureDebut": "2022-10-27 00:15:00",
-        "heureFin": "2022-10-27 22:30:00",
-        "couleur": "#FFFF00"
-      },
-      {
-        "id": 6,
-        "nom": "TREEEEEESSSS",
-        "date": "2022-10-26",
-        "heureDebut": "2022-10-26 00:00:00",
-        "heureFin": "2022-10-26 23:30:00",
-        "couleur": "#008000"
-      },
-      {
-        "id": 7,
-        "nom": "Soiréee de matin",
-        "date": "2022-10-25",
-        "heureDebut": "2022-10-25 00:00:00",
-        "heureFin": "2022-10-25 02:00:00",
-        "couleur": "#4B0082"
-      },
-      {
-        "id": 8,
-        "nom": "REPOSOOOSOSSS",
-        "date": "2022-10-25",
-        "heureDebut": "2022-10-25 02:00:00",
-        "heureFin": "2022-10-25 20:00:00",
-        "couleur": "#FFA500"
-      },
-      {
-        "id": 9,
-        "nom": "Blablablablablablablablablabla",
-        "date": "2022-10-24",
-        "heureDebut": "2022-10-24 00:00:00",
-        "heureFin": "2022-10-24 01:00:00",
-        "couleur": "#FFFF00"
-      },
-      {
-        "id": 10,
-        "nom": "BOUBOUBOU",
-        "date": "2022-10-24",
-        "heureDebut": "2022-10-24 01:30:00",
-        "heureFin": "2022-10-24 07:00:00",
-        "couleur": "#1D4ED8"
-      },
-      {
-        "id": 11,
-        "nom": "TEST",
-        "date": "2022-10-24",
-        "heureDebut": "2022-10-24 22:00:00",
-        "heureFin": "2022-10-24 23:40:00",
-        "couleur": "#FFFF00"
-      },
-      {
-        "id": 12,
-        "nom": "dzadazd",
-        "date": "2022-09-27",
-        "heureDebut": "2022-09-27 00:00:00",
-        "heureFin": "2022-09-27 23:50:00",
-        "couleur": "#FFFF00"
-      }
-    ]
+    "rdvs": []
+  },
+  {
+    "id": 9,
+    "username": "jacques",
+    "password": "jack",
+    "token": 1667302244,
+    "rdvs": []
   }
 ]
