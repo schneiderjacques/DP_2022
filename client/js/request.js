@@ -21,6 +21,7 @@ async function fetchDataConnected(body, method, route) {
     },
     body: body,
   });
+  console.log(response);
   return response.json();
 }
 async function fetchDataGet(route) {

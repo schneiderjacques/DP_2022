@@ -80,8 +80,15 @@ function createRdv() {
     couleur: color,
   };
   fetchDataConnected(JSON.stringify(data), "POST", "add_appointment").then(
-    () => {
-      refreshAllCalendars();
+    (response) => {
+      if(response.status === 409){
+        alert.children[2].innerHTML = "Il y a déjà un rendez-vous à cette heure";
+        showAlert(true);
+        return;
+      }
+      if(response.status === 200){
+        refreshAllCalendars();
+      }
     }
   );
 }
