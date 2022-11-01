@@ -7,12 +7,10 @@ function getAllDaysFromMonth(month, year) {
   let days = []; //Tout les jours du mois
   let firstDays = []; //Les jours du mois précédents qu'on peut afficher
   const lastDays = []; //Les jours du mois d'après qu'on peu afficher
-
   for (let i = 1; i <= daysInMonth(month, year); i++) {
     let day = new Date(year, month, i);
     days.push(day);
   }
-  const firstDayOfMonth = new Date(days[0]);
   const lastDayOfMonth = new Date(days[days.length - 1]);
 
   let previousDays = new Date(days[0]).getDay() - 1; //Jours précédents du mois M étudié
@@ -24,9 +22,8 @@ function getAllDaysFromMonth(month, year) {
   for (let i = previousDays; i > 0; i--) {
     firstDays.push(getPreviousDay(i));
   }
-
-  for (let i = 0; i < nextdays; i++) {
-    lastDays.push(getNextDay(i + 1));
+  for (let j = 0; j < nextdays; j++) {
+    lastDays.push(getNextDayFromMonday(lastDayOfMonth,j + 1));
   }
 
   const final = firstDays.concat(days, lastDays);
@@ -50,7 +47,12 @@ function setNextDay(nb) {
   next.setDate(current_date.getDate() + nb);
   current_date = next;
 }
-
+function setNextMonth(){
+  current_date.setMonth(current_date.getMonth() + 1);
+}
+function setPreviousMonth(){
+  current_date.setMonth(current_date.getMonth() - 1);
+}
 function isDateEqual(date1, date2) {
   //Check si deux dates sont égales
   date2.setHours("00", "00", "00", "00");

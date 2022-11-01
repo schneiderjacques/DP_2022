@@ -41,7 +41,7 @@ function setWeekNumber(dt) {
 
   const weekNumber = Math.ceil(days / 7);
   document.getElementById("main-title-week").innerHTML =
-    "Sem. n°" + weekNumber + " (" + getMonthName(dt) + ") " + dt.getFullYear();
+    "Sem. n°" + weekNumber + " (" + getMonthName(dt.getMonth()) + ") " + dt.getFullYear();
 }
 
 function setWeekTableHeaderByDay(dt) {

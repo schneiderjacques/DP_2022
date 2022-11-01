@@ -21,8 +21,7 @@ async function fetchDataConnected(body, method, route) {
     },
     body: body,
   });
-  console.log(response);
-  return response.json();
+  return response;
 }
 async function fetchDataGet(route) {
   const response = await fetch(api + route, {

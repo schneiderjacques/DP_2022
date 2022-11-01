@@ -16,7 +16,7 @@ function refreshCalendarDay(date) {
     ". " +
     date.getDate() +
     " " +
-    getMonthName(date) +
+    getMonthName(date.getMonth()) +
     " " +
     date.getFullYear();
   document.getElementById("day-headers").innerHTML = "";
@@ -92,9 +92,9 @@ function createDayRdv(date) {
     "day_planning/" +
       date.getFullYear() +
       "-" +
-      (date.getMonth() + 1) +
+      formatNumber(date.getMonth() + 1) +
       "-" +
-      date.getDate()
+      formatNumber(date.getDate())
   )
     .then((response) => {
       const rdvs = response;

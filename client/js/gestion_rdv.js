@@ -1,9 +1,9 @@
 refreshAllCalendars();
 
-function refreshAllCalendars() {
+function refreshAllCalendars() { //refresh tout les calendriers
   refreshCalendarDay(current_date);
   refreshCalendarWeek(current_date);
-  //refreshCalendarMonth(current_date.getMonth(), current_date.getFullYear());
+  refreshCalendarMonth(current_date.getMonth(), current_date.getFullYear());
 }
 function increment(hours, minutes, input) {
   //Permet l'incrémentation dans le modal
@@ -34,10 +34,10 @@ function decrement(hours, minutes, input) {
 }
 document.getElementById("confirm_button").addEventListener("click", createRdv);
 function createRdv() {
-  const day = document.getElementById("date-picker").value.trim();
-  const debutRdv = document.getElementById("input-first").value.trim();
-  const finRdv = document.getElementById("input-second").value.trim();
-  const desc = document.getElementById("textarea").value.trim();
+  let day = document.getElementById("date-picker").value.trim();
+  let debutRdv = document.getElementById("input-first").value.trim();
+  let finRdv = document.getElementById("input-second").value.trim();
+  let desc = document.getElementById("textarea").value.trim();
   const color = colors[selectedColor];
 
   let alert = document.getElementById("alert-3");
@@ -67,6 +67,14 @@ function createRdv() {
     showAlert(true);
     return;
   }
+  debutRdv = day + " " + debutRdv + ":00";
+  finRdv = day + " " + finRdv + ":00";
+  if (new Date(debutRdv) >= new Date(finRdv)) {
+    alert.children[2].innerHTML =
+      "Votre rendez-vous termine avant qu'il ne commence";
+    showAlert(true);
+    return;
+  }
   if (desc.length === 0) {
     alert.children[2].innerHTML = "Veuillez entrer une description";
     showAlert(true);
@@ -79,18 +87,38 @@ function createRdv() {
     nom: desc,
     couleur: color,
   };
+
   fetchDataConnected(JSON.stringify(data), "POST", "add_appointment").then(
     (response) => {
-      if(response.status === 409){
-        alert.children[2].innerHTML = "Il y a déjà un rendez-vous à cette heure";
+      if (response.status === 409) {
+        alert.children[2].innerHTML =
+          "Il y a déjà un rendez-vous à cette heure";
         showAlert(true);
         return;
       }
-      if(response.status === 200){
+      if (response.status === 200) {
         refreshAllCalendars();
+        setDataOfModal({
+          date: "",
+          heureDebut: "00:00",
+          heureFin: "00:00",
+          nom: "",
+          couleur: 0,
+        });
+        document.getElementById("modal").classList.add("hidden");
+        document.getElementById("modal").classList.remove("flex");
       }
     }
   );
+}
+
+function setDataOfModal(rdv) {
+  //Permet de remplir le modal avec les données du rdv
+  document.getElementById("date-picker").value = rdv.date;
+  document.getElementById("input-first").value = rdv.heureDebut;
+  document.getElementById("input-second").value = rdv.heureFin;
+  document.getElementById("textarea").value = rdv.nom;
+  changeColorSelection(rdv.couleur);
 }
 
 function showAlert(state) {

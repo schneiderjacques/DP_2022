@@ -1121,6 +1121,7 @@
   <script src="js/date_tools.js"></script>
   <script src="js/calendar_day.js"></script>
   <script src="js/calendar_week.js"></script>
+  <script src="js/calendar_month.js"></script>
   <script src="js/gestion_rdv.js"></script>
 
   <script>
@@ -1134,7 +1135,7 @@
     const vue_week = document.getElementById("vue-week");
     const vue_month = document.getElementById("vue-month");
 
-    switchVue(1); //Affiche la vue du mois par défaut
+    switchVue(0); //Affiche la vue du mois par défaut
 
     function switchVue(id) {
       switch (id) {
