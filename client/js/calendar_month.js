@@ -77,7 +77,10 @@ function printCalendarByMonth(days, month) {
         "main-month-container"
       );
       let div = document.createElement("div");
-      if (dt.getMonth() != month || dt.getFullYear() != current_date.getFullYear()) {
+      if (
+        dt.getMonth() != month ||
+        dt.getFullYear() != current_date.getFullYear()
+      ) {
         //Si le jour ne concerne pas notre mois
         div.classList.add(
           "relative",
@@ -93,6 +96,7 @@ function printCalendarByMonth(days, month) {
       var time = document.createElement("time");
       time.setAttribute("datetime", dt.toISOString().split("T")[0]);
       time.innerHTML = dt.getDate();
+
       if (
         dt.getDate() == new Date().getDate() &&
         dt.getMonth() == new Date().getMonth() &&
@@ -114,9 +118,15 @@ function printCalendarByMonth(days, month) {
 
       div.appendChild(time);
       const rdvFiltered = rdv.filter((rdv) => {
+        if(rdv.date === dt.toISOString().split("T")[0]){
+          console.log(rdv.date);
+          console.log(dt);
+        }
         return rdv.date === dt.toISOString().split("T")[0];
       });
+
       if (rdvFiltered.length != 0) {
+        
         var ol = document.createElement("ol");
         ol.classList.add("mt-2");
         for (let j = 0; j < rdvFiltered.length; j++) {
@@ -144,7 +154,7 @@ function printCalendarByMonth(days, month) {
           );
           timeTemp.setAttribute("datetime", rdvFiltered[j].heureDebut);
           timeTemp.innerHTML =
-          rdvFiltered[j].heureDebut.split(" ")[1].split(":")[0] +
+            rdvFiltered[j].heureDebut.split(" ")[1].split(":")[0] +
             ":" +
             rdvFiltered[j].heureDebut.split(" ")[1].split(":")[1];
           a.appendChild(p);
