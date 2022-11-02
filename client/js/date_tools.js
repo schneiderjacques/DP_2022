@@ -11,6 +11,7 @@ function getAllDaysFromMonth(month, year) {
     let day = new Date(year, month, i);
     days.push(day);
   }
+  const firstDayOfMonth = new Date(year, month, 1);
   const lastDayOfMonth = new Date(days[days.length - 1]);
 
   let previousDays = new Date(days[0]).getDay() - 1; //Jours précédents du mois M étudié
@@ -20,7 +21,7 @@ function getAllDaysFromMonth(month, year) {
   const nextdays = 42 - (days.length + previousDays); //Jours suivant qu'on peut toujours remplir
 
   for (let i = previousDays; i > 0; i--) {
-    firstDays.push(getPreviousDay(i));
+    firstDays.push(getPreviousDayByDate(firstDayOfMonth, i));
   }
   for (let j = 0; j < nextdays; j++) {
     lastDays.push(getNextDayFromMonday(lastDayOfMonth,j + 1));
@@ -124,6 +125,11 @@ function getNextDay(nb) {
 function getPreviousDay(nb) {
   const next = new Date(current_date.getTime());
   next.setDate(current_date.getDate() - nb);
+  return next;
+}
+function getPreviousDayByDate(date, nb) {
+  const next = new Date(date.getTime());
+  next.setDate(date.getDate() - nb);
   return next;
 }
 function getNextDayFromMonday(date, nb) {

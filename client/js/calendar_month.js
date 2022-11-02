@@ -118,15 +118,12 @@ function printCalendarByMonth(days, month) {
 
       div.appendChild(time);
       const rdvFiltered = rdv.filter((rdv) => {
-        if(rdv.date === dt.toISOString().split("T")[0]){
-          console.log(rdv.date);
-          console.log(dt);
+        if( areDateEquals(new Date(rdv.date), dt) ){
+          return true;
         }
-        return rdv.date === dt.toISOString().split("T")[0];
+        return false;
       });
-
       if (rdvFiltered.length != 0) {
-        
         var ol = document.createElement("ol");
         ol.classList.add("mt-2");
         for (let j = 0; j < rdvFiltered.length; j++) {

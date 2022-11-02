@@ -67,8 +67,6 @@ function createRdv() {
     showAlert(true);
     return;
   }
-  debutRdv = day + " " + debutRdv + ":00";
-  finRdv = day + " " + finRdv + ":00";
   if (new Date(debutRdv) >= new Date(finRdv)) {
     alert.children[2].innerHTML =
       "Votre rendez-vous termine avant qu'il ne commence";
@@ -87,6 +85,7 @@ function createRdv() {
     nom: desc,
     couleur: color,
   };
+  console.log(data);
 
   fetchDataConnected(JSON.stringify(data), "POST", "add_appointment").then(
     (response) => {
