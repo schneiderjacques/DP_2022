@@ -4,50 +4,77 @@
       <h1 class="text-3xl font-bold">Connexion</h1>
       <form action="">
         <div class="txt_field">
-          <input type="text" required id="pseudo" v-model="bodyConnexion.username">
+          <input
+            type="text"
+            required
+            id="pseudo"
+            v-model="bodyConnexion.username"
+          />
           <span></span>
           <label>Pseudonyme</label>
         </div>
         <div class="txt_field">
-          <input type="password" required id="password" v-model="bodyConnexion.password">
+          <input
+            type="password"
+            required
+            id="password"
+            v-model="bodyConnexion.password"
+          />
           <span></span>
           <label>Mot de passe</label>
         </div>
         <ErrorVue v-if="isErrorConnexion" :msg="errorConnexion"></ErrorVue>
-        <input type="button" value="Connexion" @click="connexion">
+        <input type="button" value="Connexion" @click="connexion" />
         <div class="signup_link">
           Pas encore inscrit ?
-          <button type="button" @click="isInscriptionShown = true">Inscription</button>
+          <button type="button" @click="isInscriptionShown = true">
+            Inscription
+          </button>
         </div>
       </form>
-
     </div>
     <div class="center" v-if="isInscriptionShown">
       <h1 class="text-3xl font-bold">Inscription</h1>
       <form>
         <div class="txt_field">
-          <input type="text" required id="inscr-pseudo" v-model="bodyInscription.username">
+          <input
+            type="text"
+            required
+            id="inscr-pseudo"
+            v-model="bodyInscription.username"
+          />
           <span></span>
           <label>Pseudonyme</label>
         </div>
         <div class="txt_field">
-          <input type="password" required id="inscr-first-pwd" v-model="bodyInscription.password">
+          <input
+            type="password"
+            required
+            id="inscr-first-pwd"
+            v-model="bodyInscription.password"
+          />
           <span></span>
           <label>Mot de passe</label>
         </div>
         <div class="txt_field">
-          <input type="password" required id="inscr-second-pwd" v-model="bodyInscription.confirm_password">
+          <input
+            type="password"
+            required
+            id="inscr-second-pwd"
+            v-model="bodyInscription.confirm_password"
+          />
           <span></span>
           <label>Confirmer votre mot de passe</label>
         </div>
         <ErrorVue v-if="isErrorInscription" :msg="errorInscription"></ErrorVue>
-        <input type="button" value="Inscription" @click="inscription">
+        <input type="button" value="Inscription" @click="inscription" />
         <div class="signup_link">
           Déjà inscrit ?
-          <button type="button" @click="isInscriptionShown = false">Connexion</button>
+          <button type="button" @click="isInscriptionShown = false">
+            Connexion
+          </button>
         </div>
       </form>
-
     </div>
   </div>
 </template>
@@ -58,7 +85,7 @@ import { fetchData } from "@/js/request";
 
 export default {
   name: "ConnexionVue",
-  components: {ErrorVue},
+  components: { ErrorVue },
   data() {
     return {
       bodyConnexion: {
@@ -68,7 +95,7 @@ export default {
       bodyInscription: {
         username: "",
         password: "",
-        confirm_password: ""
+        confirm_password: "",
       },
       isInscriptionShown: false,
       isErrorConnexion: false,
@@ -80,50 +107,69 @@ export default {
   methods: {
     connexion: function () {
       this.isErrorConnexion = false;
-      if(this.bodyConnexion.password.trim().length === 0 || this.bodyConnexion.username.trim().length === 0){
+      if (
+        this.bodyConnexion.password.trim().length === 0 ||
+        this.bodyConnexion.username.trim().length === 0
+      ) {
         this.errorConnexion = "Les champs ne peuvent pas être vides";
         this.isErrorConnexion = true;
         return;
       }
-      fetchData(JSON.stringify(this.bodyConnexion), 'POST', 'login/').then((res) => {
-        localStorage.setItem('user', JSON.stringify(res));
-        localStorage.setItem('currentDate', new Date().toISOString().slice(0, 10));
-        this.$router.push("/day");
-      }).catch(() => {
-        this.errorConnexion = "Identifiants incorrects";
-        this.isErrorConnexion = true;
-      });
+      fetchData(JSON.stringify(this.bodyConnexion), "POST", "login/")
+        .then((res) => {
+          localStorage.setItem("user", JSON.stringify(res));
+          localStorage.setItem(
+            "currentDate",
+            new Date().toISOString().slice(0, 10)
+          );
+          this.$router.push("/day");
+        })
+        .catch(() => {
+          this.errorConnexion = "Identifiants incorrects";
+          this.isErrorConnexion = true;
+        });
     },
     inscription: function () {
       this.isErrorInscription = false;
-      if(this.bodyInscription.password.trim().length === 0 || this.bodyInscription.username.trim().length === 0 || this.bodyInscription.confirm_password.trim().length === 0){
-        console.log('a');
+      if (
+        this.bodyInscription.password.trim().length === 0 ||
+        this.bodyInscription.username.trim().length === 0 ||
+        this.bodyInscription.confirm_password.trim().length === 0
+      ) {
+        console.log("a");
         this.errorInscription = "Les champs ne peuvent pas être vides";
         this.isErrorInscription = true;
         return;
       }
-      if(this.bodyInscription.password !== this.bodyInscription.confirm_password){
+      if (
+        this.bodyInscription.password !== this.bodyInscription.confirm_password
+      ) {
         this.errorInscription = "Les mots de passe ne correspondent pas";
         this.isErrorInscription = true;
         return;
       }
-      fetchData(JSON.stringify(this.bodyInscription), 'POST', 'register/').then((res) => {
-        localStorage.setItem('user', JSON.stringify(res));
-        localStorage.setItem('currentDate', new Date().toISOString().slice(0, 10));
-        this.$router.push("/day");
+      fetchData(JSON.stringify(this.bodyInscription), "POST", "register/")
+        .then((res) => {
+          localStorage.setItem("user", JSON.stringify(res));
+          localStorage.setItem(
+            "currentDate",
+            new Date().toISOString().slice(0, 10)
+          );
+          this.$router.push("/day");
 
-        console.log(res);
-      }).catch(() => {
-        this.errorInscription = "Pseudonyme déjà utilisé";
-        this.isErrorInscription = true;
-      });
+          console.log(res);
+        })
+        .catch(() => {
+          this.errorInscription = "Pseudonyme déjà utilisé";
+          this.isErrorInscription = true;
+        });
     },
   },
-}
+};
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Poppins:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Poppins:wght@400;500;600&display=swap");
 
 * {
   margin: 0;
@@ -197,18 +243,18 @@ form .txt_field {
   transform: translateY(-50%);
   font-size: 16px;
   pointer-events: none;
-  transition: .5s;
+  transition: 0.5s;
 }
 
 .txt_field span::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 40px;
   left: 0;
   width: 0%;
   height: 2px;
   background: #2691d9;
-  transition: .5s;
+  transition: 0.5s;
 }
 
 .txt_field input:focus ~ label,
@@ -221,7 +267,6 @@ form .txt_field {
 .txt_field input:valid ~ span::before {
   width: 100%;
 }
-
 
 input[type="button"] {
   width: 100%;
@@ -238,7 +283,7 @@ input[type="button"] {
 
 input[type="button"]:hover {
   border-color: #2691d9;
-  transition: .5s;
+  transition: 0.5s;
 }
 
 .signup_link {

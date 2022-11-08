@@ -4,10 +4,8 @@
 
 <script>
 export default {
-  name: "MonthVue"
-}
+  name: "MonthVue",
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

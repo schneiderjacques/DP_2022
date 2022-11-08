@@ -12,18 +12,16 @@
 </template>
 
 <script>
-import { XCircleIcon } from '@heroicons/vue/20/solid'
+import { XCircleIcon } from "@heroicons/vue/20/solid";
 export default {
   name: "ErrorVue",
   components: {
-    XCircleIcon
+    XCircleIcon,
   },
-  props:{
-    msg: String
-  }
-}
+  props: {
+    msg: String,
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

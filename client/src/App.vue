@@ -1,47 +1,47 @@
 <template>
   <div class="main p-10">
-    <HeaderVue @changeDate="changeDate" v-if="isConnected"/>
-    <router-view :date="date" ></router-view>
+    <HeaderVue v-if="isConnected" @changeDate="changeDate"/>
+    <router-view :date="date"></router-view>
   </div>
 </template>
 
 <script>
-import HeaderVue from './components/HeaderVue.vue'
+import HeaderVue from "./components/HeaderVue.vue";
+
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HeaderVue
+    HeaderVue,
   },
-  data(){
-    return{
-      isConnected:false,
+  data() {
+    return {
+      isConnected: false,
       date: null,
-    }
+    };
   },
-  watch:{
-    $route(){
-      this.isConnected = localStorage.getItem('user') !== null;
-    }
+  watch: {
+    $route() {
+      this.isConnected = localStorage.getItem("user") !== null;
+    },
   },
   mounted() {
-    this.date = new Date(localStorage.getItem('currentDate'));
+    this.date = new Date(localStorage.getItem("currentDate"));
   },
   methods: {
-    changeDate: function (date){
+    changeDate: function (date) {
       this.date = date;
-      this.$router.go()
-
-    }
-  }
-
-}
+      this.$router.go();
+    },
+  },
+};
 </script>
 
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
 }
-.main{
+
+.main {
   width: 100%;
   height: 100vh;
 }
