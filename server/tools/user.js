@@ -19,6 +19,7 @@ function get_datas() {
  *  Réponse
  */
 function login(req, res) {
+	
     // Vérifier si le username et le password sont présents dans la requête
     if (!req.body.username || !req.body.password) {
         res.sendStatus(422);
