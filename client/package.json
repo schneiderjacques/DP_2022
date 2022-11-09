@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "tailwind:build": "npx tailwindcss -i  ./assets/css/in.css -o ./assets/css/app.css --watch"
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.4",
@@ -21,7 +22,8 @@
     "router-view": "^1.1.7",
     "tailwindcss": "^3",
     "vue": "^3.2.13",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
