@@ -3,7 +3,7 @@
     "id": 1,
     "username": "toto",
     "password": "toto",
-    "token": "zz6gd3wxu78",
+    "token": "295a9pt4izw",
     "rdvs": [
       {
         "id": 1,
@@ -11,7 +11,7 @@
         "date": "2019-10-10",
         "heureDebut": "2019-10-10 10:10:10",
         "heureFin": "2019-10-10 10:10:19",
-        "couleur": "#FFFFF"
+        "couleur": "#FFFFFF"
       },
       {
         "id": 2,
@@ -19,7 +19,15 @@
         "date": "YYYY-mm-dd",
         "heureDebut": "YYYY-mm-dd hh:mm:ss",
         "heureFin": "YYYY-mm-dd hh:mm:ss",
-        "couleur": "#FFFFF"
+        "couleur": "#FFFFFF"
+      },
+      {
+        "id": 3,
+        "nom": "name of the apsdpointment",
+        "date": "2019-10-10",
+        "heureDebut": "2019-10-10 10:20:00",
+        "heureFin": "2019-10-10 11:11:00",
+        "couleur": "#FFFFFF"
       }
     ]
   },
@@ -34,7 +42,7 @@
         "heureDebut": "2019-10-10 10:10:10",
         "heureFin": "2019-10-10 10:10:19",
         "nom": "name of the apsdpointment",
-        "couleur": "#FF0000"
+        "couleur": "#FFFFFF"
       },
       {
         "id": 2,

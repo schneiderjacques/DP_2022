@@ -209,7 +209,7 @@ function add_appointment(req, res) {
                     let debut = new Date(planning[j].heureDebut);
                     let fin = new Date(planning[j].heureFin);
 
-                    if (debut <= new_date_debut && fin >= new_date_fin) {
+                    if ((debut <= new_date_debut && fin >= new_date_fin) || (debut >= new_date_debut && fin <= new_date_fin)) {
                         res.sendStatus(409);
                         return;
                     }
