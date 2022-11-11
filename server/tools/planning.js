@@ -212,7 +212,8 @@ function add_appointment(req, res) {
                         (new_date_debut > date_debut && new_date_debut < date_fin) ||
                         (new_date_fin > date_debut && new_date_fin < date_fin) ||
                         (new_date_debut > date_debut && new_date_fin < date_fin) ||
-                        (new_date_fin > date_debut && new_date_debut < date_debut)
+                        (new_date_fin > date_debut) ||
+                        (new_date_debut < date_fin)
                     ) {
                         res.sendStatus(409);
                         return;
@@ -291,7 +292,8 @@ function edit_appointment(req, res) {
                         (new_date_debut > date_debut && new_date_debut < date_fin) ||
                         (new_date_fin > date_debut && new_date_fin < date_fin) ||
                         (new_date_debut > date_debut && new_date_fin < date_fin) ||
-                        (new_date_fin > date_debut && new_date_debut < date_debut)
+                        (new_date_fin > date_debut) ||
+                        (new_date_debut < date_fin)
                     ) {
                         res.sendStatus(409);
                         return;
