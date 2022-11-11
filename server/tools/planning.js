@@ -204,12 +204,14 @@ function add_appointment(req, res) {
                 let new_date_debut = new Date(req.body.heureDebut);
                 let new_date_fin = new Date(req.body.heureFin);
 
-                // Vérifier si le rendez-vous n'est pas déjà pris
-                for (let j = 0; j < planning.length; j++) {
-                    let debut = new Date(planning[j].heureDebut);
-                    let fin = new Date(planning[j].heureFin);
-
-                    if ((debut <= new_date_debut && fin >= new_date_fin) || (debut >= new_date_debut && fin <= new_date_fin) || (debut <= new_date_debut && fin <= new_date_fin)) {
+                // Vérifier si le rendez-vous ne chevauche pas un autre
+                for (var j = 0; j < planning.length; j++) {
+                    let date_debut = new Date(planning[j].heureDebut);
+                    let date_fin = new Date(planning[j].heureFin);
+                    if (
+                        (new_date_debut >= date_debut && new_date_debut <= date_fin) ||
+                        (new_date_fin >= date_debut && new_date_fin <= date_fin)
+                    ) {
                         res.sendStatus(409);
                         return;
                     }
@@ -278,12 +280,14 @@ function edit_appointment(req, res) {
             let new_date_debut = new Date(req.body.heureDebut);
             let new_date_fin = new Date(req.body.heureFin);
 
-            // Vérifier si le rendez-vous n'est pas déjà pris
-            for (let j = 0; j < users[i].rdvs.length; j++) {
-                let debut = new Date(users[i].rdvs.heureDebut);
-                let fin = new Date(users[i].rdvs.heureFin);
-
-                if (debut <= new_date_debut && fin >= new_date_fin) {
+            // Vérifier si le rendez-vous ne chevauche pas un autre
+            for (var j = 0; j < users[i].rdvs.length; j++) {
+                let date_debut = new Date(users[i].rdvs[j].heureDebut);
+                let date_fin = new Date(users[i].rdvs[j].heureFin);
+                if (
+                    (new_date_debut >= date_debut && new_date_debut <= date_fin) ||
+                    (new_date_fin >= date_debut && new_date_fin <= date_fin)
+                ) {
                     res.sendStatus(409);
                     return;
                 }
