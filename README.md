@@ -40,7 +40,7 @@ Permet d'ajouter un rendez-vous dans le planning de l'utilisateur.
     "heureDebut": "YYYY-mm-dd hh:mm:ss",
     "heureFin": "YYYY-mm-dd hh:mm:ss",
     "nom": "name of the appointment",
-    "couleur": "#FFFFF"
+    "couleur": "#FFFFFF"
 }
 ```
 #### PATCH /edit_appointment/{id}
