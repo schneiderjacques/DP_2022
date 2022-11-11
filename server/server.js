@@ -118,13 +118,13 @@ app.post("/add_appointment", checkToken, function (req, res) {
  * @apiGroup Planning
  * @apiHeader {String} Authorization Token de session
  */
-app.post("/edit_appointment", checkToken, function (req, res) {
+app.post("/edit_appointment/:id", checkToken, function (req, res) {
   tool_planning.edit_appointment(req, res);
   res.end();
 });
 
 /**
- * Listener sur le port 5000
+ * Listener sur le port 8000
  */
 app.listen(8000, () => {
   console.log("Serveur à l'écoute");

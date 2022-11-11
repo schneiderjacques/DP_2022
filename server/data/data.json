@@ -15,11 +15,11 @@
       },
       {
         "id": 2,
-        "nom": "name of the apsdpointment",
-        "date": "YYYY-mm-dd",
-        "heureDebut": "YYYY-mm-dd hh:mm:ss",
-        "heureFin": "YYYY-mm-dd hh:mm:ss",
-        "couleur": "#FFFFFF"
+        "nom": "name of the apsdpointmeqsdnt",
+        "date": "2019-10-10",
+        "heureDebut": "2019-10-10 10:10:10",
+        "heureFin": "2019-10-10 10:10:19",
+        "couleur": "#FFA500"
       },
       {
         "id": 3,

@@ -209,7 +209,7 @@ function add_appointment(req, res) {
                     let debut = new Date(planning[j].heureDebut);
                     let fin = new Date(planning[j].heureFin);
 
-                    if ((debut <= new_date_debut && fin >= new_date_fin) || (debut >= new_date_debut && fin <= new_date_fin)) {
+                    if ((debut <= new_date_debut && fin >= new_date_fin) || (debut >= new_date_debut && fin <= new_date_fin) || (debut <= new_date_debut && fin <= new_date_fin)) {
                         res.sendStatus(409);
                         return;
                     }
@@ -262,6 +262,7 @@ function edit_appointment(req, res) {
     }
 
     // Vérifier la validité des données
+    req.body.id = req.params.id;
     if (!check_regex.check_appointment(req.body)) {
         res.sendStatus(422);
         return;
@@ -290,7 +291,7 @@ function edit_appointment(req, res) {
             // Modifier le rendez-vous
             let found = false;
             for (let j = 0; j < users[i].rdvs.length; j++) {
-                if (users[i].rdvs[j].id === req.body.id) {
+                if (users[i].rdvs[j].id == req.params.id) {
                     found = true;
                     users[i].rdvs[j].nom = req.body.nom;
                     users[i].rdvs[j].date = req.body.date;
