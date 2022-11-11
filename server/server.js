@@ -124,6 +124,18 @@ app.post("/edit_appointment/:id", checkToken, function (req, res) {
 });
 
 /**
+ * Méthode permettant de supprimer un événement du planning
+ * @api {post} /delete_appointment Delete event
+ * @apiName Delete appointment
+ * @apiGroup Planning
+ * @apiHeader {String} Authorization Token de session
+ */
+app.delete("/delete_appointment/:id", checkToken, function (req, res) {
+  tool_planning.delete_appointment(req, res);
+  res.end();
+});
+
+/**
  * Listener sur le port 8000
  */
 app.listen(8000, () => {

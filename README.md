@@ -55,6 +55,10 @@ Permet de modifier un rendez-vous déjà existant.
     "nom": "name of the appointment"
 }
 ```  
+#### DELETE /delete_appointment/{id}
+Permet de supprimer un rendez-vous.
+
+`{id}`: identifiant du rendez-vous à supprimer
 # Installation
 
 Se rendre dans le dossier ``/server`` et exécuter la commande suivante :

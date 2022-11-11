@@ -255,7 +255,8 @@ function edit_appointment(req, res) {
         !req.body.date ||
         !req.body.heureDebut ||
         !req.body.heureFin ||
-        !req.body.couleur
+        !req.body.couleur ||
+        !req.params.id
     ) {
         res.sendStatus(422);
         return;
@@ -318,10 +319,63 @@ function edit_appointment(req, res) {
     }
 }
 
+/**
+ * Méthode permettant de supprimer un rendez-vous
+ * @param req
+ * Requête
+ * @param res
+ * Réponse
+ */
+function delete_appointment(req, res) {
+    // Vérifier si les données sont présentes dans la requête
+    if (
+        !req.params.id
+    ) {
+        res.sendStatus(422);
+        return;
+    }
+
+    // Récupérer les données du site
+    let users = tool_user.get_datas();
+
+    // Chercher l'utilisateur
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].token == req.headers.authorization.substring(7)) {
+            let found = false;
+            for (let j = 0; j < users[i].rdvs.length; j++) {
+                if (users[i].rdvs[j].id == req.params.id) {
+                    found = true;
+                    users[i].rdvs.splice(j, 1);
+                }
+            }
+
+            if (!found) {
+                res.sendStatus(404);
+                return;
+            } else {
+                // Réordonner les id
+                for (let j = 0; j < users[i].rdvs.length; j++) {
+                    users[i].rdvs[j].id = j + 1;
+                }
+            }
+
+            // Sauvegarder les données
+            fs.writeFileSync(
+                __dirname + "/../data/" + "data.json",
+                JSON.stringify(users)
+            );
+
+            res.sendStatus(200);
+            return;
+        }
+    }
+}
+
 module.exports = {
     month_view: month_view,
     week_view: week_view,
     day_view: day_view,
     add_appointment: add_appointment,
     edit_appointment: edit_appointment,
+    delete_appointment: delete_appointment,
 };
