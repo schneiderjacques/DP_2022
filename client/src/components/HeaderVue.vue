@@ -1,7 +1,9 @@
 <template>
+  <RdvModalAdd v-if="showModal" class="h-screen w-screen w-full h-full p-0" @close="showModal = false"></RdvModalAdd>
   <header
-      class="flex flex-none items-center justify-between border-b border-gray-200 py-4 px-6"
+      class="flex flex-none items-center justify-between border-b border-gray-200 p-10"
   >
+
     <div>
       <h1 class="text-lg font-semibold leading-6 text-gray-900">
         <time class="sm:hidden" datetime="2022-01-22"> {{ completeDate }}</time>
@@ -116,6 +118,7 @@
         <button
             class="ml-6 rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             type="button"
+            @click="showModal = true"
         >
           Ajouter un RDV
         </button>
@@ -198,16 +201,21 @@
       </Menu>
     </div>
   </header>
+
 </template>
 
 <script>
+
 import {ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, EllipsisHorizontalIcon,} from "@heroicons/vue/20/solid";
 import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue";
 import {formatDate, getDateName} from "@/js/date_tools.js";
+import RdvModalAdd from "@/components/RdvModalAdd";
 
 export default {
+  emits: ["changeDate"],
   name: "HeaderVue",
   components: {
+    RdvModalAdd,
     ChevronDownIcon,
     ChevronLeftIcon,
     ChevronRightIcon,
@@ -222,6 +230,7 @@ export default {
       completeDate: "",
       formatedDate: "",
       date: null,
+      showModal: false,
     };
   },
   mounted() {

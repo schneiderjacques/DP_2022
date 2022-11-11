@@ -42,6 +42,7 @@ export function timeToDecimal(t) {
 
   return parseInt(parseInt(arr[0], 10) + "." + (dec < 10 ? "0" : "") + dec);
 }
+
 export function convertHex(hex, opacity) {
   //convert hex to rgba
   hex = hex.replace("#", "");
@@ -69,10 +70,12 @@ export function getMonthName(date) {
   ];
   return monthNames[date.getMonth()];
 }
+
 export function getDayName(date) {
   const dayNames = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
   return dayNames[date.getDay()];
 }
+
 export function getDateName(date) {
   return (
     getDayName(date) +
@@ -84,6 +87,7 @@ export function getDateName(date) {
     date.getFullYear()
   );
 }
+
 export function formatDate(date) {
   return (
     formatNumber(date.getDate()) +
@@ -93,12 +97,14 @@ export function formatDate(date) {
     date.getFullYear()
   );
 }
+
 export function getFirstDayOfWeek(dt) {
   let tmp = new Date(dt);
   const day = tmp.getDay();
   const diff = tmp.getDate() - day + (day === 0 ? -6 : 1);
   return new Date(tmp.setDate(diff));
 }
+
 export function getAllDaysOfWeek(dt) {
   const firstDay = getFirstDayOfWeek(dt);
   const days = [];
@@ -109,10 +115,67 @@ export function getAllDaysOfWeek(dt) {
   }
   return days;
 }
+
 export function areDateEqual(date1, date2) {
   return (
     date1.getDate() === date2.getDate() &&
     date1.getMonth() === date2.getMonth() &&
     date1.getFullYear() === date2.getFullYear()
   );
+}
+
+export function changeState() {
+  const picker = document.getElementById("date-picker");
+  picker.type = "date";
+  picker.showPicker();
+}
+
+export function decrementFirst(first) {
+  let value;
+  if (first) {
+    value = this.heureDebut.split(":");
+  } else {
+    value = this.heureFin.split(":");
+  }
+  let hours = parseInt(value[0]);
+  let minutes = parseInt(value[1]);
+  if (minutes === 0) {
+    minutes = 50;
+    hours--;
+  } else {
+    minutes -= 10;
+  }
+  if (hours === -1) {
+    hours = 23;
+  }
+  if (first) {
+    this.heureDebut = formatNumber(hours) + ":" + formatNumber(minutes);
+  } else {
+    this.heureFin = formatNumber(hours) + ":" + formatNumber(minutes);
+  }
+}
+
+export function incrementFirst(first) {
+  let value;
+  if (first) {
+    value = this.heureDebut.split(":");
+  } else {
+    value = this.heureFin.split(":");
+  }
+  let hours = parseInt(value[0]);
+  let minutes = parseInt(value[1]);
+  if (minutes === 50) {
+    minutes = 0;
+    hours++;
+  } else {
+    minutes += 10;
+  }
+  if (hours === 24) {
+    hours = 0;
+  }
+  if (first) {
+    this.heureDebut = formatNumber(hours) + ":" + formatNumber(minutes);
+  } else {
+    this.heureFin = formatNumber(hours) + ":" + formatNumber(minutes);
+  }
 }

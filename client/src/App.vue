@@ -1,5 +1,5 @@
 <template>
-  <div class="main p-10">
+  <div class="main">
     <HeaderVue v-if="isConnected" @changeDate="changeDate"/>
     <router-view :date="date"></router-view>
   </div>
