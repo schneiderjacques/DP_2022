@@ -11,6 +11,7 @@ export async function fetchData(body, method, route) {
   });
   return response.json();
 }
+
 export async function fetchDataConnected(body, method, route) {
   return await fetch(api + route, {
     method: method,
@@ -23,6 +24,7 @@ export async function fetchDataConnected(body, method, route) {
     body: body,
   });
 }
+
 export async function fetchDataGet(route) {
   const response = await fetch(api + route, {
     method: "GET",
@@ -35,3 +37,16 @@ export async function fetchDataGet(route) {
   });
   return response.json();
 }
+
+export async function fetchDataConnectedWithoutBody(method, route) {
+  return await fetch(api + route, {
+    method: method,
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "Access-Control-Allow-Origin": api,
+      Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
+    },
+  });
+}
+

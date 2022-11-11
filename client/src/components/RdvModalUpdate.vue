@@ -1,5 +1,6 @@
 <template>
-  <transition name="modal">
+  <transition
+  >
     <div
         class="fixed z-10 bg-opacity-50 bg-bg-regal-blue flex items-center justify-center "
     >
@@ -12,7 +13,10 @@
                   class="ml-5 rounded-xl px-1 pt-1 pb-1 bg-other-blue text-white select-none flex items-center"
               >
                 <h1 class="text-md">Modification</h1>
+
               </div>
+              <TrashIcon aria-hidden="true" class="ml-3 h-8 w-8 text-red-400 hover:text-red-600 cursor-pointer"
+                         @click="deleteRdv"/>
             </div>
             <span
                 class="text-3xl font-semibold select-none cursor-pointer text-gray-600 hover:scale-125 hover:text-black"
@@ -214,7 +218,8 @@
 import ErrorVue from "@/components/ErrorVue";
 import {RadioGroup, RadioGroupLabel, RadioGroupOption} from '@headlessui/vue'
 import {changeState, formatNumber} from "@/js/date_tools";
-import {fetchDataConnected} from "@/js/request";
+import {fetchDataConnected, fetchDataConnectedWithoutBody} from "@/js/request";
+import {TrashIcon} from "@heroicons/vue/20/solid";
 
 export default {
   name: "RdvModalUpdate",
@@ -223,7 +228,8 @@ export default {
     ErrorVue,
     RadioGroup,
     RadioGroupLabel,
-    RadioGroupOption
+    RadioGroupOption,
+    TrashIcon
   },
   props: {
     rdv: {
@@ -266,6 +272,18 @@ export default {
   },
   methods: {
     changeState,
+    deleteRdv() {
+      fetchDataConnectedWithoutBody("DELETE", "delete_appointment/" + this.rdv.id).then((response) => {
+        if (response.status === 200) {
+          this.$emit('close');
+          this.$router.go();
+        } else {
+          this.errorShown = true;
+          this.textError = "Une erreur est survenue lors de la suppression du rendez-vous";
+          this.isTextDiv = true;
+        }
+      })
+    },
     updateRdv() {
       let body = {
         nom: this.rdvTemp.nom,

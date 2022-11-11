@@ -206,7 +206,7 @@
 
 <script>
 
-import {ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, EllipsisHorizontalIcon,} from "@heroicons/vue/20/solid";
+import {ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, EllipsisHorizontalIcon} from "@heroicons/vue/20/solid";
 import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/vue";
 import {formatDate, getDateName} from "@/js/date_tools.js";
 import RdvModalAdd from "@/components/RdvModalAdd";
