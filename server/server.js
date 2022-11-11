@@ -126,6 +126,6 @@ app.post("/edit_appointment", checkToken, function (req, res) {
 /**
  * Listener sur le port 5000
  */
-app.listen(5000, () => {
+app.listen(8000, () => {
   console.log("Serveur à l'écoute");
 });

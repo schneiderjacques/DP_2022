@@ -1,4 +1,4 @@
-const api = "http://localhost:5000/"; // adresse l'api avec le port
+const api = "http://localhost:8000/"; // adresse l'api avec le port
 export async function fetchData(body, method, route) {
   const response = await fetch(api + route, {
     method: method,
