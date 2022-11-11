@@ -118,7 +118,7 @@ app.post("/add_appointment", checkToken, function (req, res) {
  * @apiGroup Planning
  * @apiHeader {String} Authorization Token de session
  */
-app.post("/edit_appointment/:id", checkToken, function (req, res) {
+app.patch("/edit_appointment/:id", checkToken, function (req, res) {
   tool_planning.edit_appointment(req, res);
   res.end();
 });

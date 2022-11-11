@@ -43,7 +43,7 @@ Permet d'ajouter un rendez-vous dans le planning de l'utilisateur.
     "couleur": "#FFFFF"
 }
 ```
-#### POST /edit_appointment/{id}
+#### PATCH /edit_appointment/{id}
 Permet de modifier un rendez-vous déjà existant.
 
 `{id}`: identifiant du rendez-vous à modifier
