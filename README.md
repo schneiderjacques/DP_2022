@@ -10,7 +10,7 @@ Développement en groupe d'une application Web avec une architecture client-serv
 
 
 # API
-[Documentation de l'API détaillée](https://documenter.getpostman.com/view/20058446/2s847PKVEZ#bbd3e5bc-1ff2-4215-a16a-99a22a33b8f3)
+[Documentation de l'API détaillée](https://documenter.getpostman.com/view/20058446/2s847PKVEZ)
 
 ## Authentification
 
