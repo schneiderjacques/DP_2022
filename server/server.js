@@ -106,7 +106,7 @@ app.get("/day_planning/:day", checkToken, function (req, res) {
  * @apiGroup Planning
  * @apiHeader {String} Authorization Token de session
  */
-app.post("/add_appointment", checkToken, function (req, res) {
+app.put("/add_appointment", checkToken, function (req, res) {
   tool_planning.add_appointment(req, res);
   res.end();
 });

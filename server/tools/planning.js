@@ -235,7 +235,7 @@ function add_appointment(req, res) {
                     JSON.stringify(users)
                 );
 
-                res.sendStatus(200);
+                res.sendStatus(201);
                 return;
             }
         }
@@ -324,7 +324,7 @@ function edit_appointment(req, res) {
                 JSON.stringify(users)
             );
 
-            res.sendStatus(200);
+            res.sendStatus(204);
             return;
         }
     }

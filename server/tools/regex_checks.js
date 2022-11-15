@@ -48,6 +48,11 @@ function check_appointment(body) {
     return false;
   }
 
+  // Vérifier que les trois dates soient le même jour
+  if (body.heureDebut.substring(0, 10) !== body.heureFin.substring(0, 10) || body.heureDebut.substring(0, 10) !== body.date) {
+    return false;
+  }
+
   // Vérifier le format de la couleur
   if (!check_color(body.couleur)) {
     return false;
