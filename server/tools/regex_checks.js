@@ -53,6 +53,12 @@ function check_appointment(body) {
     return false;
   }
 
+  // Vérifier que l'heure de début soit avant l'heure de fin
+  if (body.heureDebut.substring(11, 16) >= body.heureFin.substring(11, 16)) {
+    console.log(body.heureDebut.substring(11, 16));
+    return false;
+  }
+
   // Vérifier le format de la couleur
   if (!check_color(body.couleur)) {
     return false;
