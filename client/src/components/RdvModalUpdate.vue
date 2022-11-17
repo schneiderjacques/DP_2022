@@ -326,7 +326,7 @@ export default {
       }
       fetchDataConnected(JSON.stringify(body), 'PATCH', 'edit_appointment/' + this.rdvTemp.id)
           .then((response) => {
-            if (response.status === 200) {
+            if (response.status === 204) {
               this.$emit('close')
               this.$router.go();
             } else {

@@ -235,7 +235,7 @@ function add_appointment(req, res) {
                     JSON.stringify(users)
                 );
 
-                res.sendStatus(200);
+                res.sendStatus(201);
                 return;
             }
         }
@@ -282,6 +282,23 @@ function edit_appointment(req, res) {
             let new_date_debut = new Date(req.body.heureDebut);
             let new_date_fin = new Date(req.body.heureFin);
 
+            // Chercher le rendez-vous
+            let found = false;
+            let index_user, index_rdv = 0;
+            for (let j = 0; j < users[i].rdvs.length; j++) {
+                if (users[i].rdvs[j].id == req.params.id) {
+                    found = true;
+                    index_user = i;
+                    index_rdv = j;
+                    break;
+                }
+            }
+
+            if (!found) {
+                res.sendStatus(404);
+                return;
+            }
+
             // Vérifier si le rendez-vous ne chevauche pas un autre
             for (var j = 0; j < users[i].rdvs.length; j++) {
                 let date_debut = new Date(users[i].rdvs[j].heureDebut);
@@ -301,22 +318,11 @@ function edit_appointment(req, res) {
             }
 
             // Modifier le rendez-vous
-            let found = false;
-            for (let j = 0; j < users[i].rdvs.length; j++) {
-                if (users[i].rdvs[j].id == req.params.id) {
-                    found = true;
-                    users[i].rdvs[j].nom = req.body.nom;
-                    users[i].rdvs[j].date = req.body.date;
-                    users[i].rdvs[j].heureDebut = req.body.heureDebut;
-                    users[i].rdvs[j].heureFin = req.body.heureFin;
-                    users[i].rdvs[j].couleur = req.body.couleur;
-                }
-            }
-
-            if (!found) {
-                res.sendStatus(404);
-                return;
-            }
+            users[index_user].rdvs[index_rdv].nom = req.body.nom;
+            users[index_user].rdvs[index_rdv].date = req.body.date;
+            users[index_user].rdvs[index_rdv].heureDebut = req.body.heureDebut;
+            users[index_user].rdvs[index_rdv].heureFin = req.body.heureFin;
+            users[index_user].rdvs[index_rdv].couleur = req.body.couleur;
 
             // Sauvegarder les données
             fs.writeFileSync(
@@ -324,7 +330,7 @@ function edit_appointment(req, res) {
                 JSON.stringify(users)
             );
 
-            res.sendStatus(200);
+            res.sendStatus(204);
             return;
         }
     }

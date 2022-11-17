@@ -32,7 +32,7 @@ Permet de récupérer le planning de la semaine demandée.
 #### GET /day_planning/{date}
 Permet de récupérer le planning du jour demandé.
 `{date}` : date demandée au format `YYYY-mm-dd`
-#### POST /add_appointment
+#### PUT /add_appointment
 Permet d'ajouter un rendez-vous dans le planning de l'utilisateur.
 ```json
 {
