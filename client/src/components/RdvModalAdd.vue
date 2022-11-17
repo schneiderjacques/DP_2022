@@ -294,9 +294,9 @@ export default {
         return 0
       }
       console.log(body);
-      fetchDataConnected(JSON.stringify(body), 'POST', 'add_appointment')
+      fetchDataConnected(JSON.stringify(body), 'PUT', 'add_appointment')
           .then((response) => {
-            if (response.status === 200) {
+            if (response.status === 201) {
               this.$emit('close')
               this.$router.go();
             } else {
