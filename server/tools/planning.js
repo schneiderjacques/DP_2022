@@ -205,6 +205,7 @@ function add_appointment(req, res) {
                 let new_date_fin = new Date(req.body.heureFin);
 
                 // Vérifier si le rendez-vous ne chevauche pas un autre
+                /**
                 for (var j = 0; j < planning.length; j++) {
                     let date_debut = new Date(planning[j].heureDebut);
                     let date_fin = new Date(planning[j].heureFin);
@@ -217,7 +218,7 @@ function add_appointment(req, res) {
                         res.sendStatus(409);
                         return;
                     }
-                }
+                }**/
 
                 // Ajouter le rendez-vous
                 users[i].rdvs.push({
@@ -300,6 +301,7 @@ function edit_appointment(req, res) {
             }
 
             // Vérifier si le rendez-vous ne chevauche pas un autre
+            /**
             for (var j = 0; j < users[i].rdvs.length; j++) {
                 let date_debut = new Date(users[i].rdvs[j].heureDebut);
                 let date_fin = new Date(users[i].rdvs[j].heureFin);
@@ -315,7 +317,7 @@ function edit_appointment(req, res) {
                     }
                 }
 
-            }
+            }**/
 
             // Modifier le rendez-vous
             users[index_user].rdvs[index_rdv].nom = req.body.nom;
