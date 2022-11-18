@@ -97,7 +97,6 @@
                       v-model="heureDebut"
                       class="focus:outline-none text-center w-12 bg-transparent font-semibold text-md hover:text-black focus:text-black md:text-basecursor-default flex items-center text-gray-700 outline-none"
                       name="custom-input-number"
-                      readonly
                       type="text"
                   />
                   <button
@@ -143,7 +142,6 @@
                       v-model="heureFin"
                       class="focus:outline-none text-center w-12 bg-transparent font-semibold text-md hover:text-black focus:text-black md:text-basecursor-default flex items-center text-gray-700 outline-none"
                       name="custom-input-number"
-                      readonly
                       type="text"
                   />
                   <button
@@ -218,7 +216,7 @@ import {changeState, decrementFirst, incrementFirst} from "@/js/date_tools";
 
 export default {
   name: "RdvModalAdd",
-  emits: ['close'],
+  emits: ['updateData','close'],
   components: {
     ErrorVue,
     RadioGroup,
@@ -245,7 +243,7 @@ export default {
     }
   },
   mounted() {
-    this.colorSelected = this.colors[0]
+    this.selectedColor = this.colors[0]
   },
   methods: {
     incrementFirst,
@@ -293,12 +291,11 @@ export default {
         this.errorShown = true
         return 0
       }
-      console.log(body);
       fetchDataConnected(JSON.stringify(body), 'PUT', 'add_appointment')
           .then((response) => {
             if (response.status === 201) {
-              this.$emit('close')
-              this.$router.go();
+              this.$emit('updateData')
+              this.$emit("close")
             } else {
               this.textError = 'Vous avez déjà un rendez-vous dans ce créneau'
               this.errorShown = true
