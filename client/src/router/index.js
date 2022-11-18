@@ -3,6 +3,7 @@ import ConnexionVue from "@/components/ConnexionVue";
 import DayVue from "@/components/DayVue";
 import WeekVue from "@/components/WeekVue";
 import MonthVue from "@/components/MonthVue";
+import YearVue from "@/components/YearVue";
 
 const routes = [
   {
@@ -45,6 +46,18 @@ const routes = [
     path: "/month",
     name: "MonthVue",
     component: MonthVue,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem("user")) {
+        next();
+      } else {
+        next("/");
+      }
+    },
+  },
+  {
+    path: "/year",
+    name: "YearVue",
+    component: YearVue,
     beforeEnter: (to, from, next) => {
       if (localStorage.getItem("user")) {
         next();
