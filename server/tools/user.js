@@ -129,6 +129,7 @@ function get_user(req, res) {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
             });
+            console.log(users[i]);
             res.send(users[i]);
             return;
         }
@@ -139,9 +140,24 @@ function get_user(req, res) {
     }
 }
 
+function get_user_id(req) {
+    // Récupérer les données du site
+    let users = get_datas();
+
+    // Récupérer l'utilisateur
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].token == req.headers.authorization.substring(7)) {
+            return users[i].id
+        }
+    }
+
+    return null;
+}
+
 module.exports = {
     login: login,
     register: register,
     get_user: get_user,
     get_datas: get_datas,
+    get_user_id: get_user_id
 };

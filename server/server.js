@@ -4,7 +4,9 @@ const app = express();
 const tool_user = require("./tools/user.js");
 const tool_planning = require("./tools/planning.js");
 const fs = require("fs");
-
+const { Server } = require('ws');
+const sockserver = new Server({ port: 443 });
+const connections = new Set();
 app.use(express.json(), cors());
 
 /**
@@ -27,6 +29,37 @@ function checkToken(req, res, next) {
   if (!found) {
     res.sendStatus(401);
   }
+}
+
+/**
+ * Le client se connecte au serveur
+ * @param event
+ *  l'évènement
+ */
+sockserver.on('connection', (ws, req) => {
+  ws.idUser = req.headers['sec-websocket-protocol'];
+  connections.add(ws);
+
+  /**
+   * Le client se déconnecte du serveur
+   */
+  ws.on('close', () => {
+    connections.delete(ws);
+  });
+});
+
+/**
+ * Méthode notifiant les clients connectés avec l'id de l'utilisateur donné dans la requête
+ * @param req
+ * la requête
+ */
+function notifyClients(req) {
+  connections.forEach((client) => {
+    if (client.idUser == tool_user.get_user_id(req)) {
+      const data = JSON.stringify({'type': 'message', 'message': 'update'});
+      client.send(data);
+    }
+  })
 }
 
 /**
@@ -96,6 +129,7 @@ app.get("/week_planning/:first_day_week", checkToken, function (req, res) {
  */
 app.get("/day_planning/:day", checkToken, function (req, res) {
   tool_planning.day_view(req, res);
+  notifyClients(req);
   res.end();
 });
 
@@ -108,6 +142,7 @@ app.get("/day_planning/:day", checkToken, function (req, res) {
  */
 app.put("/add_appointment", checkToken, function (req, res) {
   tool_planning.add_appointment(req, res);
+  notifyClients(req);
   res.end();
 });
 
@@ -120,6 +155,7 @@ app.put("/add_appointment", checkToken, function (req, res) {
  */
 app.patch("/edit_appointment/:id", checkToken, function (req, res) {
   tool_planning.edit_appointment(req, res);
+  notifyClients(req);
   res.end();
 });
 
@@ -132,6 +168,7 @@ app.patch("/edit_appointment/:id", checkToken, function (req, res) {
  */
 app.delete("/delete_appointment/:id", checkToken, function (req, res) {
   tool_planning.delete_appointment(req, res);
+  notifyClients(req);
   res.end();
 });
 
