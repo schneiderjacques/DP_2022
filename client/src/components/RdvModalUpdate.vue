@@ -223,7 +223,7 @@ import {TrashIcon} from "@heroicons/vue/20/solid";
 
 export default {
   name: "RdvModalUpdate",
-  emits: ['close'],
+  emits: ['updateData','close'],
   components: {
     ErrorVue,
     RadioGroup,
@@ -275,8 +275,8 @@ export default {
     deleteRdv() {
       fetchDataConnectedWithoutBody("DELETE", "delete_appointment/" + this.rdv.id).then((response) => {
         if (response.status === 200) {
+          this.$emit('updateData')
           this.$emit('close');
-          this.$router.go();
         } else {
           this.errorShown = true;
           this.textError = "Une erreur est survenue lors de la suppression du rendez-vous";
@@ -327,8 +327,8 @@ export default {
       fetchDataConnected(JSON.stringify(body), 'PATCH', 'edit_appointment/' + this.rdvTemp.id)
           .then((response) => {
             if (response.status === 204) {
+              this.$emit('updateData')
               this.$emit('close')
-              this.$router.go();
             } else {
               this.textError = 'Vous avez déjà un rendez-vous dans ce créneau'
               this.errorShown = true

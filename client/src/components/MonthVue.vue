@@ -1,6 +1,7 @@
 <template>
   <RdvModalUpdate v-if="showUpdateModal" :rdv="rdvToUpdate"
                   class="h-screen w-screen w-full h-full p-0 fixed top-0 left-0"
+                  @updateData="fetchData"
                   @close="closeModaleUpdate"></RdvModalUpdate>
   <div class="lg:flex lg:h-full lg:flex-col">
     <div class="shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col">
@@ -20,11 +21,13 @@
             <time :datetime="day.date" :class="(day.getDate() === new Date().getDate() && day.getMonth()=== new Date().getMonth()) ? 'flex h-6 w-6 items-center justify-center rounded-full bg-indigo-600 font-semibold text-white' : undefined">{{ day.getDate() }}</time>
             <ol v-if="this.rdvs.length>0" class="mt-2">
               <li v-for="event in this.rdvs" :key="event.id">
-                <a v-if="equalsDate(getFormatDate(event.date),day)" class="group flex" @click="showModalUpdate(event)">
+                <a v-if="equalsDate(getFormatDate(event.date),day)" class="group flex cursor-pointer" @click="showModalUpdate(event)">
                   <p class="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">
                     {{ event.nom }}
                   </p>
-                  <time :datetime="event.date" class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block"></time>
+                  <time :datetime="event.date" class="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block">
+                    {{ getHourAndMinuteFromDate(new Date(event.heureDebut)) }} - {{ getHourAndMinuteFromDate(new Date(event.heureFin)) }}
+                  </time>
                 </a>
               </li>
             </ol>
@@ -59,13 +62,15 @@
 
 <script>
 import {fetchDataGet} from "@/js/request";
-import {getAllDaysFromMonth} from "@/js/date_tools";
+import {getAllDaysFromMonth, getHourAndMinuteFromDate} from "@/js/date_tools";
 import RdvModalUpdate from "@/components/RdvModalUpdate";
+import { ClockIcon } from "@heroicons/vue/20/solid";
 
 export default {
   name: "MonthVue",
   components: {
     RdvModalUpdate,
+    ClockIcon
   },
   props: {
     date: {
@@ -84,11 +89,11 @@ export default {
   },
   mounted() {
     this.days = getAllDaysFromMonth(this.date);
-    this.getEvent();
+    this.fetchData();
   },
   methods: {
-    getEvent:function (){
-      //GET /month_planning/{month}/{year}
+    getHourAndMinuteFromDate,
+    fetchData:function (){
       fetchDataGet("month_planning/" +(this.date.getMonth()+1)+ "/"+this.date.getFullYear())
           .then((res) => {
             this.rdvs = res;
@@ -127,7 +132,6 @@ export default {
       this.rdvDaily = res;
     },
     getMaxEventByDay(date, rdv, n){
-      console.log(date);
       let res = [];
       let nb = 0;
       let day = new Date(date);

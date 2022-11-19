@@ -143,7 +143,7 @@ export function decrementFirst(first) {
     minutes = 50;
     hours--;
   } else {
-    minutes -= 10;
+    minutes -= 5;
   }
   if (hours === -1) {
     hours = 23;
@@ -168,7 +168,7 @@ export function incrementFirst(first) {
     minutes = 0;
     hours++;
   } else {
-    minutes += 10;
+    minutes += 5;
   }
   if (hours === 24) {
     hours = 0;
@@ -226,4 +226,15 @@ export function getAllDaysFromMonth(date) {
 
     const final = firstDays.concat(days, lastDays);
     return final;
+}
+
+export function getAllDaysFromYear(date) {
+  const res = [];
+  let year = date.getFullYear();
+  for (let i = 0; i < 12; i++) {
+    let month = getMonthName(new Date(year, i+1, 0));
+    let days = getAllDaysFromMonth(new Date(year, i+1, 0));
+    res.push({"name": month, "days": days});
+  }
+  return res;
 }

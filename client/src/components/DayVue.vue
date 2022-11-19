@@ -1,7 +1,8 @@
 <template>
   <RdvModalUpdate v-if="showUpdateModal" :rdv="rdvToUpdate"
                   class="h-screen w-screen w-full h-full p-0 fixed top-0 left-0"
-                  @close="closeModaleUpdate"></RdvModalUpdate>
+                  @close="closeModaleUpdate"
+                  @updateData="fetchData"></RdvModalUpdate>
   <div class="flex h-full flex-col px-10">
     <div class="isolate flex flex-auto overflow-hidden bg-white">
       <div ref="container" class="flex flex-auto flex-col overflow-auto">
@@ -114,12 +115,13 @@ export default {
     };
   },
   mounted() {
-    this.getRdv();
+    this.fetchData();
     this.days = getAllDaysOfWeek(this.date);
   },
   methods: {
     getDayName,
-    getRdv() {
+    fetchData() {
+      console.log("Maj des donnéesV2")
       const dateFormat =
           this.date.getFullYear() +
           "-" +
@@ -153,6 +155,11 @@ export default {
       this.showUpdateModal = false;
     },
   },
+  //Poits du projet dp à réfléchir
+  //Synchronisation des données en tmps rééel
+  //Overlap sur les RDV
+  //Granularité des créneaux (backend et frontend) ? même granuralité sur les deux ?
+  //Continuité affichage sur les mois (semaines complètes)
 };
 </script>
 

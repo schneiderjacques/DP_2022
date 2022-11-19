@@ -1,5 +1,5 @@
 <template>
-  <RdvModalAdd v-if="showModal" class="h-screen w-screen w-full h-full p-0" @close="showModal = false"></RdvModalAdd>
+  <RdvModalAdd v-if="showModal" class="h-screen w-screen w-full h-full p-0" @close="showModal = false" @updateData="updateData"></RdvModalAdd>
   <header
       class="flex flex-none items-center justify-between border-b border-gray-200 p-10"
   >
@@ -45,7 +45,7 @@
               class="flex items-center rounded-md border border-gray-300 bg-white py-2 pl-3 pr-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
               type="button"
           >
-            Vue de Jour
+            {{ title }}
             <ChevronDownIcon
                 aria-hidden="true"
                 class="ml-2 h-5 w-5 text-gray-400"
@@ -101,13 +101,15 @@
                   >
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
-                  <a
+                  <router-link to="/year"
+                  ><a
                       :class="[
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                       'block px-4 py-2 text-sm',
                     ]"
                       href="#"
                   >Année</a
+                  ></router-link
                   >
                 </MenuItem>
               </div>
@@ -212,7 +214,7 @@ import {formatDate, getDateName} from "@/js/date_tools.js";
 import RdvModalAdd from "@/components/RdvModalAdd";
 
 export default {
-  emits: ["changeDate"],
+  emits: ["changeDate", "updateData"],
   name: "HeaderVue",
   components: {
     RdvModalAdd,
@@ -231,7 +233,13 @@ export default {
       formatedDate: "",
       date: null,
       showModal: false,
+      title: this.getName(),
     };
+  },
+  watch: {
+    $route() {
+      this.title = this.getName();
+    },
   },
   mounted() {
     console.log(localStorage.getItem("currentDate"));
@@ -246,13 +254,15 @@ export default {
       this.$emit("changeDate", this.date);
     },
     next: function () {
-      console.log(this.$route.name);
       switch (this.$route.name) {
         case "DayVue":
           this.setNexDay(1);
           break;
         case "WeekVue":
-          this.setNexDay(7);
+          this.setNextWeek();
+          break;
+        case "MonthVue":
+          this.setNextMonth();
           break;
       }
     },
@@ -262,7 +272,10 @@ export default {
           this.setNexDay(-1);
           break;
         case "WeekVue":
-          this.setNexDay(-7);
+          this.setPreviousWeek();
+          break;
+        case "MonthVue":
+          this.setPreviousMonth();
           break;
       }
     },
@@ -270,10 +283,41 @@ export default {
       this.date.setDate(this.date.getDate() + nb);
       this.changeDateToParent();
     },
+    setNextWeek: function () {
+      //set date to monday
+      this.date.setDate(this.date.getDate() - this.date.getDay() + 1);
+      this.setNexDay(7);
+    },
+    setPreviousWeek: function () {
+      //set date to monday
+      this.date.setDate(this.date.getDate() - this.date.getDay() + 1);
+      this.setNexDay(-7);
+    },
     setNextMonth: function () {
       this.date.setMonth(this.date.getMonth() + 1);
+      this.date.setDate(1);
       this.changeDateToParent();
     },
+    setPreviousMonth: function () {
+      this.date.setMonth(this.date.getMonth() - 1);
+      this.date.setDate(1);
+      this.changeDateToParent();
+    },
+    updateData: function () {
+      this.$emit('updateData');
+    },
+    getName: function (){
+      switch (this.$route.name) {
+        case "DayVue":
+          return "Jour"
+        case "WeekVue":
+          return "Semaine";
+        case "MonthVue":
+          return "Mois";
+        case "YearVue":
+          return "Année";
+      }
+    }
   },
 };
 </script>

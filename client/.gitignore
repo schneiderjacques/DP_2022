@@ -4,7 +4,7 @@ node_modules
 
 client/yarn.lock
 client/package-lock.json
-
+server/data/data.json
 # local env files
 .env.local
 .env.*.local

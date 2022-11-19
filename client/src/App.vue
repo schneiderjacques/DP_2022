@@ -1,7 +1,9 @@
 <template>
   <div class="main">
-    <HeaderVue v-if="isConnected" @changeDate="changeDate"/>
-    <router-view :date="date"></router-view>
+    <HeaderVue v-if="isConnected" @changeDate="changeDate" @updateData="updateData"/>
+    <router-view :date="date" v-slot="{ Component }">
+      <component ref="view" :is="Component"></component>
+    </router-view>
   </div>
 </template>
 
@@ -59,6 +61,10 @@ export default {
       this.date = date;
       this.$router.go();
     },
+    updateData: function (){
+      this.$refs.view.fetchData();
+
+    }
   },
 };
 </script>
