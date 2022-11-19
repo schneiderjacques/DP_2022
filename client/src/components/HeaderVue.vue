@@ -101,13 +101,15 @@
                   >
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
-                  <a
+                  <router-link to="/year"
+                  ><a
                       :class="[
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                       'block px-4 py-2 text-sm',
                     ]"
                       href="#"
                   >Année</a
+                  ></router-link
                   >
                 </MenuItem>
               </div>

@@ -227,3 +227,14 @@ export function getAllDaysFromMonth(date) {
     const final = firstDays.concat(days, lastDays);
     return final;
 }
+
+export function getAllDaysFromYear(date) {
+  const res = [];
+  let year = date.getFullYear();
+  for (let i = 0; i < 12; i++) {
+    let month = getMonthName(new Date(year, i+1, 0));
+    let days = getAllDaysFromMonth(new Date(year, i+1, 0));
+    res.push({"name": month, "days": days});
+  }
+  return res;
+}

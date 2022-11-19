@@ -88,7 +88,6 @@ export default {
   },
   methods: {
     getEvent:function (){
-      //GET /month_planning/{month}/{year}
       fetchDataGet("month_planning/" +(this.date.getMonth()+1)+ "/"+this.date.getFullYear())
           .then((res) => {
             this.rdvs = res;
@@ -127,7 +126,6 @@ export default {
       this.rdvDaily = res;
     },
     getMaxEventByDay(date, rdv, n){
-      console.log(date);
       let res = [];
       let nb = 0;
       let day = new Date(date);
