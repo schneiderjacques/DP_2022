@@ -57,10 +57,10 @@ export default {
   },
   mounted() {
     this.days = getAllDaysFromYear(this.date);
-    this.getEvent();
+    this.fetchData();
   },
   methods: {
-    getEvent:function (){
+    fetchData:function (){
       fetchDataGet("month_planning/" +(this.date.getMonth()+1)+ "/"+this.date.getFullYear())
           .then((res) => {
             this.rdvs = res;

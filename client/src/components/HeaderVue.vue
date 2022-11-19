@@ -45,7 +45,7 @@
               class="flex items-center rounded-md border border-gray-300 bg-white py-2 pl-3 pr-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
               type="button"
           >
-            Vue de Jour
+            {{ title }}
             <ChevronDownIcon
                 aria-hidden="true"
                 class="ml-2 h-5 w-5 text-gray-400"
@@ -233,7 +233,13 @@ export default {
       formatedDate: "",
       date: null,
       showModal: false,
+      title: this.getName(),
     };
+  },
+  watch: {
+    $route() {
+      this.title = this.getName();
+    },
   },
   mounted() {
     console.log(localStorage.getItem("currentDate"));
@@ -248,13 +254,15 @@ export default {
       this.$emit("changeDate", this.date);
     },
     next: function () {
-      console.log(this.$route.name);
       switch (this.$route.name) {
         case "DayVue":
           this.setNexDay(1);
           break;
         case "WeekVue":
-          this.setNexDay(7);
+          this.setNextWeek();
+          break;
+        case "MonthVue":
+          this.setNextMonth();
           break;
       }
     },
@@ -264,7 +272,10 @@ export default {
           this.setNexDay(-1);
           break;
         case "WeekVue":
-          this.setNexDay(-7);
+          this.setPreviousWeek();
+          break;
+        case "MonthVue":
+          this.setPreviousMonth();
           break;
       }
     },
@@ -272,12 +283,40 @@ export default {
       this.date.setDate(this.date.getDate() + nb);
       this.changeDateToParent();
     },
+    setNextWeek: function () {
+      //set date to monday
+      this.date.setDate(this.date.getDate() - this.date.getDay() + 1);
+      this.setNexDay(7);
+    },
+    setPreviousWeek: function () {
+      //set date to monday
+      this.date.setDate(this.date.getDate() - this.date.getDay() + 1);
+      this.setNexDay(-7);
+    },
     setNextMonth: function () {
       this.date.setMonth(this.date.getMonth() + 1);
+      this.date.setDate(1);
+      this.changeDateToParent();
+    },
+    setPreviousMonth: function () {
+      this.date.setMonth(this.date.getMonth() - 1);
+      this.date.setDate(1);
       this.changeDateToParent();
     },
     updateData: function () {
       this.$emit('updateData');
+    },
+    getName: function (){
+      switch (this.$route.name) {
+        case "DayVue":
+          return "Jour"
+        case "WeekVue":
+          return "Semaine";
+        case "MonthVue":
+          return "Mois";
+        case "YearVue":
+          return "Année";
+      }
     }
   },
 };

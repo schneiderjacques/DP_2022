@@ -1,6 +1,7 @@
 <template>
   <RdvModalUpdate v-if="showUpdateModal" :rdv="rdvToUpdate"
                   class="h-screen w-screen w-full h-full p-0 fixed top-0 left-0"
+                  @updateData="fetchData"
                   @close="closeModaleUpdate"></RdvModalUpdate>
   <div class="flex h-full flex-col">
     <div
@@ -203,7 +204,7 @@ export default {
   },
   mounted() {
     this.days = getAllDaysOfWeek(this.date);
-    this.getRdv();
+    this.fetchData();
   },
   methods: {
     getDayName,
@@ -219,7 +220,7 @@ export default {
         return "items-center justify-center font-semibold text-gray-900";
       }
     },
-    getRdv() {
+    fetchData() {
       const firstDayOfWeek = getFirstDayOfWeek(this.date);
       const dateFormat =
           firstDayOfWeek.getFullYear() +
