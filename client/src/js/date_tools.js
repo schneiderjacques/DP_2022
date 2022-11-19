@@ -143,7 +143,7 @@ export function decrementFirst(first) {
     minutes = 50;
     hours--;
   } else {
-    minutes -= 10;
+    minutes -= 5;
   }
   if (hours === -1) {
     hours = 23;
@@ -168,7 +168,7 @@ export function incrementFirst(first) {
     minutes = 0;
     hours++;
   } else {
-    minutes += 10;
+    minutes += 5;
   }
   if (hours === 24) {
     hours = 0;
