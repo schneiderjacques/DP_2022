@@ -2,7 +2,7 @@
   <RdvModalUpdate v-if="showUpdateModal" :rdv="rdvToUpdate"
                   class="h-screen w-screen w-full h-full p-0 fixed top-0 left-0"
                   @close="closeModaleUpdate"
-                  @updateData="updateData"></RdvModalUpdate>
+                  @updateData="fetchData"></RdvModalUpdate>
   <div class="flex h-full flex-col px-10">
     <div class="isolate flex flex-auto overflow-hidden bg-white">
       <div ref="container" class="flex flex-auto flex-col overflow-auto">
@@ -115,12 +115,12 @@ export default {
     };
   },
   mounted() {
-    this.updateData();
+    this.fetchData();
     this.days = getAllDaysOfWeek(this.date);
   },
   methods: {
     getDayName,
-    updateData: function () {
+    fetchData() {
       console.log("Maj des donnéesV2")
       const dateFormat =
           this.date.getFullYear() +

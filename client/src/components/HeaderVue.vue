@@ -1,5 +1,5 @@
 <template>
-  <RdvModalAdd v-if="showModal" class="h-screen w-screen w-full h-full p-0" @close="showModal = false"></RdvModalAdd>
+  <RdvModalAdd v-if="showModal" class="h-screen w-screen w-full h-full p-0" @close="showModal = false" @updateData="updateData"></RdvModalAdd>
   <header
       class="flex flex-none items-center justify-between border-b border-gray-200 p-10"
   >
@@ -212,7 +212,7 @@ import {formatDate, getDateName} from "@/js/date_tools.js";
 import RdvModalAdd from "@/components/RdvModalAdd";
 
 export default {
-  emits: ["changeDate"],
+  emits: ["changeDate", "updateData"],
   name: "HeaderVue",
   components: {
     RdvModalAdd,
@@ -274,6 +274,9 @@ export default {
       this.date.setMonth(this.date.getMonth() + 1);
       this.changeDateToParent();
     },
+    updateData: function () {
+      this.$emit('updateData');
+    }
   },
 };
 </script>
