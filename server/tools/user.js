@@ -36,7 +36,7 @@ function login(req, res) {
             users[i].password === req.body.password
         ) {
             // Génération d'un token de session
-            users[i].token = Math.random().toString(36).substr(2);
+            users[i].token.push(Math.random().toString(36).substr(2));
 
             // Enregistrer les données du site
             fs.writeFileSync(__dirname + "/../data/" + "data.json", JSON.stringify(users));
@@ -110,6 +110,36 @@ function register(req, res) {
 }
 
 /**
+ * Méthode permettant à l'utilisateur de se déconnecter
+ * @param req
+ * Requête
+ * @param res
+ * Réponse
+ */
+function logout(req, res) {
+    // Récupérer les données du site
+    let users = get_datas();
+
+    // Récupérer l'utilisateur
+    for (var i = 0; i < users.length; i++) {
+        // Cherche le token dans la liste des tokens de l'utilisateur
+        let index = users[i].token.indexOf(req.headers.authorization.substring(7));
+
+        // Si le token est trouvé
+        if (index > -1) {
+            // On le supprime
+            users[i].token.splice(index, 1);
+            // On enregistre les données du site
+            fs.writeFileSync(__dirname + "/../data/" + "data.json", JSON.stringify(users));
+            res.sendStatus(200);
+            return;
+        }
+    }
+
+    res.sendStatus(404);
+}
+
+/**
  * Méthode permettant de récupérer les données de l'utilisateur
  * @param req
  * Requête
@@ -129,7 +159,6 @@ function get_user(req, res) {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
             });
-            console.log(users[i]);
             res.send(users[i]);
             return;
         }
@@ -159,5 +188,6 @@ module.exports = {
     register: register,
     get_user: get_user,
     get_datas: get_datas,
-    get_user_id: get_user_id
+    get_user_id: get_user_id,
+    logout: logout,
 };

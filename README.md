@@ -18,6 +18,8 @@ Développement en groupe d'une application Web avec une architecture client-serv
 Permet de se connecter à l'application.
 #### POST /register
 Permet de s'inscrire.
+#### POST /logout
+Permet de se déconnecter de l'application.
 #### GET /user
 Permet de récupérer les données de l'utilisateur connecté.
 

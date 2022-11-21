@@ -85,6 +85,17 @@ app.post("/register", function (req, res) {
 });
 
 /**
+ * Méthode de déconnexion
+ * @api {post} /logout Logout
+ * @apiName Logout
+ * @apiGroup Authentication
+ */
+app.post("/logout", function (req, res) {
+  tool_user.logout(req, res);
+  res.end();
+});
+
+/**
  * Méthode de récupération des données de l'utilisateur
  * @api {get} /user Get user
  * @apiName User
