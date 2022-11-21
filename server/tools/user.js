@@ -91,7 +91,7 @@ function register(req, res) {
         username: req.body.username,
         password: req.body.password,
         // Génération d'un token de session
-        token: Math.random().toString(36).substr(2),
+        token: [Math.random().toString(36).substr(2)],
         rdvs: [],
     });
 
@@ -153,14 +153,16 @@ function get_user(req, res) {
     // Récupérer l'utilisateur
     let found = false;
     for (var i = 0; i < users.length; i++) {
-        if (users[i].token == req.headers.authorization.substring(7)) {
-            found = true;
-            res.set({
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-            });
-            res.send(users[i]);
-            return;
+        for (var j = 0; j < users[i].token.length; j++) {
+            if (users[i].token[j] == req.headers.authorization.substring(7)) {
+                found = true;
+                res.set({
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                });
+                res.send(users[i]);
+                return;
+            }
         }
     }
 
@@ -175,8 +177,10 @@ function get_user_id(req) {
 
     // Récupérer l'utilisateur
     for (var i = 0; i < users.length; i++) {
-        if (users[i].token == req.headers.authorization.substring(7)) {
-            return users[i].id
+        for (var j = 0; j < users[i].token.length; j++) {
+            if (users[i].token[j] == req.headers.authorization.substring(7)) {
+                return users[i].id
+            }
         }
     }
 

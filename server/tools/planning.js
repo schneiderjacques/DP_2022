@@ -15,8 +15,10 @@ function get_planning(req) {
 
     // Chercher l'utilisateur
     for (let i = 0; i < users.length; i++) {
-        if (users[i].token == req.headers.authorization.substring(7)) {
-            return users[i].rdvs;
+        for (let j = 0; j < users[i].token.length; j++) {
+            if (users[i].token[j] == req.headers.authorization.substring(7)) {
+                return users[i].rdvs;
+            }
         }
     }
 
@@ -200,13 +202,14 @@ function add_appointment(req, res) {
         let users = tool_user.get_datas();
         // Chercher l'utilisateur
         for (var i = 0; i < users.length; i++) {
-            if (users[i].token == req.headers.authorization.substring(7)) {
-                let new_date_debut = new Date(req.body.heureDebut);
-                let new_date_fin = new Date(req.body.heureFin);
+            for (var k = 0; k < users[i].token.length; j++) {
+                if (users[i].token[k] == req.headers.authorization.substring(7)) {
+                    let new_date_debut = new Date(req.body.heureDebut);
+                    let new_date_fin = new Date(req.body.heureFin);
 
-                // Vérifier si le rendez-vous ne chevauche pas un autre
-                /**
-                for (var j = 0; j < planning.length; j++) {
+                    // Vérifier si le rendez-vous ne chevauche pas un autre
+                    /**
+                     for (var j = 0; j < planning.length; j++) {
                     let date_debut = new Date(planning[j].heureDebut);
                     let date_fin = new Date(planning[j].heureFin);
                     if (
@@ -220,24 +223,25 @@ function add_appointment(req, res) {
                     }
                 }**/
 
-                // Ajouter le rendez-vous
-                users[i].rdvs.push({
-                    id: planning.length + 1,
-                    nom: req.body.nom,
-                    date: req.body.date,
-                    heureDebut: req.body.heureDebut,
-                    heureFin: req.body.heureFin,
-                    couleur: req.body.couleur,
-                });
+                    // Ajouter le rendez-vous
+                    users[i].rdvs.push({
+                        id: planning.length + 1,
+                        nom: req.body.nom,
+                        date: req.body.date,
+                        heureDebut: req.body.heureDebut,
+                        heureFin: req.body.heureFin,
+                        couleur: req.body.couleur,
+                    });
 
-                // Sauvegarder les données
-                fs.writeFileSync(
-                    __dirname + "/../data/" + "data.json",
-                    JSON.stringify(users)
-                );
+                    // Sauvegarder les données
+                    fs.writeFileSync(
+                        __dirname + "/../data/" + "data.json",
+                        JSON.stringify(users)
+                    );
 
-                res.sendStatus(201);
-                return;
+                    res.sendStatus(201);
+                    return;
+                }
             }
         }
     } else {
@@ -279,30 +283,31 @@ function edit_appointment(req, res) {
 
     // Chercher l'utilisateur
     for (var i = 0; i < users.length; i++) {
-        if (users[i].token == req.headers.authorization.substring(7)) {
-            let new_date_debut = new Date(req.body.heureDebut);
-            let new_date_fin = new Date(req.body.heureFin);
+        for (var k = 0; k < users[i].token.length; j++) {
+            if (users[i].token[k] == req.headers.authorization.substring(7)) {
+                let new_date_debut = new Date(req.body.heureDebut);
+                let new_date_fin = new Date(req.body.heureFin);
 
-            // Chercher le rendez-vous
-            let found = false;
-            let index_user, index_rdv = 0;
-            for (let j = 0; j < users[i].rdvs.length; j++) {
-                if (users[i].rdvs[j].id == req.params.id) {
-                    found = true;
-                    index_user = i;
-                    index_rdv = j;
-                    break;
+                // Chercher le rendez-vous
+                let found = false;
+                let index_user, index_rdv = 0;
+                for (let j = 0; j < users[i].rdvs.length; j++) {
+                    if (users[i].rdvs[j].id == req.params.id) {
+                        found = true;
+                        index_user = i;
+                        index_rdv = j;
+                        break;
+                    }
                 }
-            }
 
-            if (!found) {
-                res.sendStatus(404);
-                return;
-            }
+                if (!found) {
+                    res.sendStatus(404);
+                    return;
+                }
 
-            // Vérifier si le rendez-vous ne chevauche pas un autre
-            /**
-            for (var j = 0; j < users[i].rdvs.length; j++) {
+                // Vérifier si le rendez-vous ne chevauche pas un autre
+                /**
+                 for (var j = 0; j < users[i].rdvs.length; j++) {
                 let date_debut = new Date(users[i].rdvs[j].heureDebut);
                 let date_fin = new Date(users[i].rdvs[j].heureFin);
                 if (j !== req.params.id - 1) {
@@ -319,21 +324,22 @@ function edit_appointment(req, res) {
 
             }**/
 
-            // Modifier le rendez-vous
-            users[index_user].rdvs[index_rdv].nom = req.body.nom;
-            users[index_user].rdvs[index_rdv].date = req.body.date;
-            users[index_user].rdvs[index_rdv].heureDebut = req.body.heureDebut;
-            users[index_user].rdvs[index_rdv].heureFin = req.body.heureFin;
-            users[index_user].rdvs[index_rdv].couleur = req.body.couleur;
+                // Modifier le rendez-vous
+                users[index_user].rdvs[index_rdv].nom = req.body.nom;
+                users[index_user].rdvs[index_rdv].date = req.body.date;
+                users[index_user].rdvs[index_rdv].heureDebut = req.body.heureDebut;
+                users[index_user].rdvs[index_rdv].heureFin = req.body.heureFin;
+                users[index_user].rdvs[index_rdv].couleur = req.body.couleur;
 
-            // Sauvegarder les données
-            fs.writeFileSync(
-                __dirname + "/../data/" + "data.json",
-                JSON.stringify(users)
-            );
+                // Sauvegarder les données
+                fs.writeFileSync(
+                    __dirname + "/../data/" + "data.json",
+                    JSON.stringify(users)
+                );
 
-            res.sendStatus(204);
-            return;
+                res.sendStatus(204);
+                return;
+            }
         }
     }
 }
@@ -359,33 +365,35 @@ function delete_appointment(req, res) {
 
     // Chercher l'utilisateur
     for (var i = 0; i < users.length; i++) {
-        if (users[i].token == req.headers.authorization.substring(7)) {
-            let found = false;
-            for (let j = 0; j < users[i].rdvs.length; j++) {
-                if (users[i].rdvs[j].id == req.params.id) {
-                    found = true;
-                    users[i].rdvs.splice(j, 1);
-                }
-            }
-
-            if (!found) {
-                res.sendStatus(404);
-                return;
-            } else {
-                // Réordonner les id
+        for (var k = 0; k < users[i].token.length; j++) {
+            if (users[i].token[k] == req.headers.authorization.substring(7)) {
+                let found = false;
                 for (let j = 0; j < users[i].rdvs.length; j++) {
-                    users[i].rdvs[j].id = j + 1;
+                    if (users[i].rdvs[j].id == req.params.id) {
+                        found = true;
+                        users[i].rdvs.splice(j, 1);
+                    }
                 }
+
+                if (!found) {
+                    res.sendStatus(404);
+                    return;
+                } else {
+                    // Réordonner les id
+                    for (let j = 0; j < users[i].rdvs.length; j++) {
+                        users[i].rdvs[j].id = j + 1;
+                    }
+                }
+
+                // Sauvegarder les données
+                fs.writeFileSync(
+                    __dirname + "/../data/" + "data.json",
+                    JSON.stringify(users)
+                );
+
+                res.sendStatus(200);
+                return;
             }
-
-            // Sauvegarder les données
-            fs.writeFileSync(
-                __dirname + "/../data/" + "data.json",
-                JSON.stringify(users)
-            );
-
-            res.sendStatus(200);
-            return;
         }
     }
 }
