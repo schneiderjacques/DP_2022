@@ -142,7 +142,6 @@ app.get("/week_planning/:first_day_week", checkToken, function (req, res) {
  */
 app.get("/day_planning/:day", checkToken, function (req, res) {
   tool_planning.day_view(req, res);
-  notifyClients(req);
   res.end();
 });
 
