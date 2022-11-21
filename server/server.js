@@ -19,9 +19,11 @@ function checkToken(req, res, next) {
       fs.readFileSync(__dirname + "/data/" + "data.json", "utf8")
     );
     for (var i = 0; i < users.length; i++) {
-      if (users[i].token == req.headers.authorization.substring(7)) {
-        found = true;
-        next();
+      for (var j = 0; j < users[i].token.length; j++) {
+        if (users[i].token[j] == req.headers.authorization.substring(7)) {
+          found = true;
+          next();
+        }
       }
     }
   }
