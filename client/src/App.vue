@@ -1,8 +1,8 @@
 <template>
   <div class="main">
     <HeaderVue v-if="isConnected" @changeDate="changeDate" @updateData="updateData"/>
-    <router-view :date="date" v-slot="{ Component }">
-      <component ref="view" :is="Component"></component>
+    <router-view v-slot="{ Component }" :date="date">
+      <component :is="Component" ref="view"></component>
     </router-view>
   </div>
 </template>
@@ -31,7 +31,7 @@ export default {
   mounted() {
     this.date = new Date(localStorage.getItem("currentDate"));
   },
-  created: function() {
+  created: function () {
     let isConnected = localStorage.getItem("user") !== null;
 
     if (isConnected) {
@@ -39,20 +39,21 @@ export default {
 
       // Ouverture websocket
       this.connection = new WebSocket("ws://localhost:443", idUser)
-
-      this.connection.onmessage = function(event) {
+      this.connection.onmessage = (event) => {
         let data = JSON.parse(event.data);
         if (data.message == "update") {
           console.log("update");
           fetchDataGet("user/")
-            .then((res) => {
-              localStorage.setItem("user", JSON.stringify(res));
-            })
-            .catch((error) => {
-              console.log("Erreur lors de la récupération des données");
-              console.log(error);
-            });
+              .then((res) => {
+                localStorage.setItem("user", JSON.stringify(res));
+                this.updateData();
+              })
+              .catch((error) => {
+                console.log("Erreur lors de la récupération des données");
+                console.log(error);
+              });
         }
+
       }
     }
   },
@@ -61,7 +62,7 @@ export default {
       this.date = date;
       this.$router.go();
     },
-    updateData: function (){
+    updateData: function () {
       this.$refs.view.fetchData();
 
     }

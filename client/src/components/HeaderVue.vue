@@ -1,5 +1,6 @@
 <template>
-  <RdvModalAdd v-if="showModal" class="h-screen w-screen w-full h-full p-0" @close="showModal = false" @updateData="updateData"></RdvModalAdd>
+  <RdvModalAdd v-if="showModal" class="h-screen w-screen w-full h-full p-0" @close="showModal = false"
+               @updateData="updateData"></RdvModalAdd>
   <header
       class="flex flex-none items-center justify-between border-b border-gray-200 p-10"
   >
@@ -123,6 +124,13 @@
             @click="showModal = true"
         >
           Ajouter un RDV
+        </button>
+        <button
+            class="ml-6 rounded-md border border-transparent bg-indigo-800 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            type="button"
+            @click="signOut"
+        >
+          Déconnexion
         </button>
       </div>
       <Menu as="div" class="relative ml-6 md:hidden">
@@ -306,7 +314,7 @@ export default {
     updateData: function () {
       this.$emit('updateData');
     },
-    getName: function (){
+    getName: function () {
       switch (this.$route.name) {
         case "DayVue":
           return "Jour"
@@ -317,7 +325,11 @@ export default {
         case "YearVue":
           return "Année";
       }
-    }
+    },
+    signOut: function () {
+      localStorage.clear();
+      this.$router.push({name: "ConnexionVue"});
+    },
   },
 };
 </script>
