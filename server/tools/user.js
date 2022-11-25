@@ -41,6 +41,9 @@ function login(req, res) {
             // Enregistrer les données du site
             fs.writeFileSync(__dirname + "/../data/" + "data.json", JSON.stringify(users));
 
+            // On retourne l'utilisateur avec son token
+            users[i].token = users[i].token[users[i].token.length - 1];
+
             res.set({
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
@@ -156,6 +159,7 @@ function get_user(req, res) {
         for (var j = 0; j < users[i].token.length; j++) {
             if (users[i].token[j] == req.headers.authorization.substring(7)) {
                 found = true;
+                users[i].token = users[i].token[users[i].token.length - 1];
                 res.set({
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "*",

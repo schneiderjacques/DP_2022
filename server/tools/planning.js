@@ -202,7 +202,7 @@ function add_appointment(req, res) {
         let users = tool_user.get_datas();
         // Chercher l'utilisateur
         for (var i = 0; i < users.length; i++) {
-            for (var k = 0; k < users[i].token.length; j++) {
+            for (var k = 0; k < users[i].token.length; k++) {
                 if (users[i].token[k] == req.headers.authorization.substring(7)) {
                     let new_date_debut = new Date(req.body.heureDebut);
                     let new_date_fin = new Date(req.body.heureFin);
@@ -279,7 +279,7 @@ function edit_appointment(req, res) {
 
     // Chercher l'utilisateur
     for (var i = 0; i < users.length; i++) {
-        for (var k = 0; k < users[i].token.length; j++) {
+        for (var k = 0; k < users[i].token.length; k++) {
             if (users[i].token[k] == req.headers.authorization.substring(7)) {
                 let new_date_debut = new Date(req.body.heureDebut);
                 let new_date_fin = new Date(req.body.heureFin);
@@ -357,7 +357,7 @@ function delete_appointment(req, res) {
 
     // Chercher l'utilisateur
     for (var i = 0; i < users.length; i++) {
-        for (var k = 0; k < users[i].token.length; j++) {
+        for (var k = 0; k < users[i].token.length; k++) {
             if (users[i].token[k] == req.headers.authorization.substring(7)) {
                 let found = false;
                 for (let j = 0; j < users[i].rdvs.length; j++) {
