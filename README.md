@@ -9,7 +9,7 @@ Développement en groupe d'une application Web avec une architecture client-serv
 |SCHNEIDER Jacques|
 
 # Front
-[Manuel d'utilisation de l'application](https://user-images.githubusercontent.com/55313428/204584029-8472fe6b-ccee-4061-9d4f-7c3ae483292d.png)
+[Manuel d'utilisation de l'application](https://github.com/schneiderjacques/DP_2022/blob/master/documentation/Manuel%20utilisation%20-%20Front.pdf)
 
 # API
 [Documentation de l'API détaillée](https://documenter.getpostman.com/view/20058446/2s847PKVEZ)
