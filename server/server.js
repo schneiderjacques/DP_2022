@@ -4,7 +4,7 @@ const app = express();
 const tool_user = require("./tools/user.js");
 const tool_planning = require("./tools/planning.js");
 const fs = require("fs");
-const { Server } = require('ws');
+const { Server } = require("ws");
 const sockserver = new Server({ port: 443 });
 const connections = new Set();
 app.use(express.json(), cors());
@@ -38,14 +38,14 @@ function checkToken(req, res, next) {
  * @param event
  *  l'évènement
  */
-sockserver.on('connection', (ws, req) => {
-  ws.idUser = req.headers['sec-websocket-protocol'];
+sockserver.on("connection", (ws, req) => {
+  ws.idUser = req.headers["sec-websocket-protocol"];
   connections.add(ws);
 
   /**
    * Le client se déconnecte du serveur
    */
-  ws.on('close', () => {
+  ws.on("close", () => {
     connections.delete(ws);
   });
 });
@@ -58,10 +58,10 @@ sockserver.on('connection', (ws, req) => {
 function notifyClients(req) {
   connections.forEach((client) => {
     if (client.idUser == tool_user.get_user_id(req)) {
-      const data = JSON.stringify({'type': 'message', 'message': 'update'});
+      const data = JSON.stringify({ type: "message", message: "update" });
       client.send(data);
     }
-  })
+  });
 }
 
 /**
@@ -118,6 +118,18 @@ app.get("/user", checkToken, function (req, res) {
  */
 app.get("/month_planning/:month/:year", checkToken, function (req, res) {
   tool_planning.month_view(req, res);
+  res.end();
+});
+
+/**
+ * Méthode retournant les rendez-vous de l'année donnée
+ * @api {get} /planning/:year Get planning
+ * @apiName Planning
+ * @apiGroup Planning
+ * @apiHeader {String} Authorization Token de session
+ */
+app.get("/year_planning/:year", checkToken, function (req, res) {
+  tool_planning.year_view(req, res);
   res.end();
 });
 

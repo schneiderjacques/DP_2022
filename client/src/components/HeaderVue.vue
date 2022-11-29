@@ -272,6 +272,9 @@ export default {
         case "MonthVue":
           this.setNextMonth();
           break;
+        case "YearVue":
+          this.setNextYear();
+          break;
       }
     },
     previous: function () {
@@ -285,7 +288,26 @@ export default {
         case "MonthVue":
           this.setPreviousMonth();
           break;
+        case "YearVue":
+          this.setPreviousYear();
+          break;
       }
+    },
+    setNextYear() {
+      this.date.setFullYear(this.date.getFullYear() + 1);
+      this.date.setDate(1)
+      this.date.setMonth(0)
+      this.completeDate = getDateName(this.date);
+      this.formatedDate = formatDate(this.date);
+      this.changeDateToParent();
+    },
+    setPreviousYear() {
+      this.date.setFullYear(this.date.getFullYear() - 1);
+      this.date.setDate(1)
+      this.date.setMonth(0)
+      this.completeDate = getDateName(this.date);
+      this.formatedDate = formatDate(this.date);
+      this.changeDateToParent();
     },
     setNexDay: function (nb) {
       this.date.setDate(this.date.getDate() + nb);
