@@ -91,12 +91,6 @@ export default {
   components: {
     RdvModalUpdate,
   },
-  props: {
-    date: {
-      type: Date,
-      required: true,
-    },
-  },
   data() {
     return {
       showUpdateModal: false,
@@ -104,15 +98,17 @@ export default {
       days: [],
       rdvs: [],
       selectedDate: [],
+      date: null,
     };
   },
   mounted() {
-    this.days = getAllDaysFromYear(this.date);
     this.fetchData();
+    this.days = getAllDaysFromYear(this.date);
   },
   methods: {
     getHourAndMinuteFromDate,
     fetchData: function () {
+      this.date = new Date(localStorage.getItem("currentDate"));
       fetchDataGet("year_planning/" + this.date.getFullYear())
           .then((res) => {
             this.rdvs = res;

@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <HeaderVue v-if="isConnected" @changeDate="changeDate" @updateData="updateData"/>
-    <router-view v-slot="{ Component }" :date="date">
+    <router-view v-slot="{ Component }">
       <component :is="Component" ref="view"></component>
     </router-view>
   </div>
@@ -60,6 +60,7 @@ export default {
   methods: {
     changeDate: function (date) {
       this.date = date;
+      localStorage.setItem("currentDate", date);
       this.updateData();
     },
     updateData: function () {

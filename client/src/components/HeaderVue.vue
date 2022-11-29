@@ -298,16 +298,12 @@ export default {
       this.date.setFullYear(this.date.getFullYear() + 1);
       this.date.setDate(1)
       this.date.setMonth(0)
-      this.completeDate = getDateName(this.date);
-      this.formatedDate = formatDate(this.date);
       this.changeDateToParent();
     },
     setPreviousYear() {
       this.date.setFullYear(this.date.getFullYear() - 1);
       this.date.setDate(1)
       this.date.setMonth(0)
-      this.completeDate = getDateName(this.date);
-      this.formatedDate = formatDate(this.date);
       this.changeDateToParent();
     },
     setNexDay: function (nb) {
@@ -318,11 +314,13 @@ export default {
       //set date to monday
       this.date.setDate(this.date.getDate() - this.date.getDay() + 1);
       this.setNexDay(7);
+      this.changeDateToParent();
     },
     setPreviousWeek: function () {
       //set date to monday
       this.date.setDate(this.date.getDate() - this.date.getDay() + 1);
       this.setNexDay(-7);
+      this.changeDateToParent();
     },
     setNextMonth: function () {
       this.date.setMonth(this.date.getMonth() + 1);
@@ -335,6 +333,8 @@ export default {
       this.changeDateToParent();
     },
     updateData: function () {
+      this.completeDate = getDateName(this.date);
+      this.formatedDate = formatDate(this.date);
       this.$emit('updateData');
 
     },

@@ -74,12 +74,6 @@ export default {
     RdvDayVue,
     RdvModalUpdate,
   },
-  props: {
-    date: {
-      type: Date,
-      required: true,
-    },
-  },
   data() {
     return {
       showUpdateModal: false,
@@ -112,6 +106,7 @@ export default {
         "23",
       ],
       rdvs: [],
+      date: null
     };
   },
   mounted() {
@@ -121,6 +116,8 @@ export default {
   methods: {
     getDayName,
     fetchData() {
+      this.date = new Date(localStorage.getItem("currentDate"));
+      console.log(this.date);
       console.log("Maj des donnéesV2")
       const dateFormat =
           this.date.getFullYear() +

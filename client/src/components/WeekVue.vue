@@ -162,12 +162,6 @@ import RdvModalUpdate from "@/components/RdvModalUpdate";
 export default {
   name: "WeekVue",
   components: {RdvModalUpdate, RdvWeekVue},
-  props: {
-    date: {
-      type: Date,
-      required: true,
-    },
-  },
   data() {
     return {
       showUpdateModal: false,
@@ -200,11 +194,12 @@ export default {
       ],
       days: [],
       rdvs: [],
+      date: null
     };
   },
   mounted() {
-    this.days = getAllDaysOfWeek(this.date);
     this.fetchData();
+    this.days = getAllDaysOfWeek(this.date);
   },
   methods: {
     getDayName,
@@ -221,6 +216,7 @@ export default {
       }
     },
     fetchData() {
+      this.date = new Date(localStorage.getItem("currentDate"));
       const firstDayOfWeek = getFirstDayOfWeek(this.date);
       const dateFormat =
           firstDayOfWeek.getFullYear() +
