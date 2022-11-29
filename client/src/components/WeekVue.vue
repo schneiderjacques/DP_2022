@@ -1,8 +1,8 @@
 <template>
   <RdvModalUpdate v-if="showUpdateModal" :rdv="rdvToUpdate"
                   class="h-screen w-screen w-full h-full p-0 fixed top-0 left-0"
-                  @updateData="fetchData"
-                  @close="closeModaleUpdate"></RdvModalUpdate>
+                  @close="closeModaleUpdate"
+                  @updateData="fetchData"></RdvModalUpdate>
   <div class="flex h-full flex-col">
     <div
         ref="container"
@@ -231,6 +231,7 @@ export default {
       fetchDataGet("week_planning/" + dateFormat)
           .then((res) => {
             this.rdvs = res;
+            this.days = getAllDaysOfWeek(this.date);
           })
           .catch((err) => {
             console.log(err);
