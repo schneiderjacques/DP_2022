@@ -10,7 +10,7 @@ Développement en groupe d'une application Web avec une architecture client-serv
 
 # Documentation
 ## Front
-[Manuel d'utilisation de l'application](https://github.com/schneiderjacques/DP_2022/blob/master/documentation/Manuel%20utilisation%20-%20Front.pdf)
+[Manuel d'utilisation de l'application](./documentation/Manuel%20utilisation%20-%20Front.pdf)
 ## Back
 [Documentation de l'API détaillée en ligne](https://documenter.getpostman.com/view/20058446/2s847PKVEZ)\
 [Documentation de l'API détaillée en PDF](./documentation/Documentation%20API%20-%20Back.pdf)
@@ -50,3 +50,5 @@ L'application est accessible à l'adresse http://localhost:8080.\
 Pour se connecter, il faut utiliser les identifiants suivants :
 - Identifiant : user
 - Mot de passe : password
+
+Des événements sont déjà présents dans l'application sur cet utilisateur (du 18 au 23 décembre) à titre d'exemples.
