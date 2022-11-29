@@ -15,6 +15,14 @@ Développement en groupe d'une application Web avec une architecture client-serv
 [Documentation de l'API détaillée en ligne](https://documenter.getpostman.com/view/20058446/2s847PKVEZ)\
 [Documentation de l'API détaillée en PDF](./documentation/Documentation%20API%20-%20Back.pdf)
 
+## Fonctionnalités supplémentaires implémentées
+- Routes protégées par un Bearer Token
+- Vue des événements par année
+- Ajout de couleur aux événements
+
+## Méthode utilisée pour la synchronisation en temps réel des données
+Pour synchroniser en temps réel les données entre les utilisateurs, nous avons utilisé le protocole WebSocket.
+
 # Installation
 
 ## Installation des packages nodeJS
