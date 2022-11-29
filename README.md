@@ -39,7 +39,7 @@ node server.js
 La commande retourne l'url du serveur (URL par défaut : http://localhost:8000).
 
 ## Lancement du client
-Se rendre dans le dossier ``/client`` et exécuter la commande suivante :
+Se rendre dans le dossier ``/client`` et exécuter la commande suivante afin de lancer le client VueJS :
 ```bash
 npm run serve
 ```
@@ -48,7 +48,7 @@ La commande retourne l'url de l'application (URL par défaut : http://localhost:
 ## Connexion
 L'application est accessible à l'adresse http://localhost:8080.\
 Pour se connecter, il faut utiliser les identifiants suivants :
-- Identifiant : user
-- Mot de passe : password
+- Identifiant : ``user``
+- Mot de passe : ``password``
 
 Des événements sont déjà présents dans l'application sur cet utilisateur (du 18 au 23 décembre) à titre d'exemples.
