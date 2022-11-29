@@ -258,7 +258,8 @@ export default {
   methods: {
     changeDateToParent() {
       localStorage.setItem("currentDate", this.date.toISOString().slice(0, 10));
-      console.log(localStorage.getItem("currentDate"));
+      this.completeDate = getDateName(this.date);
+      this.formatedDate = formatDate(this.date);
       this.$emit("changeDate", this.date);
     },
     next: function () {
@@ -335,6 +336,7 @@ export default {
     },
     updateData: function () {
       this.$emit('updateData');
+
     },
     getName: function () {
       switch (this.$route.name) {

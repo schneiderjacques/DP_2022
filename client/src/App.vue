@@ -60,7 +60,7 @@ export default {
   methods: {
     changeDate: function (date) {
       this.date = date;
-      this.$router.go();
+      this.updateData();
     },
     updateData: function () {
       this.$refs.view.fetchData();
