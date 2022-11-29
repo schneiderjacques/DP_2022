@@ -89,8 +89,8 @@ export default {
   data() {
     return {
       bodyConnexion: {
-        username: "toto",
-        password: "toto",
+        username: "",
+        password: "",
       },
       bodyInscription: {
         username: "",

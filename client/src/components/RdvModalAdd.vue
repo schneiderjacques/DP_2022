@@ -162,7 +162,7 @@
                   v-model="desc"
                   class="w-full mt-2 border-gray-200 border rounded-lg p-2 resize-none shadow-sm"
                   cols="30"
-                  maxlength="30"
+                  maxlength="255"
                   name=""
                   placeholder="Entrer une description..."
                   rows="5"

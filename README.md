@@ -8,66 +8,45 @@ Développement en groupe d'une application Web avec une architecture client-serv
 |MOITRIER Arthur  |
 |SCHNEIDER Jacques|
 
-# Front
+# Documentation
+## Front
 [Manuel d'utilisation de l'application](https://github.com/schneiderjacques/DP_2022/blob/master/documentation/Manuel%20utilisation%20-%20Front.pdf)
+## Back
+[Documentation de l'API détaillée en ligne](https://documenter.getpostman.com/view/20058446/2s847PKVEZ)\
+[Documentation de l'API détaillée en PDF](./documentation/Documentation%20API%20-%20Back.pdf)
 
-# API
-[Documentation de l'API détaillée](https://documenter.getpostman.com/view/20058446/2s847PKVEZ)
-
-## Authentification
-
-#### POST /login
-Permet de se connecter à l'application.
-#### POST /register
-Permet de s'inscrire.
-#### POST /logout
-Permet de se déconnecter de l'application.
-#### GET /user
-Permet de récupérer les données de l'utilisateur connecté.
-
-## Gestion du planning
-#### GET /month_planning/{month}/{year}
-Permet de récupérer le planning du mois demandé.
-`{month}` : `{1..12}`
-`{year}` : `{YYYY}`
-#### GET /week_planning/{date}
-Permet de récupérer le planning de la semaine demandée.
-`{date}` : premier jour de la semaine demandée au format `YYYY-mm-dd`
-#### GET /day_planning/{date}
-Permet de récupérer le planning du jour demandé.
-`{date}` : date demandée au format `YYYY-mm-dd`
-#### PUT /add_appointment
-Permet d'ajouter un rendez-vous dans le planning de l'utilisateur.
-```json
-{
-    "date": "YYYY-mm-dd",
-    "heureDebut": "YYYY-mm-dd hh:mm:ss",
-    "heureFin": "YYYY-mm-dd hh:mm:ss",
-    "nom": "name of the appointment",
-    "couleur": "#FFFFFF"
-}
-```
-#### PATCH /edit_appointment/{id}
-Permet de modifier un rendez-vous déjà existant.
-
-`{id}`: identifiant du rendez-vous à modifier
-```json
-{
-    "date": "YYYY-mm-dd",
-    "heureDebut": "YYYY-mm-dd hh:mm:ss",
-    "heureFin": "YYYY-mm-dd hh:mm:ss",
-    "nom": "name of the appointment"
-}
-```  
-#### DELETE /delete_appointment/{id}
-Permet de supprimer un rendez-vous.
-
-`{id}`: identifiant du rendez-vous à supprimer
 # Installation
 
+## Installation des packages nodeJS
 Se rendre dans le dossier ``/server`` et exécuter la commande suivante :
 ```nodejs  
 npm install  
 ```
 
-# Exécution
+Se rendre dans le dossier ``/client`` et exécuter la commande suivante :
+```nodejs  
+npm install  
+```
+
+# Utilisation
+
+## Lancement du serveur
+
+Se rendre dans le dossier ``/server`` et exécuter la commande suivante :
+```bash
+node server.js
+```
+La commande retourne l'url du serveur (URL par défaut : http://localhost:8000).
+
+## Lancement du client
+Se rendre dans le dossier ``/client`` et exécuter la commande suivante :
+```bash
+npm run serve
+```
+La commande retourne l'url de l'application (URL par défaut : http://localhost:8080).
+
+## Connexion
+L'application est accessible à l'adresse http://localhost:8080.\
+Pour se connecter, il faut utiliser les identifiants suivants :
+- Identifiant : user
+- Mot de passe : password
